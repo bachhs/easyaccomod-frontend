@@ -4,7 +4,7 @@ import React, {
 } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useHistory } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useSnackbar } from 'notistack';
 import {
   Avatar,
@@ -34,7 +34,6 @@ function Account() {
   const history = useHistory();
   const ref = useRef(null);
   const dispatch = useDispatch();
-  const account = useSelector((state) => state.account);
   const { enqueueSnackbar } = useSnackbar();
   const [isOpen, setOpen] = useState(false);
 
@@ -70,14 +69,13 @@ function Account() {
         <Avatar
           alt="User"
           className={classes.avatar}
-          src={account.user.avatar}
         />
         <Hidden smDown>
           <Typography
             variant="h6"
             color="inherit"
           >
-            {`${account.user.firstName} ${account.user.lastName}`}
+            Account
           </Typography>
         </Hidden>
       </Box>

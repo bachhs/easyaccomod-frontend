@@ -23,7 +23,6 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
-import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
 import AllInboxIcon from '@material-ui/icons/AllInbox';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
@@ -45,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Notifications() {
+function Messages() {
   const classes = useStyles();
   const notifications = useSelector((state) => state.notifications.notifications);
   const ref = useRef(null);
@@ -72,7 +71,7 @@ function Notifications() {
           ref={ref}
           onClick={handleOpen}
         >
-          <NotificationsNoneIcon />
+          <ChatBubbleOutlineIcon />
         </IconButton>
       </Tooltip>
       <Popover
@@ -157,4 +156,4 @@ function Notifications() {
   );
 }
 
-export default Notifications;
+export default Messages;

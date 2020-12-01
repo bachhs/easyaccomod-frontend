@@ -3,7 +3,6 @@
 import _ from 'lodash';
 import { colors, createMuiTheme, responsiveFontSizes } from '@material-ui/core';
 import typography from './typography';
-import { softShadows } from './shadows';
 import { THEMES } from '../constants';
 
 const baseConfig = {
@@ -63,7 +62,6 @@ const themeConfigs = [
         secondary: colors.blueGrey[600]
       }
     },
-    shadows: softShadows
   },
 ];
 

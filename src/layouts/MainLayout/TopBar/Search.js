@@ -10,16 +10,13 @@ import {
   IconButton,
   InputAdornment,
   Link,
-  SvgIcon,
   TextField,
   Tooltip,
   Typography,
   makeStyles
 } from '@material-ui/core';
-import {
-  Search as SearchIcon,
-  XCircle as XIcon
-} from 'react-feather';
+import SearchIcon from '@material-ui/icons/Search';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import axios from 'src/utils/axios';
 
 const useStyles = makeStyles(() => ({
@@ -68,9 +65,7 @@ function Search() {
           color="inherit"
           onClick={handleOpen}
         >
-          <SvgIcon fontSize="small">
-            <SearchIcon />
-          </SvgIcon>
+          <SearchIcon />
         </IconButton>
       </Tooltip>
       <Drawer
@@ -95,9 +90,7 @@ function Search() {
                 Search
               </Typography>
               <IconButton onClick={handleClose}>
-                <SvgIcon fontSize="small">
-                  <XIcon />
-                </SvgIcon>
+                <HighlightOffIcon />
               </IconButton>
             </Box>
             <Box mt={2}>
@@ -107,12 +100,7 @@ function Search() {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <SvgIcon
-                        fontSize="small"
-                        color="action"
-                      >
-                        <SearchIcon />
-                      </SvgIcon>
+                      <SearchIcon />
                     </InputAdornment>
                   )
                 }}

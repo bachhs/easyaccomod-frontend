@@ -1,21 +1,26 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {
   AppBar,
+  Box,
+  Toolbar,
   makeStyles,
 } from '@material-ui/core';
 import Logo from 'src/components/Logo';
+import Account from './Account';
+import Messages from './Messages';
+import Notifications from './Notifications';
+import Search from './Search';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     zIndex: theme.zIndex.drawer + 100,
-    boxShadow: '3',
-    backgroundColor: theme.palette.primary.main
   },
   toolbar: {
-    minHeight: 64
+    minHeight: 56
   }
 }));
 
@@ -25,15 +30,32 @@ function TopBar({
   ...rest
 }) {
   const classes = useStyles();
+  const account = useSelector((state) => state.account);
 
   return (
     <AppBar
       className={clsx(classes.root, className)}
       {...rest}
     >
-      <RouterLink to="/">
-        <Logo />
-      </RouterLink>
+      <Toolbar className={classes.toolbar}>
+        <RouterLink to="/">
+          <Logo />
+        </RouterLink>
+        <Box
+          ml={2}
+          flexGrow={1}
+        />
+        <Search />
+        {!account.user && (
+          <>
+            <Messages />
+            <Notifications />
+            <Box ml={2}>
+              <Account />
+            </Box>
+          </>
+        )}
+      </Toolbar>
     </AppBar>
   );
 }
