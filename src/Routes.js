@@ -22,7 +22,7 @@ function Routes() {
               <Switch>
                 <Route
                   exact
-                  path="/home"
+                  path="/"
                   component={lazy(() => import('src/views/places/PlaceListView'))}
                 />
                 <Redirect to="/404" />
