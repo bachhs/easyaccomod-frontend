@@ -15,21 +15,6 @@ function Routes() {
   return (
     <Suspense fallback={<LoadingScreen />}>
       <Switch>
-        <Route
-          path="*"
-          render={(props) => (
-            <MainLayout {...props}>
-              <Switch>
-                <Route
-                  exact
-                  path="/"
-                  component={lazy(() => import('src/views/places/PlaceListView'))}
-                />
-                <Redirect to="/404" />
-              </Switch>
-            </MainLayout>
-          )}
-        />
         <GuestRoute
           exact
           path="/login"
@@ -44,6 +29,21 @@ function Routes() {
           exact
           path="/404"
           component={lazy(() => import('src/views/pages/Error404View'))}
+        />
+        <Route
+          path="*"
+          render={(props) => (
+            <MainLayout {...props}>
+              <Switch>
+                <Route
+                  exact
+                  path="/"
+                  component={lazy(() => import('src/views/places/PlaceListView'))}
+                />
+                <Redirect to="/404" />
+              </Switch>
+            </MainLayout>
+          )}
         />
         <Redirect to="/404" />
       </Switch>
