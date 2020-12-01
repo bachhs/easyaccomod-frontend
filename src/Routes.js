@@ -9,11 +9,27 @@ import {
 } from 'react-router-dom';
 import LoadingScreen from 'src/components/LoadingScreen';
 import GuestRoute from 'src/components/GuestRoute';
+import MainLayout from 'src/layouts/MainLayout';
 
 function Routes() {
   return (
     <Suspense fallback={<LoadingScreen />}>
       <Switch>
+        <Route
+          path="*"
+          render={(props) => (
+            <MainLayout {...props}>
+              <Switch>
+                <Route
+                  exact
+                  path="/home"
+                  component={lazy(() => import('src/views/places/PlaceListView'))}
+                />
+                <Redirect to="/404" />
+              </Switch>
+            </MainLayout>
+          )}
+        />
         <GuestRoute
           exact
           path="/login"
