@@ -8,14 +8,12 @@ import {
   Container,
   Card,
   CardContent,
-  CardMedia,
   Divider,
   Link,
   Typography,
   colors,
   makeStyles
 } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
 import LockIcon from '@material-ui/icons/Lock';
 import Page from 'src/components/Page';
 import Logo from 'src/components/Logo';
@@ -24,12 +22,12 @@ import LoginForm from './LoginForm';
 const useStyles = makeStyles((theme) => ({
   root: {
     justifyContent: 'center',
-    backgroundColor: theme.palette.background.dark,
+    backgroundColor: '#f0f2f5',
     display: 'flex',
     height: '100%',
     minHeight: '100%',
     flexDirection: 'column',
-    paddingBottom: 80,
+    paddingBottom: 150,
     paddingTop: 80
   },
   backButton: {
@@ -58,18 +56,6 @@ const useStyles = makeStyles((theme) => ({
     left: theme.spacing(3),
     height: 64,
     width: 64
-  },
-  media: {
-    borderTopRightRadius: 4,
-    borderBottomRightRadius: 4,
-    padding: theme.spacing(3),
-    color: theme.palette.common.white,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
-    [theme.breakpoints.down('md')]: {
-      display: 'none'
-    }
   }
 }));
 
@@ -85,7 +71,7 @@ function LoginView() {
       className={classes.root}
       title="Login"
     >
-      <Container maxWidth="md">
+      <Container maxWidth="sm">
         <Box
           mb={8}
           display="flex"
@@ -119,25 +105,10 @@ function LoginView() {
             >
               Sign in on the internal platform
             </Typography>
-            <Box mt={2}>
-              <Alert
-                severity="info"
-              >
-                <div>
-                  Use
-                  {' '}
-                  <b>admin@devias.io</b>
-                  {' '}
-                  and password
-                  {' '}
-                  <b>admin</b>
-                </div>
-              </Alert>
-            </Box>
-            <Box mt={3}>
+            <Box mt={4}>
               <LoginForm onSubmitSuccess={handleSubmitSuccess} />
             </Box>
-            <Box my={2}>
+            <Box my={4}>
               <Divider />
             </Box>
             <Link
@@ -149,43 +120,6 @@ function LoginView() {
               Create new account
             </Link>
           </CardContent>
-          <CardMedia
-            className={classes.media}
-            image="/static/images/auth.png"
-            title="Cover"
-          >
-            <Typography
-              color="inherit"
-              variant="subtitle1"
-            >
-              Hella narvwhal Cosby sweater McSweeney&apos;s,
-              salvia kitsch before they sold out High Life.
-            </Typography>
-            <Box
-              alignItems="center"
-              display="flex"
-              mt={3}
-            >
-              <Avatar
-                alt="Person"
-                src="/static/images/avatars/avatar_2.png"
-              />
-              <Box ml={3}>
-                <Typography
-                  color="inherit"
-                  variant="body1"
-                >
-                  Ekaterina Tankova
-                </Typography>
-                <Typography
-                  color="inherit"
-                  variant="body2"
-                >
-                  Manager at inVision
-                </Typography>
-              </Box>
-            </Box>
-          </CardMedia>
         </Card>
       </Container>
     </Page>
