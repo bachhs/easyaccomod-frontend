@@ -15,6 +15,11 @@ import {
   makeStyles
 } from '@material-ui/core';
 import { register } from 'src/actions/accountActions';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -29,13 +34,20 @@ function RegisterForm({ className, onSubmitSuccess, ...rest }) {
       initialValues={{
         firstName: '',
         lastName: '',
+        citizenIdentifyCardNumber: '',
+        permanentResidence: '',
+        phoneNumber: '',
         email: '',
         password: '',
+        choose: '',
         policy: false
       }}
       validationSchema={Yup.object().shape({
         firstName: Yup.string().max(255).required('First name is required'),
         lastName: Yup.string().max(255).required('Last name is required'),
+        citizenIdentifyCardNumber: Yup.string().min(10).max(10).required('Citizen identify card number is required'),
+        permanentResidence: Yup.string().max(255).required('Permanent residence is required'),
+        phoneNumber: Yup.string().min(10).max(10).required('Phone number is required'),
         email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
         password: Yup.string().min(7).max(255).required('Password is required'),
         policy: Yup.boolean().oneOf([true], 'This field must be checked')
@@ -69,30 +81,79 @@ function RegisterForm({ className, onSubmitSuccess, ...rest }) {
           onSubmit={handleSubmit}
           {...rest}
         >
+          <Box>
+            <TextField
+              error={Boolean(touched.firstName && errors.firstName)}
+              helperText={touched.firstName && errors.firstName}
+              fullWidth
+              label="First Name"
+              margin="normal"
+              rowsMax={4}
+              name="firstName"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              type="firstName"
+              value={values.firstName}
+              variant="outlined"
+            />
+            <TextField
+              error={Boolean(touched.lastName && errors.lastName)}
+              helperText={touched.lastName && errors.lastName}
+              fullWidth
+              label="Last Name"
+              margin="normal"
+              name="lastName"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              type="lastName"
+              value={values.lastName}
+              variant="outlined"
+            />
+          </Box>
           <TextField
-            error={Boolean(touched.firstName && errors.firstName)}
-            fullWidth
-            helperText={touched.firstName && errors.firstName}
-            label="First Name"
+            error={Boolean(touched.citizenIdentifyCardNumber && errors.citizenIdentifyCardNumber)}
+            helperText={touched.citizenIdentifyCardNumber && errors.citizenIdentifyCardNumber}
+            label="Citizen identify card number"
             margin="normal"
-            name="firstName"
+            fullWidth
+            name="citizenIdentifyCardNumber"
             onBlur={handleBlur}
             onChange={handleChange}
-            type="firstName"
-            value={values.firstName}
+            type="citizenIdentifyCardNumber"
+            value={values.citizenIdentifyCardNumber}
+            variant="outlined"
+          />
+          <FormControl style={{ marginTop: 15, marginLeft: 10 }} component="fieldset">
+            <FormLabel row>You want to do:</FormLabel>
+            <RadioGroup row aria-label="choose" name="choose" value={values.choose} onChange={handleChange}>
+              <FormControlLabel value="renter" control={<Radio />} label="renter" />
+              <FormControlLabel value="owner" control={<Radio />} label="owner" />
+            </RadioGroup>
+          </FormControl>
+          <TextField
+            error={Boolean(touched.permanentResidence && errors.permanentResidence)}
+            fullWidth
+            helperText={touched.permanentResidence && errors.permanentResidence}
+            label="Permanent residence"
+            margin="normal"
+            name="permanentResidence"
+            onBlur={handleBlur}
+            onChange={handleChange}
+            type="permanentResidence"
+            value={values.permanentResidence}
             variant="outlined"
           />
           <TextField
-            error={Boolean(touched.lastName && errors.lastName)}
+            error={Boolean(touched.phoneNumber && errors.phoneNumber)}
             fullWidth
-            helperText={touched.lastName && errors.lastName}
-            label="Last Name"
+            helperText={touched.phoneNumber && errors.phoneNumber}
+            label="Phone number"
             margin="normal"
-            name="lastName"
+            name="phoneNumber"
             onBlur={handleBlur}
             onChange={handleChange}
-            type="lastName"
-            value={values.lastName}
+            type="phoneNumber"
+            value={values.phoneNumber}
             variant="outlined"
           />
           <TextField

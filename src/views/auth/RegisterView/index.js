@@ -16,10 +16,10 @@ import Page from 'src/components/Page';
 import Logo from 'src/components/Logo';
 import RegisterForm from './RegisterForm';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     justifyContent: 'center',
-    backgroundColor: theme.palette.background.dark,
+    backgroundColor: '#f0f2f5',
     display: 'flex',
     height: '100%',
     minHeight: '100%',
@@ -44,7 +44,7 @@ function RegisterView() {
     >
       <Container maxWidth="sm">
         <Box
-          mb={5}
+          mb={2}
           display="flex"
           alignItems="center"
         >
@@ -71,7 +71,7 @@ function RegisterView() {
             <Typography variant="subtitle1">
               Sign up on the internal platform
             </Typography>
-            <Box mt={3}>
+            <Box mt={2}>
               <RegisterForm onSubmitSuccess={handleSubmitSuccess} />
             </Box>
             <Box my={2}>
