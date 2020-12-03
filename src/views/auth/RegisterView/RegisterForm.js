@@ -100,6 +100,7 @@ function RegisterForm({ className, onSubmitSuccess, ...rest }) {
             helperText={touched.email && errors.email}
             label="Email Address"
             margin="normal"
+            style={{ marginBottom: 15 }}
             name="email"
             onBlur={handleBlur}
             onChange={handleChange}
@@ -120,6 +121,7 @@ function RegisterForm({ className, onSubmitSuccess, ...rest }) {
             helperText={touched.citizen && errors.citizen}
             label="Citizen ID"
             margin="normal"
+            style={{ marginTop: 10 }}
             name="citizen"
             onBlur={handleBlur}
             onChange={handleChange}

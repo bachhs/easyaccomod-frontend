@@ -24,8 +24,8 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     minHeight: '100%',
     flexDirection: 'column',
-    paddingBottom: 80,
-    paddingTop: 80
+    paddingBottom: 50,
+    paddingTop: 100
   }
 }));
 
@@ -46,6 +46,7 @@ function RegisterView() {
         <Box
           display="flex"
           alignItems="center"
+          mb={1}
         >
           <RouterLink to="/">
             <Logo />
