@@ -8,18 +8,17 @@ import {
   Box,
   Button,
   Checkbox,
+  FormControlLabel,
   FormHelperText,
+  FormLabel,
   TextField,
   Typography,
   Link,
+  Radio,
+  RadioGroup,
   makeStyles
 } from '@material-ui/core';
 import { register } from 'src/actions/accountActions';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -32,24 +31,25 @@ function RegisterForm({ className, onSubmitSuccess, ...rest }) {
   return (
     <Formik
       initialValues={{
-        firstName: '',
-        lastName: '',
-        citizenIdentifyCardNumber: '',
-        permanentResidence: '',
-        phoneNumber: '',
+        username: '',
         email: '',
+        role: '',
+        citizen: '',
+        address: '',
+        phone: '',
         password: '',
-        choose: '',
         policy: false
       }}
       validationSchema={Yup.object().shape({
-        firstName: Yup.string().max(255).required('First name is required'),
-        lastName: Yup.string().max(255).required('Last name is required'),
-        citizenIdentifyCardNumber: Yup.string().min(10).max(10).required('Citizen identify card number is required'),
-        permanentResidence: Yup.string().max(255).required('Permanent residence is required'),
-        phoneNumber: Yup.string().min(10).max(10).required('Phone number is required'),
+        username: Yup.string().max(255).required('User Name is required'),
         email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-        password: Yup.string().min(7).max(255).required('Password is required'),
+        role: Yup.string().oneOf(['renter', 'owner']).required('Role is required'),
+        citizen: Yup.string().required('Citizen ID is required').matches(/^[0-9]+$/, 'Must be only digits').min(6, 'Must be at least 6 digits')
+          .max(12, 'Must be max 12 digits'),
+        address: Yup.string().max(255).required('Address is required'),
+        phone: Yup.string().required('Phone number is required').matches(/^[0-9]+$/, 'Must be only digits').min(6, 'Must be at least 6 digits')
+          .max(12, 'Must be max 12 digits'),
+        password: Yup.string().min(6).max(255).required('Password is required'),
         policy: Yup.boolean().oneOf([true], 'This field must be checked')
       })}
       onSubmit={async (values, {
@@ -81,79 +81,17 @@ function RegisterForm({ className, onSubmitSuccess, ...rest }) {
           onSubmit={handleSubmit}
           {...rest}
         >
-          <Box>
-            <TextField
-              error={Boolean(touched.firstName && errors.firstName)}
-              helperText={touched.firstName && errors.firstName}
-              fullWidth
-              label="First Name"
-              margin="normal"
-              rowsMax={4}
-              name="firstName"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              type="firstName"
-              value={values.firstName}
-              variant="outlined"
-            />
-            <TextField
-              error={Boolean(touched.lastName && errors.lastName)}
-              helperText={touched.lastName && errors.lastName}
-              fullWidth
-              label="Last Name"
-              margin="normal"
-              name="lastName"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              type="lastName"
-              value={values.lastName}
-              variant="outlined"
-            />
-          </Box>
           <TextField
-            error={Boolean(touched.citizenIdentifyCardNumber && errors.citizenIdentifyCardNumber)}
-            helperText={touched.citizenIdentifyCardNumber && errors.citizenIdentifyCardNumber}
-            label="Citizen identify card number"
-            margin="normal"
+            error={Boolean(touched.username && errors.username)}
             fullWidth
-            name="citizenIdentifyCardNumber"
+            helperText={touched.username && errors.username}
+            label="User Name"
+            margin="normal"
+            name="username"
             onBlur={handleBlur}
             onChange={handleChange}
-            type="citizenIdentifyCardNumber"
-            value={values.citizenIdentifyCardNumber}
-            variant="outlined"
-          />
-          <FormControl style={{ marginTop: 15, marginLeft: 10 }} component="fieldset">
-            <FormLabel row>You want to do:</FormLabel>
-            <RadioGroup row aria-label="choose" name="choose" value={values.choose} onChange={handleChange}>
-              <FormControlLabel value="renter" control={<Radio />} label="renter" />
-              <FormControlLabel value="owner" control={<Radio />} label="owner" />
-            </RadioGroup>
-          </FormControl>
-          <TextField
-            error={Boolean(touched.permanentResidence && errors.permanentResidence)}
-            fullWidth
-            helperText={touched.permanentResidence && errors.permanentResidence}
-            label="Permanent residence"
-            margin="normal"
-            name="permanentResidence"
-            onBlur={handleBlur}
-            onChange={handleChange}
-            type="permanentResidence"
-            value={values.permanentResidence}
-            variant="outlined"
-          />
-          <TextField
-            error={Boolean(touched.phoneNumber && errors.phoneNumber)}
-            fullWidth
-            helperText={touched.phoneNumber && errors.phoneNumber}
-            label="Phone number"
-            margin="normal"
-            name="phoneNumber"
-            onBlur={handleBlur}
-            onChange={handleChange}
-            type="phoneNumber"
-            value={values.phoneNumber}
+            type="username"
+            value={values.username}
             variant="outlined"
           />
           <TextField
@@ -167,6 +105,52 @@ function RegisterForm({ className, onSubmitSuccess, ...rest }) {
             onChange={handleChange}
             type="email"
             value={values.email}
+            variant="outlined"
+          />
+          <FormLabel>Role</FormLabel>
+          <RadioGroup row aria-label="role" name="role" value={values.role} onChange={handleChange}>
+            <FormControlLabel value="renter" control={<Radio />} label="Renter" />
+            <FormControlLabel value="owner" control={<Radio />} label="Owner" />
+          </RadioGroup>
+          {Boolean(touched.role && errors.role)
+            && <FormHelperText className="MuiFormHelperText-root MuiFormHelperText-contained Mui-error">You must select a role</FormHelperText>}
+          <TextField
+            error={Boolean(touched.citizen && errors.citizen)}
+            fullWidth
+            helperText={touched.citizen && errors.citizen}
+            label="Citizen ID"
+            margin="normal"
+            name="citizen"
+            onBlur={handleBlur}
+            onChange={handleChange}
+            type="citizenID"
+            value={values.citizen}
+            variant="outlined"
+          />
+          <TextField
+            error={Boolean(touched.address && errors.address)}
+            fullWidth
+            helperText={touched.address && errors.address}
+            label="Address"
+            margin="normal"
+            name="address"
+            onBlur={handleBlur}
+            onChange={handleChange}
+            type="address"
+            value={values.address}
+            variant="outlined"
+          />
+          <TextField
+            error={Boolean(touched.phone && errors.phone)}
+            fullWidth
+            helperText={touched.phone && errors.phone}
+            label="Phone Number"
+            margin="normal"
+            name="phone"
+            onBlur={handleBlur}
+            onChange={handleChange}
+            type="phone"
+            value={values.phone}
             variant="outlined"
           />
           <TextField
@@ -209,9 +193,9 @@ function RegisterForm({ className, onSubmitSuccess, ...rest }) {
             </Typography>
           </Box>
           {Boolean(touched.policy && errors.policy) && (
-            <FormHelperText error>
-              {errors.policy}
-            </FormHelperText>
+          <FormHelperText error>
+            {errors.policy}
+          </FormHelperText>
           )}
           <Box mt={2}>
             <Button
@@ -237,7 +221,7 @@ RegisterForm.propTypes = {
 };
 
 RegisterForm.default = {
-  onSubmitSuccess: () => {}
+  onSubmitSuccess: () => { }
 };
 
 export default RegisterForm;
