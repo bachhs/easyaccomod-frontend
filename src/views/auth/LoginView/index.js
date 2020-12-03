@@ -22,12 +22,12 @@ import LoginForm from './LoginForm';
 const useStyles = makeStyles((theme) => ({
   root: {
     justifyContent: 'center',
-    backgroundColor: '#f0f2f5',
+    backgroundColor: theme.palette.background.dark,
     display: 'flex',
     height: '100%',
     minHeight: '100%',
     flexDirection: 'column',
-    paddingBottom: 150,
+    paddingBottom: 80,
     paddingTop: 80
   },
   backButton: {
