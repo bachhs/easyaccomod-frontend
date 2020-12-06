@@ -21,7 +21,6 @@ class AuthService {
 
   handleAuthentication() {
     const accessToken = this.getAccessToken();
-
     if (!accessToken) {
       return;
     }
@@ -34,22 +33,24 @@ class AuthService {
   }
 
   loginWithEmailAndPassword = (email, password) => new Promise((resolve, reject) => {
-    axios.post('/api/account/login', { email, password })
+    axios.post(`${process.env.REACT_APP_API}/users/login`, { email, password })
       .then((response) => {
-        if (response.data.user) {
+        if (response.data.user && response.data.accessToken) {
           this.setSession(response.data.accessToken);
           resolve(response.data.user);
-        } else {
-          reject(response.data.error);
         }
+        reject(response);
       })
       .catch((error) => {
+        if (error.response.data) {
+          reject(error.response.data);
+        }
         reject(error);
       });
   })
 
   loginInWithToken = () => new Promise((resolve, reject) => {
-    axios.get('/api/account/me')
+    axios.get(`${process.env.REACT_APP_API}/users/login`)
       .then((response) => {
         if (response.data.user) {
           resolve(response.data.user);
@@ -65,6 +66,23 @@ class AuthService {
   logout = () => {
     this.setSession(null);
   }
+
+  register = (userData) => new Promise((resolve, reject) => {
+    axios.post(`${process.env.REACT_APP_API}/users/register`, userData)
+      .then((response) => {
+        if (response.data.user && response.data.accessToken) {
+          this.setSession(response.data.accessToken);
+          resolve(response.data.user);
+        }
+        reject(response);
+      })
+      .catch((error) => {
+        if (error.response.data) {
+          reject(error.response.data);
+        }
+        reject(error);
+      });
+  })
 
   setSession = (accessToken) => {
     if (accessToken) {

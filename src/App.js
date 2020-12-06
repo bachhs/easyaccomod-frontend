@@ -9,6 +9,7 @@ import {
   ThemeProvider
 } from '@material-ui/core';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import Auth from 'src/components/Auth';
 import ScrollReset from 'src/components/ScrollReset';
 import useSettings from 'src/hooks/useSettings';
 import { createTheme } from 'src/theme';
@@ -50,8 +51,10 @@ function App() {
       <MuiPickersUtilsProvider utils={MomentUtils}>
         <SnackbarProvider maxSnack={1}>
           <Router history={history}>
-            <ScrollReset />
-            <Routes />
+            <Auth>
+              <ScrollReset />
+              <Routes />
+            </Auth>
           </Router>
         </SnackbarProvider>
       </MuiPickersUtilsProvider>

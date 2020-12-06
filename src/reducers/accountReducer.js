@@ -6,7 +6,9 @@ import {
   LOGIN_FAILURE,
   LOGOUT,
   SILENT_LOGIN,
-  UPDATE_PROFILE
+  UPDATE_PROFILE,
+  REGISTER_FAILURE,
+  REGISTER_SUCCESS
 } from 'src/actions/accountActions';
 
 const initialState = {
@@ -15,9 +17,20 @@ const initialState = {
 
 const accountReducer = (state = initialState, action) => {
   switch (action.type) {
+    case REGISTER_SUCCESS: {
+      const { user } = action.payload;
+
+      return produce(state, (draft) => {
+        draft.user = user;
+      });
+    }
+    case REGISTER_FAILURE: {
+      return produce(state, () => {
+      });
+    }
+
     case LOGIN_REQUEST: {
       return produce(state, (draft) => {
-        // Ensure we clear current session
         draft.user = null;
       });
     }
@@ -32,7 +45,6 @@ const accountReducer = (state = initialState, action) => {
 
     case LOGIN_FAILURE: {
       return produce(state, () => {
-        // Maybe store error
       });
     }
 

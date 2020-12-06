@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useHistory } from 'react-router';
+import { useSnackbar } from 'notistack';
 import {
   Avatar,
   Button,
@@ -62,10 +63,16 @@ const useStyles = makeStyles((theme) => ({
 function LoginView() {
   const classes = useStyles();
   const history = useHistory();
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleSubmitSuccess = () => {
-    history.push('/app');
+    history.push('/');
   };
+  const handleSubmitFail = (error) => {
+    const errorMessage = error.message || 'Something went wrong';
+    enqueueSnackbar(errorMessage, { variant: 'error' });
+  };
+
   return (
     <Page
       className={classes.root}
@@ -106,7 +113,7 @@ function LoginView() {
               Sign in on the internal platform
             </Typography>
             <Box mt={4}>
-              <LoginForm onSubmitSuccess={handleSubmitSuccess} />
+              <LoginForm onSubmitSuccess={handleSubmitSuccess} onSubmitFail={handleSubmitFail} />
             </Box>
             <Box my={4}>
               <Divider />

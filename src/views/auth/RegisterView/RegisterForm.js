@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
+
 import {
   Box,
   Button,
@@ -24,7 +25,9 @@ const useStyles = makeStyles(() => ({
   root: {}
 }));
 
-function RegisterForm({ className, onSubmitSuccess, ...rest }) {
+function RegisterForm({
+  className, onSubmitSuccess, onSubmitFail, ...rest
+}) {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -63,6 +66,7 @@ function RegisterForm({ className, onSubmitSuccess, ...rest }) {
         } catch (error) {
           setStatus({ success: false });
           setErrors({ submit: error.message });
+          onSubmitFail(error);
           setSubmitting(false);
         }
       }}
@@ -219,11 +223,13 @@ function RegisterForm({ className, onSubmitSuccess, ...rest }) {
 
 RegisterForm.propTypes = {
   className: PropTypes.string,
-  onSubmitSuccess: PropTypes.func
+  onSubmitSuccess: PropTypes.func,
+  onSubmitFail: PropTypes.func
 };
 
 RegisterForm.default = {
-  onSubmitSuccess: () => { }
+  onSubmitSuccess: () => { },
+  onSubmitFail: () => { }
 };
 
 export default RegisterForm;

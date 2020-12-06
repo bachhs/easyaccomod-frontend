@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useHistory } from 'react-router';
+import { useSnackbar } from 'notistack';
 import {
   Box,
   Button,
@@ -32,9 +34,15 @@ const useStyles = makeStyles((theme) => ({
 function RegisterView() {
   const classes = useStyles();
   const history = useHistory();
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleSubmitSuccess = () => {
-    history.push('/app/login');
+    history.push('/');
+  };
+
+  const handleSubmitFail = (error) => {
+    const errorMessage = error.message || 'Something went wrong';
+    enqueueSnackbar(errorMessage, { variant: 'error' });
   };
 
   return (
@@ -69,7 +77,7 @@ function RegisterView() {
               Sign up
             </Typography>
             <Box>
-              <RegisterForm onSubmitSuccess={handleSubmitSuccess} />
+              <RegisterForm onSubmitSuccess={handleSubmitSuccess} onSubmitFail={handleSubmitFail} />
             </Box>
             <Box my={2}>
               <Divider />

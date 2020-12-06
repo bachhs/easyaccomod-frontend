@@ -46,7 +46,7 @@ function TopBar({
           flexGrow={1}
         />
         <Search />
-        {!account.user && (
+        {account.user && (
           <>
             <Messages />
             <Notifications />

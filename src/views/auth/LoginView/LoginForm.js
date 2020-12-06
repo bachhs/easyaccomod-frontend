@@ -8,7 +8,6 @@ import {
   Box,
   Button,
   TextField,
-  FormHelperText,
   makeStyles
 } from '@material-ui/core';
 import { login } from 'src/actions/accountActions';
@@ -17,15 +16,17 @@ const useStyles = makeStyles(() => ({
   root: {}
 }));
 
-function LoginForm({ className, onSubmitSuccess, ...rest }) {
+function LoginForm({
+  className, onSubmitSuccess, onSubmitFail, ...rest
+}) {
   const classes = useStyles();
   const dispatch = useDispatch();
 
   return (
     <Formik
       initialValues={{
-        email: 'admin@devias.io',
-        password: 'admin'
+        email: '',
+        password: ''
       }}
       validationSchema={Yup.object().shape({
         email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
@@ -41,7 +42,7 @@ function LoginForm({ className, onSubmitSuccess, ...rest }) {
           onSubmitSuccess();
         } catch (error) {
           const message = (error.response && error.response.data.message) || 'Something went wrong';
-
+          onSubmitFail(error);
           setStatus({ success: false });
           setErrors({ submit: message });
           setSubmitting(false);
@@ -101,13 +102,6 @@ function LoginForm({ className, onSubmitSuccess, ...rest }) {
             >
               Log In
             </Button>
-            {errors.submit && (
-              <Box mt={3}>
-                <FormHelperText error>
-                  {errors.submit}
-                </FormHelperText>
-              </Box>
-            )}
           </Box>
         </form>
       )}
@@ -117,11 +111,13 @@ function LoginForm({ className, onSubmitSuccess, ...rest }) {
 
 LoginForm.propTypes = {
   className: PropTypes.string,
-  onSubmitSuccess: PropTypes.func
+  onSubmitSuccess: PropTypes.func,
+  onSubmitFail: PropTypes.func
 };
 
 LoginForm.defaultProps = {
-  onSubmitSuccess: () => {}
+  onSubmitSuccess: () => {},
+  onSubmitFail: () => {}
 };
 
 export default LoginForm;
