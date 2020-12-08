@@ -21,7 +21,7 @@ function PlaceCreateView() {
       className={classes.root}
       title="Place Create"
     >
-      <Container maxWidth="lg">
+      <Container maxWidth="md">
         <Header />
         <PlaceCreateForm />
       </Container>

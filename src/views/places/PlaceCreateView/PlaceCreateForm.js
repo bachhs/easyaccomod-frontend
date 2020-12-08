@@ -124,7 +124,7 @@ function PlaceCreateForm({ className, ...rest }) {
             <Grid
               item
               xs={12}
-              lg={8}
+              lg={12}
             >
               <Card>
                 <CardContent>
@@ -238,11 +238,6 @@ function PlaceCreateForm({ className, ...rest }) {
                 </Card>
               </Box>
             </Grid>
-            <Grid
-              item
-              xs={12}
-              lg={4}
-            />
           </Grid>
           {errors.submit && (
             <Box mt={3}>
