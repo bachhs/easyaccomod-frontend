@@ -40,6 +40,11 @@ function Routes() {
                   path="/"
                   component={lazy(() => import('src/views/places/PlaceListView'))}
                 />
+                <Route
+                  exact
+                  path="/places/new"
+                  component={lazy(() => import('src/views/places/PlaceCreateView'))}
+                />
                 <Redirect to="/404" />
               </Switch>
             </MainLayout>
