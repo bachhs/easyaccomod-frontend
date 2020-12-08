@@ -25,9 +25,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     backgroundColor: theme.palette.background.dark,
     display: 'flex',
-    height: '100%',
     minHeight: '100%',
-    flexDirection: 'column',
     paddingBottom: 80,
     paddingTop: 80
   },

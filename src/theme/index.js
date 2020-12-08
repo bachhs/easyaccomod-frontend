@@ -48,7 +48,7 @@ const themeConfigs = [
       },
       background: {
         default: colors.common.white,
-        dark: '#f4f6f8',
+        dark: '#f0f2f5',
         paper: colors.common.white
       },
       primary: {
