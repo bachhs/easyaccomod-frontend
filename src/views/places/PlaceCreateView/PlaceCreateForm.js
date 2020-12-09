@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import { useHistory } from 'react-router';
 import PropTypes from 'prop-types';
@@ -13,26 +14,23 @@ import {
   CardHeader,
   Checkbox,
   Divider,
+  FormControl,
   FormControlLabel,
   FormHelperText,
   Grid,
+  InputAdornment,
+  InputLabel,
+  MenuItem,
+  OutlinedInput,
   TextField,
   Typography,
   makeStyles
 } from '@material-ui/core';
 import FilesDropzone from 'src/components/FilesDropzone';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import FormControl from '@material-ui/core/FormControl';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import InputLabel from '@material-ui/core/InputLabel';
+import Maps from 'src/components/Maps';
 
 const useStyles = makeStyles(() => ({
   root: {},
-  editor: {
-    '& .ql-editor': {
-      height: 400
-    }
-  }
 }));
 
 function PlaceCreateForm({ className, ...rest }) {
@@ -53,7 +51,7 @@ function PlaceCreateForm({ className, ...rest }) {
         number: '',
         area: '',
         price: '',
-        Hostt: '',
+        host: '',
         bathroom: {
           shared: '',
           waterHeater: ''
@@ -70,22 +68,18 @@ function PlaceCreateForm({ className, ...rest }) {
       validationSchema={Yup.object().shape({
         title: Yup.string().max(255).required('Title is required'),
         type: Yup.string().oneOf(['Phòng trọ', 'Chung cư', 'Nhà nguyên căn']).required('Type is required'),
-        number: '',
-        area: '',
-        price: '',
-        Hostt: '',
-        bathroom: {
-          shared: '',
-          waterHeater: ''
-        },
-        kitchen: '',
-        airconditioner: '',
-        balcony: '',
-        electricPrice: '',
-        description: '',
-        images: [],
-        activated: '',
-        endDate: '',
+        number: Yup.number().positive('Must be a positive').required('Number is required'),
+        area: Yup.number().positive('Must be a positive').required('Number is required'),
+        price: Yup.number().positive('Must be a positive').required('Number is required'),
+        host: Yup.boolean(),
+        bathroom: Yup.string().oneOf(['shared', 'private']).required('Bathroom type is required'),
+        waterHeater: Yup.boolean(),
+        kitchen: Yup.string().oneOf(['no', 'shared', 'private']).required('Kitchen type is required'),
+        airconditioner: Yup.boolean(),
+        balcony: Yup.boolean(),
+        electricPrice: Yup.number().positive('Must be a positive').required('Number is required'),
+        waterPrice: Yup.number().positive('Must be a positive').required('Number is required'),
+        endDate: Yup.date().required('End date is required'),
       })}
       onSubmit={async (values, {
         setErrors,
@@ -93,7 +87,6 @@ function PlaceCreateForm({ className, ...rest }) {
         setSubmitting
       }) => {
         try {
-          // Do api call
           setStatus({ success: true });
           setSubmitting(false);
           enqueueSnackbar('Product Created', {
@@ -133,9 +126,9 @@ function PlaceCreateForm({ className, ...rest }) {
               <Card>
                 <CardContent>
                   <TextField
-                    error={Boolean(touched.name && errors.name)}
+                    error={Boolean(touched.title && errors.title)}
                     fullWidth
-                    helperText={touched.name && errors.name}
+                    helperText={touched.title && errors.title}
                     label="Product Name"
                     name="name"
                     onBlur={handleBlur}
@@ -194,15 +187,16 @@ function PlaceCreateForm({ className, ...rest }) {
                           id="outlined-select-currency-native"
                           select
                           fullWidth
-                          label="Type select"
+                          label="Select"
                           value={values.type}
                           onChange={handleChange}
-                          SelectProps={{
-                            native: true,
-                          }}
                           helperText="Please select your type"
                           variant="outlined"
-                        />
+                        >
+                          <MenuItem value={10}>Ten</MenuItem>
+                          <MenuItem value={20}>Twenty</MenuItem>
+                          <MenuItem value={30}>Thirty</MenuItem>
+                        </TextField>
                       </Grid>
                       <Grid
                         item
@@ -414,16 +408,7 @@ function PlaceCreateForm({ className, ...rest }) {
                     <Grid
                       item
                     >
-                      <TextField
-                        fullWidth
-                        label="Maps"
-                        name="salePrice"
-                        type="number"
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        value={values.salePrice}
-                        variant="outlined"
-                      />
+                      <Maps />
                     </Grid>
                   </CardContent>
                 </Card>

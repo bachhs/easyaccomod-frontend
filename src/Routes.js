@@ -27,6 +27,11 @@ function Routes() {
         />
         <Route
           exact
+          path="/405"
+          component={lazy(() => import('src/components/Maps'))}
+        />
+        <Route
+          exact
           path="/404"
           component={lazy(() => import('src/views/pages/Error404View'))}
         />
