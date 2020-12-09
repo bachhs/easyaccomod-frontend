@@ -26,8 +26,13 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
-import FilesDropzone from 'src/components/FilesDropzone';
 import Maps from 'src/components/Maps';
+import FilesDropzone from 'src/components/FilesDropzone';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker
+} from '@material-ui/pickers';
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -37,6 +42,10 @@ function PlaceCreateForm({ className, ...rest }) {
   const classes = useStyles();
   const history = useHistory();
   const { enqueueSnackbar } = useSnackbar();
+  const [selectedDate, setSelectedDate] = React.useState(new Date());
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
 
   return (
     <Formik
@@ -52,14 +61,13 @@ function PlaceCreateForm({ className, ...rest }) {
         area: '',
         price: '',
         host: '',
-        bathroom: {
-          shared: '',
-          waterHeater: ''
-        },
+        bathroom: '',
         kitchen: '',
+        waterHeater: '',
         airconditioner: '',
         balcony: '',
         electricPrice: '',
+        waterPrice: '',
         description: '',
         images: [],
         activated: '',
@@ -136,6 +144,23 @@ function PlaceCreateForm({ className, ...rest }) {
                     value={values.name}
                     variant="outlined"
                   />
+                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <Grid container justify="space-around">
+                      <KeyboardDatePicker
+                        style={{ marginTop: 25 }}
+                        fullWidth
+                        id="date-picker-dialog"
+                        label="Date expiration"
+                        format="MM/dd/yyyy"
+                        value={selectedDate}
+                        onChange={handleDateChange}
+                        KeyboardButtonProps={{
+                          'aria-label': 'change date',
+                        }}
+                        helperText="Please choose expiration date "
+                      />
+                    </Grid>
+                  </MuiPickersUtilsProvider>
                   <Box
                     mt={3}
                     mb={1}
@@ -193,9 +218,9 @@ function PlaceCreateForm({ className, ...rest }) {
                           helperText="Please select your type"
                           variant="outlined"
                         >
-                          <MenuItem value={10}>Ten</MenuItem>
-                          <MenuItem value={20}>Twenty</MenuItem>
-                          <MenuItem value={30}>Thirty</MenuItem>
+                          <MenuItem value={10}>Phòng trọ</MenuItem>
+                          <MenuItem value={20}>Chung cư mini</MenuItem>
+                          <MenuItem value={30}>Chung cư nguyên căn</MenuItem>
                         </TextField>
                       </Grid>
                       <Grid
@@ -315,11 +340,13 @@ function PlaceCreateForm({ className, ...rest }) {
                           label="Kitchen select"
                           value={values.kitchen}
                           onChange={handleChange}
-                          SelectProps={{
-                            native: true,
-                          }}
+                          onBlur={handleBlur}
                           variant="outlined"
-                        />
+                        >
+                          <MenuItem value={10}>Khu bếp riêng</MenuItem>
+                          <MenuItem value={20}>Khu bếp chung</MenuItem>
+                          <MenuItem value={30}>Không nấu ăn</MenuItem>
+                        </TextField>
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <TextField
@@ -329,11 +356,12 @@ function PlaceCreateForm({ className, ...rest }) {
                           label="Bathroom select"
                           value={values.bathroom}
                           onChange={handleChange}
-                          SelectProps={{
-                            native: true,
-                          }}
+                          onBlur={handleBlur}
                           variant="outlined"
-                        />
+                        >
+                          <MenuItem value={10}>Khép kín</MenuItem>
+                          <MenuItem value={20}>Chung</MenuItem>
+                        </TextField>
                       </Grid>
                     </Grid>
                     <Grid

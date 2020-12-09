@@ -44,7 +44,14 @@ function Maps({ className, ...rest }) {
           onLoad={onLoad}
           onPlacesChanged={onPlacesChanged}
         >
-          <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+          <TextField
+            id="outlined-basic"
+            variant="outlined"
+            fullWidth
+            placeholder="Type your address"
+            style={{ marginBottom: 10 }}
+            helperText="Please type your address to search"
+          />
         </StandaloneSearchBox>
         <GoogleMap
           mapContainerStyle={mapContainerStyle}
