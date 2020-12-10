@@ -1,14 +1,12 @@
 import React from 'react';
 import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
-import MomentUtils from '@date-io/moment';
 import { SnackbarProvider } from 'notistack';
 import {
   createStyles,
   makeStyles,
   ThemeProvider
 } from '@material-ui/core';
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import Auth from 'src/components/Auth';
 import ScrollReset from 'src/components/ScrollReset';
 import useSettings from 'src/hooks/useSettings';
@@ -48,16 +46,14 @@ function App() {
 
   return (
     <ThemeProvider theme={createTheme(settings)}>
-      <MuiPickersUtilsProvider utils={MomentUtils}>
-        <SnackbarProvider maxSnack={1}>
-          <Router history={history}>
-            <Auth>
-              <ScrollReset />
-              <Routes />
-            </Auth>
-          </Router>
-        </SnackbarProvider>
-      </MuiPickersUtilsProvider>
+      <SnackbarProvider maxSnack={1}>
+        <Router history={history}>
+          <Auth>
+            <ScrollReset />
+            <Routes />
+          </Auth>
+        </Router>
+      </SnackbarProvider>
     </ThemeProvider>
   );
 }

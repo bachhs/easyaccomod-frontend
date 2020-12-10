@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
 import { useHistory } from 'react-router';
 import PropTypes from 'prop-types';
@@ -14,38 +13,34 @@ import {
   CardHeader,
   Checkbox,
   Divider,
-  FormControl,
   FormControlLabel,
   FormHelperText,
   Grid,
   InputAdornment,
-  InputLabel,
   MenuItem,
-  OutlinedInput,
   TextField,
   Typography,
   makeStyles
 } from '@material-ui/core';
 import Maps from 'src/components/Maps';
-import FilesDropzone from 'src/components/FilesDropzone';
 import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
-  KeyboardDatePicker
+  KeyboardDatePicker,
 } from '@material-ui/pickers';
+import FilesDropzone from 'src/components/FilesDropzone';
 
 const useStyles = makeStyles(() => ({
   root: {},
+  datePicker: {
+    marginTop: 25
+  }
 }));
 
 function PlaceCreateForm({ className, ...rest }) {
   const classes = useStyles();
   const history = useHistory();
   const { enqueueSnackbar } = useSnackbar();
-  const [selectedDate, setSelectedDate] = React.useState(new Date());
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-  };
 
   return (
     <Formik
@@ -60,23 +55,23 @@ function PlaceCreateForm({ className, ...rest }) {
         number: '',
         area: '',
         price: '',
-        host: '',
+        host: false,
         bathroom: '',
         kitchen: '',
-        waterHeater: '',
-        airconditioner: '',
-        balcony: '',
+        waterHeater: false,
+        airconditioner: false,
+        balcony: false,
         electricPrice: '',
         waterPrice: '',
         description: '',
         images: [],
         activated: '',
-        endDate: '',
+        endDate: new Date(),
       }}
       validationSchema={Yup.object().shape({
         title: Yup.string().max(255).required('Title is required'),
         type: Yup.string().oneOf(['Phòng trọ', 'Chung cư', 'Nhà nguyên căn']).required('Type is required'),
-        number: Yup.number().positive('Must be a positive').required('Number is required'),
+        room: Yup.number().positive('Must be a positive').required('Number is required'),
         area: Yup.number().positive('Must be a positive').required('Number is required'),
         price: Yup.number().positive('Must be a positive').required('Number is required'),
         host: Yup.boolean(),
@@ -114,6 +109,8 @@ function PlaceCreateForm({ className, ...rest }) {
         handleChange,
         handleSubmit,
         isSubmitting,
+        setFieldValue,
+        setFieldTouched,
         touched,
         values
       }) => (
@@ -135,32 +132,32 @@ function PlaceCreateForm({ className, ...rest }) {
                 <CardContent>
                   <TextField
                     error={Boolean(touched.title && errors.title)}
-                    fullWidth
                     helperText={touched.title && errors.title}
-                    label="Product Name"
-                    name="name"
+                    fullWidth
+                    label="Place title"
+                    name="title"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={values.name}
+                    value={values.title}
                     variant="outlined"
                   />
-                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <Grid container justify="space-around">
+                  <Grid container justify="space-around">
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
                       <KeyboardDatePicker
-                        style={{ marginTop: 25 }}
+                        className={classes.datePicker}
+                        label="End Date"
+                        format="dd/MM/yyyy"
+                        name="endDate"
+                        inputVariant="outlined"
                         fullWidth
-                        id="date-picker-dialog"
-                        label="Date expiration"
-                        format="MM/dd/yyyy"
-                        value={selectedDate}
-                        onChange={handleDateChange}
-                        KeyboardButtonProps={{
-                          'aria-label': 'change date',
-                        }}
-                        helperText="Please choose expiration date "
+                        value={values.endDate}
+                        onBlur={() => setFieldTouched('endDate')}
+                        onClose={() => setFieldTouched('endDate')}
+                        onAccept={() => setFieldTouched('endDate')}
+                        onChange={(date) => setFieldValue('endDate', date)}
                       />
-                    </Grid>
-                  </MuiPickersUtilsProvider>
+                    </MuiPickersUtilsProvider>
+                  </Grid>
                   <Box
                     mt={3}
                     mb={1}
@@ -194,33 +191,20 @@ function PlaceCreateForm({ className, ...rest }) {
                         item
                         xs={12}
                         md={12}
-                      >
-                        <TextField
-                          error={Boolean(touched.address && errors.address)}
-                          fullWidth
-                          helperText={touched.address && errors.address}
-                          label="Address"
-                          name="address"
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          value={values.address}
-                          variant="outlined"
-                        />
-                      </Grid>
+                      />
                       <Grid item xs={12} md={6}>
                         <TextField
-                          id="outlined-select-currency-native"
+                          id="place-type"
                           select
                           fullWidth
                           label="Select"
                           value={values.type}
-                          onChange={handleChange}
-                          helperText="Please select your type"
+                          onChange={(e) => setFieldValue('type', e.target.value)}
                           variant="outlined"
                         >
-                          <MenuItem value={10}>Phòng trọ</MenuItem>
-                          <MenuItem value={20}>Chung cư mini</MenuItem>
-                          <MenuItem value={30}>Chung cư nguyên căn</MenuItem>
+                          <MenuItem value="Phòng trọ">Phòng trọ</MenuItem>
+                          <MenuItem value="Chung cư mini">Chung cư mini</MenuItem>
+                          <MenuItem value="Chung cư nguyên căn">Chung cư nguyên căn</MenuItem>
                         </TextField>
                       </Grid>
                       <Grid
@@ -229,13 +213,15 @@ function PlaceCreateForm({ className, ...rest }) {
                         md={6}
                       >
                         <TextField
+                          error={Boolean(touched.room && errors.room)}
+                          helperText={touched.room && errors.room}
                           fullWidth
                           label="Room"
-                          name="totalRoom"
+                          name="room"
                           type="number"
                           onBlur={handleBlur}
                           onChange={handleChange}
-                          value={values.totalRoom}
+                          value={values.room}
                           variant="outlined"
                         />
                       </Grid>
@@ -244,80 +230,84 @@ function PlaceCreateForm({ className, ...rest }) {
                         xs={12}
                         md={6}
                       >
-                        <FormControl variant="outlined" fullWidth>
-                          <InputLabel htmlFor="outlined-adornment-price">Price</InputLabel>
-                          <OutlinedInput
-                            id="outlined-adornment-price"
-                            value={values.price}
-                            onChange={handleChange('price')}
-                            endAdornment={<InputAdornment position="end">VND</InputAdornment>}
-                            aria-describedby="outlined-price-helper-text"
-                            inputProps={{
-                              'aria-label': 'price',
-                            }}
-                            labelWidth={39}
-                          />
-                        </FormControl>
+                        <TextField
+                          error={Boolean(touched.price && errors.price)}
+                          helperText={touched.price && errors.price}
+                          fullWidth
+                          label="Price"
+                          name="price"
+                          type="number"
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          value={values.price}
+                          variant="outlined"
+                          InputProps={{
+                            endAdornment: <InputAdornment position="end">VND</InputAdornment>,
+                          }}
+                        />
                       </Grid>
                       <Grid
                         item
                         xs={12}
                         md={6}
                       >
-                        <FormControl variant="outlined" fullWidth>
-                          <InputLabel htmlFor="outlined-adornment-area">Area</InputLabel>
-                          <OutlinedInput
-                            id="outlined-adornment-area"
-                            value={values.area}
-                            onChange={handleChange('area')}
-                            endAdornment={<InputAdornment position="end">m2</InputAdornment>}
-                            aria-describedby="outlined-area-helper-text"
-                            inputProps={{
-                              'aria-label': 'area',
-                            }}
-                            labelWidth={35}
-                          />
-                        </FormControl>
+                        <TextField
+                          error={Boolean(touched.area && errors.area)}
+                          helperText={touched.area && errors.area}
+                          fullWidth
+                          label="Area"
+                          name="area"
+                          type="number"
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          value={values.price}
+                          variant="outlined"
+                          InputProps={{
+                            endAdornment: <InputAdornment position="end">m2</InputAdornment>,
+                          }}
+                        />
                       </Grid>
                       <Grid
                         item
                         xs={12}
                         md={6}
                       >
-                        <FormControl variant="outlined" fullWidth>
-                          <InputLabel htmlFor="outlined-adornment-electricPrice">Electric Price</InputLabel>
-                          <OutlinedInput
-                            id="outlined-adornment-electricPrice"
-                            value={values.electricPrice}
-                            onChange={handleChange('electricPrice')}
-                            endAdornment={<InputAdornment position="end">VND/1</InputAdornment>}
-                            aria-describedby="outlined-electricPrice-helper-text"
-                            inputProps={{
-                              'aria-label': 'electricPrice',
-                            }}
-                            labelWidth={100}
-                          />
-                        </FormControl>
+                        <TextField
+                          error={Boolean(touched.electricPrice && errors.electricPrice)}
+                          helperText={touched.electricPrice && errors.electricPrice}
+                          fullWidth
+                          label="Electric Price"
+                          name="electricPrice"
+                          type="number"
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          value={values.electricPrice}
+                          variant="outlined"
+                          InputProps={{
+                            endAdornment: <InputAdornment position="end">VND/1</InputAdornment>,
+                          }}
+                        />
                       </Grid>
                       <Grid
                         item
                         xs={12}
                         md={6}
                       >
-                        <FormControl variant="outlined" fullWidth>
-                          <InputLabel htmlFor="outlined-adornment-waterPrice">Water Price</InputLabel>
-                          <OutlinedInput
-                            id="outlined-adornment-waterPrice"
-                            value={values.waterPrice}
-                            onChange={handleChange('waterPrice')}
-                            endAdornment={<InputAdornment position="end">VND/1</InputAdornment>}
-                            aria-describedby="outlined-waterPrice-helper-text"
-                            inputProps={{
-                              'aria-label': 'waterPrice',
-                            }}
-                            labelWidth={90}
-                          />
-                        </FormControl>
+                        <TextField
+                          error={Boolean(touched.waterPrice && errors.waterPrice)}
+                          helperText={touched.waterPrice && errors.waterPrice}
+                          fullWidth
+                          label="Water Price"
+                          name="waterPrice"
+                          type="number"
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          value={values.waterPrice}
+                          variant="outlined"
+                          InputProps={{
+                            endAdornment: <InputAdornment position="end">VND/1</InputAdornment>,
+                          }}
+                        />
                       </Grid>
                     </Grid>
                   </CardContent>
@@ -334,33 +324,29 @@ function PlaceCreateForm({ className, ...rest }) {
                     >
                       <Grid item xs={12} md={6}>
                         <TextField
-                          id="outlined-select-currency-native"
                           select
                           fullWidth
-                          label="Kitchen select"
+                          label="Bếp"
                           value={values.kitchen}
-                          onChange={handleChange}
-                          onBlur={handleBlur}
+                          onChange={(e) => setFieldValue('kitchen', e.target.value)}
                           variant="outlined"
                         >
-                          <MenuItem value={10}>Khu bếp riêng</MenuItem>
-                          <MenuItem value={20}>Khu bếp chung</MenuItem>
-                          <MenuItem value={30}>Không nấu ăn</MenuItem>
+                          <MenuItem value="Khu bếp riêng">Khu bếp riêng</MenuItem>
+                          <MenuItem value="Khu bếp chung">Khu bếp chung</MenuItem>
+                          <MenuItem value="Không nấu ăn">Không nấu ăn</MenuItem>
                         </TextField>
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <TextField
-                          id="outlined-select-currency-native"
                           select
                           fullWidth
-                          label="Bathroom select"
+                          label="Phòng tắm"
                           value={values.bathroom}
-                          onChange={handleChange}
-                          onBlur={handleBlur}
+                          onChange={(e) => setFieldValue('bathroom', e.target.value)}
                           variant="outlined"
                         >
-                          <MenuItem value={10}>Khép kín</MenuItem>
-                          <MenuItem value={20}>Chung</MenuItem>
+                          <MenuItem value="Khép kín">Khép kín</MenuItem>
+                          <MenuItem value="Chung">Chung</MenuItem>
                         </TextField>
                       </Grid>
                     </Grid>
@@ -373,10 +359,10 @@ function PlaceCreateForm({ className, ...rest }) {
                           <FormControlLabel
                             control={(
                               <Checkbox
-                                checked={values.Host}
+                                checked={values.host}
                                 onChange={handleChange}
-                                value={values.Host}
-                                name="Host"
+                                value={values.host}
+                                name="host"
                               />
                         )}
                             label="Host"

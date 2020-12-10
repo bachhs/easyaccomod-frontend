@@ -1,10 +1,10 @@
-/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { TextField, makeStyles } from '@material-ui/core';
+import Geocode from 'react-geocode';
 import {
-  GoogleMap, LoadScript, StandaloneSearchBox, Marker
+  GoogleMap, LoadScript, Marker, StandaloneSearchBox
 } from '@react-google-maps/api';
 
 const mapContainerStyle = {
@@ -24,8 +24,11 @@ const libraries = ['places'];
 function Maps({ className, ...rest }) {
   const classes = useStyles();
   const [searchBox, setSearchBox] = useState();
+  const [address, setAddress] = useState();
   const onLoad = (ref) => setSearchBox(ref);
+  const center = { lat: 21.0388785, lng: 105.7780865 };
   const [coordinate, setCoordinate] = useState();
+  Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API);
 
   const onPlacesChanged = () => {
     const location = {
@@ -47,20 +50,29 @@ function Maps({ className, ...rest }) {
           <TextField
             id="outlined-basic"
             variant="outlined"
+            value={address}
             fullWidth
             placeholder="Type your address"
             style={{ marginBottom: 10 }}
-            helperText="Please type your address to search"
           />
         </StandaloneSearchBox>
         <GoogleMap
           mapContainerStyle={mapContainerStyle}
           zoom={13}
-          center={coordinate}
+          center={center}
+          onClick={(e) => {
+            setCoordinate({ lat: e.latLng.lat(), lng: e.latLng.lng() });
+          }}
         >
           {searchBox && (
           <Marker
             position={coordinate}
+            draggable
+            onDragEnd={(e) => Geocode.fromLatLng(e.latLng.lat(), e.latLng.lng()).then(
+              (response) => {
+                setAddress(response.results[0].formatted_address);
+              }
+            )}
           />
           )}
         </GoogleMap>
@@ -73,4 +85,4 @@ Maps.propTypes = {
   className: PropTypes.string
 };
 
-export default Maps;
+export default React.memo(Maps);
