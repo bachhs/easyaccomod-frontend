@@ -22,7 +22,8 @@ function Auth({ children }) {
 
       if (authService.isAuthenticated()) {
         try {
-          const user = await authService.loginInWithToken();
+          const user = await authService.loginWithToken();
+
           await dispatch(setUserData(user));
         } catch {
           authService.setSession(null);

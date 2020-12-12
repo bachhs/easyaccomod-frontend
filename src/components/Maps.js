@@ -13,10 +13,6 @@ const mapContainerStyle = {
 
 const useStyles = makeStyles(() => ({
   root: {},
-  mapContainerStyle: {
-    width: '350px',
-    height: '350px'
-  }
 }));
 
 const libraries = ['places'];
@@ -48,11 +44,10 @@ function Maps({ className, ...rest }) {
           onPlacesChanged={onPlacesChanged}
         >
           <TextField
-            id="outlined-basic"
             variant="outlined"
             value={address}
             fullWidth
-            placeholder="Type your address"
+            placeholder="Nhập địa chỉ"
             style={{ marginBottom: 10 }}
           />
         </StandaloneSearchBox>

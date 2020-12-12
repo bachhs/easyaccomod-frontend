@@ -49,7 +49,7 @@ class AuthService {
       });
   })
 
-  loginInWithToken = () => new Promise((resolve, reject) => {
+  loginWithToken = () => new Promise((resolve, reject) => {
     axios.get(`${process.env.REACT_APP_API}/users/login`)
       .then((response) => {
         if (response.data.user) {

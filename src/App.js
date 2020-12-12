@@ -7,6 +7,8 @@ import {
   makeStyles,
   ThemeProvider
 } from '@material-ui/core';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import MomentUtils from '@date-io/moment';
 import Auth from 'src/components/Auth';
 import ScrollReset from 'src/components/ScrollReset';
 import useSettings from 'src/hooks/useSettings';
@@ -46,14 +48,16 @@ function App() {
 
   return (
     <ThemeProvider theme={createTheme(settings)}>
-      <SnackbarProvider maxSnack={1}>
-        <Router history={history}>
-          <Auth>
-            <ScrollReset />
-            <Routes />
-          </Auth>
-        </Router>
-      </SnackbarProvider>
+      <MuiPickersUtilsProvider utils={MomentUtils}>
+        <SnackbarProvider maxSnack={1}>
+          <Router history={history}>
+            <Auth>
+              <ScrollReset />
+              <Routes />
+            </Auth>
+          </Router>
+        </SnackbarProvider>
+      </MuiPickersUtilsProvider>
     </ThemeProvider>
   );
 }

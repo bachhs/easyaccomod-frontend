@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
+import axios from 'src/utils/axios';
+import moment from 'moment';
 import { useSnackbar } from 'notistack';
 import {
   Box,
@@ -19,15 +21,10 @@ import {
   InputAdornment,
   MenuItem,
   TextField,
-  Typography,
   makeStyles
 } from '@material-ui/core';
 import Maps from 'src/components/Maps';
-import DateFnsUtils from '@date-io/date-fns';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
+import { KeyboardDatePicker } from '@material-ui/pickers';
 import FilesDropzone from 'src/components/FilesDropzone';
 
 const useStyles = makeStyles(() => ({
@@ -52,7 +49,7 @@ function PlaceCreateForm({ className, ...rest }) {
           lng: ''
         },
         type: '',
-        number: '',
+        room: '',
         area: '',
         price: '',
         host: false,
@@ -65,8 +62,7 @@ function PlaceCreateForm({ className, ...rest }) {
         waterPrice: '',
         description: '',
         images: [],
-        activated: '',
-        endDate: new Date(),
+        endDate: moment(new Date()).add(1, 'weeks'),
       }}
       validationSchema={Yup.object().shape({
         title: Yup.string().max(255).required('Title is required'),
@@ -75,14 +71,14 @@ function PlaceCreateForm({ className, ...rest }) {
         area: Yup.number().positive('Must be a positive').required('Number is required'),
         price: Yup.number().positive('Must be a positive').required('Number is required'),
         host: Yup.boolean(),
-        bathroom: Yup.string().oneOf(['shared', 'private']).required('Bathroom type is required'),
+        bathroom: Yup.string().oneOf(['Chung', 'Khép kín']).required('Bathroom type is required'),
         waterHeater: Yup.boolean(),
-        kitchen: Yup.string().oneOf(['no', 'shared', 'private']).required('Kitchen type is required'),
+        kitchen: Yup.string().oneOf(['Khu bếp riêng', 'Khu bếp chung', 'Không nấu ăn']).required('Kitchen type is required'),
         airconditioner: Yup.boolean(),
         balcony: Yup.boolean(),
         electricPrice: Yup.number().positive('Must be a positive').required('Number is required'),
         waterPrice: Yup.number().positive('Must be a positive').required('Number is required'),
-        endDate: Yup.date().required('End date is required'),
+        endDate: Yup.date().min(moment(new Date()).add(6, 'days'), 'Thời gian đăng bài tối thiểu 1 tuần').required('End date is required'),
       })}
       onSubmit={async (values, {
         setErrors,
@@ -90,12 +86,13 @@ function PlaceCreateForm({ className, ...rest }) {
         setSubmitting
       }) => {
         try {
+          axios.post(`${process.env.REACT_APP_API}/places/new`, values);
           setStatus({ success: true });
           setSubmitting(false);
           enqueueSnackbar('Product Created', {
             variant: 'success'
           });
-          history.push('/app/products');
+          history.push('');
         } catch (err) {
           setErrors({ submit: err.message });
           setStatus({ success: false });
@@ -134,7 +131,7 @@ function PlaceCreateForm({ className, ...rest }) {
                     error={Boolean(touched.title && errors.title)}
                     helperText={touched.title && errors.title}
                     fullWidth
-                    label="Place title"
+                    label="Tên bài đăng"
                     name="title"
                     onBlur={handleBlur}
                     onChange={handleChange}
@@ -142,32 +139,40 @@ function PlaceCreateForm({ className, ...rest }) {
                     variant="outlined"
                   />
                   <Grid container justify="space-around">
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                      <KeyboardDatePicker
-                        className={classes.datePicker}
-                        label="End Date"
-                        format="dd/MM/yyyy"
-                        name="endDate"
-                        inputVariant="outlined"
-                        fullWidth
-                        value={values.endDate}
-                        onBlur={() => setFieldTouched('endDate')}
-                        onClose={() => setFieldTouched('endDate')}
-                        onAccept={() => setFieldTouched('endDate')}
-                        onChange={(date) => setFieldValue('endDate', date)}
-                      />
-                    </MuiPickersUtilsProvider>
+                    <KeyboardDatePicker
+                      className={classes.datePicker}
+                      error={Boolean(touched.endDate && errors.endDate)}
+                      helperText={touched.endDate && errors.endDate}
+                      label="Thời gian hiển thị"
+                      format="DD/MM/YYYY"
+                      name="endDate"
+                      inputVariant="outlined"
+                      variant="inline"
+                      fullWidth
+                      value={values.endDate}
+                      onBlur={() => setFieldTouched('endDate')}
+                      onClose={() => setFieldTouched('endDate')}
+                      onAccept={() => setFieldTouched('endDate')}
+                      onChange={(date) => setFieldValue('endDate', date)}
+                    />
                   </Grid>
                   <Box
                     mt={3}
                     mb={1}
                   >
-                    <Typography
-                      variant="subtitle2"
-                      color="textSecondary"
-                    >
-                      Description
-                    </Typography>
+                    <TextField
+                      error={Boolean(touched.description && errors.description)}
+                      helperText={touched.description && errors.description}
+                      fullWidth
+                      label="Mô tả"
+                      name="description"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      value={values.description}
+                      multiline
+                      rows={4}
+                      variant="outlined"
+                    />
                   </Box>
                   {(touched.description && errors.description) && (
                     <Box mt={2}>
@@ -180,7 +185,7 @@ function PlaceCreateForm({ className, ...rest }) {
               </Card>
               <Box mt={3}>
                 <Card>
-                  <CardHeader title="Choose Option" />
+                  <CardHeader title="Thông tin chung" />
                   <Divider />
                   <CardContent>
                     <Grid
@@ -194,17 +199,18 @@ function PlaceCreateForm({ className, ...rest }) {
                       />
                       <Grid item xs={12} md={6}>
                         <TextField
-                          id="place-type"
+                          error={Boolean(touched.type && errors.type)}
+                          helperText={touched.type && errors.type}
                           select
                           fullWidth
-                          label="Select"
+                          label="Loại phòng "
                           value={values.type}
                           onChange={(e) => setFieldValue('type', e.target.value)}
                           variant="outlined"
                         >
                           <MenuItem value="Phòng trọ">Phòng trọ</MenuItem>
-                          <MenuItem value="Chung cư mini">Chung cư mini</MenuItem>
-                          <MenuItem value="Chung cư nguyên căn">Chung cư nguyên căn</MenuItem>
+                          <MenuItem value="Chung cư">Chung cư mini</MenuItem>
+                          <MenuItem value="Nhà nguyên căn">Chung cư nguyên căn</MenuItem>
                         </TextField>
                       </Grid>
                       <Grid
@@ -216,7 +222,7 @@ function PlaceCreateForm({ className, ...rest }) {
                           error={Boolean(touched.room && errors.room)}
                           helperText={touched.room && errors.room}
                           fullWidth
-                          label="Room"
+                          label="Số phòng"
                           name="room"
                           type="number"
                           onBlur={handleBlur}
@@ -234,7 +240,7 @@ function PlaceCreateForm({ className, ...rest }) {
                           error={Boolean(touched.price && errors.price)}
                           helperText={touched.price && errors.price}
                           fullWidth
-                          label="Price"
+                          label="Giá cả(theo tháng)"
                           name="price"
                           type="number"
                           onBlur={handleBlur}
@@ -255,15 +261,16 @@ function PlaceCreateForm({ className, ...rest }) {
                           error={Boolean(touched.area && errors.area)}
                           helperText={touched.area && errors.area}
                           fullWidth
-                          label="Area"
+                          label="Diện tích"
                           name="area"
                           type="number"
                           onBlur={handleBlur}
                           onChange={handleChange}
-                          value={values.price}
+                          value={values.area}
                           variant="outlined"
                           InputProps={{
-                            endAdornment: <InputAdornment position="end">m2</InputAdornment>,
+                            // eslint-disable-next-line react/jsx-one-expression-per-line
+                            endAdornment: <InputAdornment position="end">m<sub>2</sub></InputAdornment>
                           }}
                         />
                       </Grid>
@@ -276,7 +283,7 @@ function PlaceCreateForm({ className, ...rest }) {
                           error={Boolean(touched.electricPrice && errors.electricPrice)}
                           helperText={touched.electricPrice && errors.electricPrice}
                           fullWidth
-                          label="Electric Price"
+                          label="Giá điện"
                           name="electricPrice"
                           type="number"
                           onBlur={handleBlur}
@@ -297,7 +304,7 @@ function PlaceCreateForm({ className, ...rest }) {
                           error={Boolean(touched.waterPrice && errors.waterPrice)}
                           helperText={touched.waterPrice && errors.waterPrice}
                           fullWidth
-                          label="Water Price"
+                          label="Giá nước"
                           name="waterPrice"
                           type="number"
                           onBlur={handleBlur}
@@ -315,7 +322,7 @@ function PlaceCreateForm({ className, ...rest }) {
               </Box>
               <Box mt={3}>
                 <Card>
-                  <CardHeader title="Material Facilities" />
+                  <CardHeader title="Cơ sở vật chất" />
                   <Divider />
                   <CardContent>
                     <Grid
@@ -324,6 +331,8 @@ function PlaceCreateForm({ className, ...rest }) {
                     >
                       <Grid item xs={12} md={6}>
                         <TextField
+                          error={Boolean(touched.kitchen && errors.kitchen)}
+                          helperText={touched.kitchen && errors.kitchen}
                           select
                           fullWidth
                           label="Bếp"
@@ -338,6 +347,8 @@ function PlaceCreateForm({ className, ...rest }) {
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <TextField
+                          error={Boolean(touched.bathroom && errors.bathroom)}
+                          helperText={touched.bathroom && errors.bathroom}
                           select
                           fullWidth
                           label="Phòng tắm"
@@ -365,7 +376,7 @@ function PlaceCreateForm({ className, ...rest }) {
                                 name="host"
                               />
                         )}
-                            label="Host"
+                            label="Chung chủ"
                           />
                         </Box>
                         <Box mt={2}>
@@ -378,7 +389,7 @@ function PlaceCreateForm({ className, ...rest }) {
                                 name="balcony"
                               />
                         )}
-                            label="Balcony"
+                            label="Ban công"
                           />
                         </Box>
                       </Grid>
@@ -393,7 +404,7 @@ function PlaceCreateForm({ className, ...rest }) {
                                 name="airconditioner"
                               />
                         )}
-                            label="Air Conditioner"
+                            label="Điều hòa"
                           />
                         </Box>
                         <Box mt={2}>
@@ -406,7 +417,7 @@ function PlaceCreateForm({ className, ...rest }) {
                                 name="waterHeater"
                               />
                         )}
-                            label="Water Heater"
+                            label="Nóng lạnh"
                           />
                         </Box>
                       </Grid>
@@ -416,7 +427,7 @@ function PlaceCreateForm({ className, ...rest }) {
               </Box>
               <Box mt={3}>
                 <Card>
-                  <CardHeader title="Google Maps" />
+                  <CardHeader title="Địa chỉ" />
                   <Divider />
                   <CardContent>
                     <Grid
@@ -429,7 +440,7 @@ function PlaceCreateForm({ className, ...rest }) {
               </Box>
               <Box mt={3}>
                 <Card>
-                  <CardHeader title="Upload Images" />
+                  <CardHeader title="Hình ảnh" />
                   <Divider />
                   <CardContent>
                     <FilesDropzone />
@@ -452,7 +463,7 @@ function PlaceCreateForm({ className, ...rest }) {
               type="submit"
               disabled={isSubmitting}
             >
-              Create product
+              Đăng bài
             </Button>
           </Box>
         </form>

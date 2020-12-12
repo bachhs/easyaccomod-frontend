@@ -29,7 +29,7 @@ function Header({ className, ...rest }) {
           variant="h3"
           color="textPrimary"
         >
-          Create a new product
+          Đăng bài cho thuê phòng
         </Typography>
       </Grid>
       <Grid item>
@@ -37,7 +37,7 @@ function Header({ className, ...rest }) {
           component={RouterLink}
           to="/"
         >
-          Cancel
+          Hủy
         </Button>
       </Grid>
     </Grid>
