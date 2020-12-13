@@ -11,8 +11,6 @@ import {
 } from '@material-ui/core';
 import Logo from 'src/components/Logo';
 import Account from './Account';
-import Messages from './Messages';
-import Notifications from './Notifications';
 import Search from './Search';
 
 const useStyles = makeStyles((theme) => ({
@@ -48,8 +46,6 @@ function TopBar({
         <Search />
         {account.user && (
           <>
-            <Messages />
-            <Notifications />
             <Box ml={2}>
               <Account />
             </Box>

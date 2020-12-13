@@ -49,7 +49,7 @@ function App() {
   return (
     <ThemeProvider theme={createTheme(settings)}>
       <MuiPickersUtilsProvider utils={MomentUtils}>
-        <SnackbarProvider maxSnack={1}>
+        <SnackbarProvider maxSnack={1} autoHideDuration={3000}>
           <Router history={history}>
             <Auth>
               <ScrollReset />
