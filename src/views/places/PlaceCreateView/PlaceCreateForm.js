@@ -85,19 +85,23 @@ function PlaceCreateForm({ className, ...rest }) {
         setStatus,
         setSubmitting
       }) => {
-        try {
-          axios.post(`${process.env.REACT_APP_API}/places/new`, values);
-          setStatus({ success: true });
-          setSubmitting(false);
-          enqueueSnackbar('Product Created', {
-            variant: 'success'
+        axios.post(`${process.env.REACT_APP_API}/places/new`, values)
+          .then((response) => {
+            setStatus({ success: true });
+            setSubmitting(false);
+            enqueueSnackbar('Đăng bài thành công', {
+              variant: 'success'
+            });
+            history.push(`/places/${response.data.placeId}`);
+          })
+          .catch((err) => {
+            setErrors({ submit: err.message });
+            setStatus({ success: false });
+            setSubmitting(false);
+            enqueueSnackbar(err.data.message || 'Không thể tạo phòng thuê', {
+              variant: 'error'
+            });
           });
-          history.push('');
-        } catch (err) {
-          setErrors({ submit: err.message });
-          setStatus({ success: false });
-          setSubmitting(false);
-        }
       }}
     >
       {({

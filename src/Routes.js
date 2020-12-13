@@ -9,6 +9,7 @@ import {
 } from 'react-router-dom';
 import LoadingScreen from 'src/components/LoadingScreen';
 import GuestRoute from 'src/components/GuestRoute';
+import ActivatedRoute from 'src/components/ActivatedRoute';
 import MainLayout from 'src/layouts/MainLayout';
 
 function Routes() {
@@ -27,11 +28,6 @@ function Routes() {
         />
         <Route
           exact
-          path="/405"
-          component={lazy(() => import('src/components/Maps'))}
-        />
-        <Route
-          exact
           path="/404"
           component={lazy(() => import('src/views/pages/Error404View'))}
         />
@@ -45,10 +41,15 @@ function Routes() {
                   path="/"
                   component={lazy(() => import('src/views/places/PlaceListView'))}
                 />
-                <Route
+                <ActivatedRoute
                   exact
                   path="/places/new"
                   component={lazy(() => import('src/views/places/PlaceCreateView'))}
+                />
+                <Route
+                  exact
+                  path="/places/:pid"
+                  component={lazy(() => import('src/views/places/PlaceDetailView'))}
                 />
                 <Redirect to="/404" />
               </Switch>
