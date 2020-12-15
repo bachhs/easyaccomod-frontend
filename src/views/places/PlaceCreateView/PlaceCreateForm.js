@@ -67,6 +67,7 @@ function PlaceCreateForm({ className, ...rest }) {
       validationSchema={Yup.object().shape({
         title: Yup.string().max(255).required('Title is required'),
         type: Yup.string().oneOf(['Phòng trọ', 'Chung cư', 'Nhà nguyên căn']).required('Type is required'),
+        address: Yup.string().required('Vui lòng nhập địa chỉ'),
         room: Yup.number().positive('Must be a positive').required('Number is required'),
         area: Yup.number().positive('Must be a positive').required('Number is required'),
         price: Yup.number().positive('Must be a positive').required('Number is required'),
@@ -98,7 +99,7 @@ function PlaceCreateForm({ className, ...rest }) {
             setErrors({ submit: err.message });
             setStatus({ success: false });
             setSubmitting(false);
-            enqueueSnackbar(err.data.message || 'Không thể tạo phòng thuê', {
+            enqueueSnackbar(err.response.data.message || 'Không thể tạo phòng thuê', {
               variant: 'error'
             });
           });
@@ -437,7 +438,12 @@ function PlaceCreateForm({ className, ...rest }) {
                     <Grid
                       item
                     >
-                      <Maps />
+                      <Maps
+                        error={Boolean(touched.address && errors.address)}
+                        helperText={touched.address && errors.address}
+                        onAddressChange={(e) => setFieldValue('address', e)}
+                        onLocationChange={(e) => setFieldValue('location', e)}
+                      />
                     </Grid>
                   </CardContent>
                 </Card>

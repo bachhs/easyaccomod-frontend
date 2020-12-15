@@ -72,6 +72,11 @@ function FilesDropzone({ className, ...rest }) {
     setFiles([]);
   };
 
+  const handleUpload = () => {
+    const data = new FormData();
+    data.append('file', files);
+  };
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: handleDrop
   });
@@ -151,6 +156,7 @@ function FilesDropzone({ className, ...rest }) {
               Remove all
             </Button>
             <Button
+              onClick={handleUpload}
               color="secondary"
               size="small"
               variant="contained"

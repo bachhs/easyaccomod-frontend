@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -17,12 +18,14 @@ const useStyles = makeStyles(() => ({
 
 const libraries = ['places'];
 
-function Maps({ className, ...rest }) {
+function Maps({
+  className, onAddressChange, onLocationChange, error, helperText, ...rest
+}) {
   const classes = useStyles();
   const [searchBox, setSearchBox] = useState();
-  const [address, setAddress] = useState();
   const onLoad = (ref) => setSearchBox(ref);
   const center = { lat: 21.0388785, lng: 105.7780865 };
+  let address;
   const [coordinate, setCoordinate] = useState();
   Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API);
 
@@ -31,6 +34,8 @@ function Maps({ className, ...rest }) {
       lat: searchBox.getPlaces()[0].geometry.location.lat(),
       lng: searchBox.getPlaces()[0].geometry.location.lng()
     };
+    onAddressChange(searchBox.getPlaces()[0].formatted_address);
+    onLocationChange(location);
     setCoordinate(location);
   };
   return (
@@ -44,6 +49,8 @@ function Maps({ className, ...rest }) {
           onPlacesChanged={onPlacesChanged}
         >
           <TextField
+            error={error}
+            helperText={helperText}
             variant="outlined"
             value={address}
             fullWidth
@@ -55,19 +62,10 @@ function Maps({ className, ...rest }) {
           mapContainerStyle={mapContainerStyle}
           zoom={13}
           center={center}
-          onClick={(e) => {
-            setCoordinate({ lat: e.latLng.lat(), lng: e.latLng.lng() });
-          }}
         >
           {searchBox && (
           <Marker
             position={coordinate}
-            draggable
-            onDragEnd={(e) => Geocode.fromLatLng(e.latLng.lat(), e.latLng.lng()).then(
-              (response) => {
-                setAddress(response.results[0].formatted_address);
-              }
-            )}
           />
           )}
         </GoogleMap>
@@ -77,7 +75,11 @@ function Maps({ className, ...rest }) {
 }
 
 Maps.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
+  error: PropTypes.bool,
+  helperText: PropTypes.string,
+  onAddressChange: PropTypes.func,
+  onLocationChange: PropTypes.func
 };
 
 export default React.memo(Maps);
