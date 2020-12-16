@@ -49,7 +49,6 @@ function PlaceDetailView() {
       .then((response) => {
         if (isMountedRef.current) {
           setPlace(response.data.place);
-          console.log(place);
         }
       });
   }, [isMountedRef]);

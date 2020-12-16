@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import moment from 'moment';
+import 'moment/locale/vi';
 import {
   Box,
   Button,
@@ -10,12 +11,12 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
-import ShareIcon from '@material-ui/icons/Share';
+import ReportIcon from '@material-ui/icons/Report';
 import CheckIcon from '@material-ui/icons/Check';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
-import EventBusyIcon from '@material-ui/icons/EventBusy';
+import ClearIcon from '@material-ui/icons/Clear';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
-import SendIcon from '@material-ui/icons/Send';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -68,14 +69,14 @@ function Header({ place, className, ...rest }) {
               fontSize="small"
               className={classes.badgeIcon}
             >
-              {place.active ? <CheckIcon /> : <EventBusyIcon /> }
+              {place.available ? <CheckIcon /> : <ClearIcon /> }
             </SvgIcon>
             <Typography
-              variant="body2"
+              variant="body1"
               color="inherit"
               component="span"
             >
-              {place.active ? 'Active' : 'Inactive'}
+              {place.available ? 'Còn phòng' : 'Không còn phòng'}
             </Typography>
           </div>
           <div className={classes.badge}>
@@ -86,11 +87,11 @@ function Header({ place, className, ...rest }) {
               <EventAvailableIcon />
             </SvgIcon>
             <Typography
-              variant="body2"
+              variant="body1"
               color="inherit"
               component="span"
             >
-              {`Ending ${moment(place.endDate).fromNow()}`}
+              {`Kết thúc vào ${moment(place.endDate).fromNow()}`}
             </Typography>
           </div>
           <div className={classes.badge}>
@@ -101,11 +102,11 @@ function Header({ place, className, ...rest }) {
               <AttachMoneyIcon />
             </SvgIcon>
             <Typography
-              variant="body2"
+              variant="body1"
               color="inherit"
               component="span"
             >
-              {`Budget: ${place.price}`}
+              {`Giá phòng: ${place.price} VNĐ`}
             </Typography>
           </div>
         </Box>
@@ -116,9 +117,9 @@ function Header({ place, className, ...rest }) {
             fontSize="small"
             className={classes.actionIcon}
           >
-            <ShareIcon />
+            <ReportIcon />
           </SvgIcon>
-          Share
+          Báo cáo
         </Button>
         <Button
           className={classes.action}
@@ -129,9 +130,9 @@ function Header({ place, className, ...rest }) {
             fontSize="small"
             className={classes.actionIcon}
           >
-            <SendIcon />
+            <FavoriteIcon />
           </SvgIcon>
-          Apply for a role
+          Yêu thích
         </Button>
       </Grid>
     </Grid>

@@ -2,10 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {
+  Box,
   Grid,
   makeStyles
 } from '@material-ui/core';
 import Brief from './Brief';
+import Holder from './Holder';
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -34,7 +36,11 @@ function Overview({ place, className, ...rest }) {
         lg={4}
         xl={3}
         xs={12}
-      />
+      >
+        <Box>
+          <Holder place={place} />
+        </Box>
+      </Grid>
     </Grid>
   );
 }
