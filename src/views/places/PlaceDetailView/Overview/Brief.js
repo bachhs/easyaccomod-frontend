@@ -6,6 +6,7 @@ import {
   Card,
   CardContent,
   Chip,
+  Divider,
   Grid,
   Typography,
   makeStyles
@@ -23,6 +24,9 @@ import BeachAccessIcon from '@material-ui/icons/BeachAccess';
 
 const useStyles = makeStyles(() => ({
   root: {},
+  chip: {
+    marginBottom: 8
+  },
 }));
 
 function Brief({ place, className, ...rest }) {
@@ -30,146 +34,234 @@ function Brief({ place, className, ...rest }) {
 
   return (
     <>
-      <Card
-        className={clsx(classes.root, className)}
-        {...rest}
-      >
-        <CardContent>
-          <Grid
-            container
-            spacing={3}
-          >
-            <Grid
-              item
-              xs={12}
-              md={6}
+      <Box mb={3}>
+        <Card
+          className={clsx(classes.root, className)}
+          {...rest}
+        >
+          <CardContent>
+            <Typography
+              variant="h4"
+              color="textPrimary"
             >
-              <Typography
-                variant="subtitle2"
-                color="textSecondary"
+              Hình ảnh minh họa
+            </Typography>
+          </CardContent>
+          <Divider />
+          <CardContent>
+            <Grid
+              container
+              spacing={3}
+            >
+              <Grid
+                item
+                xs={12}
+                md={6}
               >
-                Địa chỉ
-              </Typography>
+                <Typography
+                  variant="h4"
+                  color="textPrimary"
+                >
+                  Địa chỉ
+                </Typography>
+                <Typography
+                  variant="h5"
+                  color="textSecondary"
+                  style={{ marginTop: 3 }}
+                >
+                  {place.address}
+                </Typography>
+                <Box mt={1}>
+                  <Typography
+                    variant="h4"
+                    color="textPrimary"
+                  >
+                    Thông tin chung
+                  </Typography>
+                  <Grid
+                    container
+                  >
+                    <Grid
+                      item
+                      sm={12}
+                      md={6}
+                    >
+                      <List>
+                        <ListItem>
+                          <ListItemAvatar>
+                            <Avatar>
+                              <ImageIcon />
+                            </Avatar>
+                          </ListItemAvatar>
+                          <ListItemText primary="Loại phòng" secondary={place.type} />
+                        </ListItem>
+                        <ListItem>
+                          <ListItemAvatar>
+                            <Avatar>
+                              <WorkIcon />
+                            </Avatar>
+                          </ListItemAvatar>
+                          <ListItemText primary="Số phòng" secondary={place.room} />
+                        </ListItem>
+                        <ListItem>
+                          <ListItemAvatar>
+                            <Avatar>
+                              <BeachAccessIcon />
+                            </Avatar>
+                          </ListItemAvatar>
+                          <ListItemText primary="Diện tích" secondary={`${place.price} m2`} />
+                        </ListItem>
+                      </List>
+                    </Grid>
+                    <Grid
+                      item
+                      sm={12}
+                      md={6}
+                    >
+                      <List>
+                        <ListItem>
+                          <ListItemAvatar>
+                            <Avatar>
+                              <ImageIcon />
+                            </Avatar>
+                          </ListItemAvatar>
+                          <ListItemText primary="Giá phòng" secondary={`${place.price} VNĐ`} />
+                        </ListItem>
+                        <ListItem>
+                          <ListItemAvatar>
+                            <Avatar>
+                              <WorkIcon />
+                            </Avatar>
+                          </ListItemAvatar>
+                          <ListItemText primary="Giá điện" secondary={`${place.electricPrice} VNĐ/1`} />
+                        </ListItem>
+                        <ListItem>
+                          <ListItemAvatar>
+                            <Avatar>
+                              <BeachAccessIcon />
+                            </Avatar>
+                          </ListItemAvatar>
+                          <ListItemText primary="Giá nước" secondary={`${place.waterPrice} VNĐ/1`} />
+                        </ListItem>
+                      </List>
+                    </Grid>
+                  </Grid>
+                </Box>
+                <Box>
+                  <Typography
+                    variant="h4"
+                    color="textPrimary"
+                    style={{ marginBottom: 10 }}
+                  >
+                    Cơ sở vật chất
+                  </Typography>
+                  <Grid>
+                    <Chip
+                      className={clsx(classes.chip, className)}
+                      icon={<FaceIcon />}
+                      label={place.kitchen}
+                      clickable
+                      color="primary"
+                      variant="outlined"
+                    />
+                  </Grid>
+                  <Grid>
+                    <Chip
+                      className={clsx(classes.chip, className)}
+                      icon={<FaceIcon />}
+                      label={`Phòng tắm ${place.bathroom}`}
+                      clickable
+                      color="primary"
+                      variant="outlined"
+                    />
+                  </Grid>
+                  <Grid>
+                    {place.host && (
+                    <Chip
+                      className={clsx(classes.chip, className)}
+                      icon={<FaceIcon />}
+                      label="Chung chủ"
+                      clickable
+                      color="primary"
+                      variant="outlined"
+                    />
+                    )}
+                  </Grid>
+                  <Grid>
+                    {place.airconditioner && (
+                    <Chip
+                      className={clsx(classes.chip, className)}
+                      icon={<FaceIcon />}
+                      label="Điều hòa"
+                      clickable
+                      color="primary"
+                      variant="outlined"
+                    />
+                    )}
+                  </Grid>
+                  <Grid>
+                    {place.balcony && (
+                    <Chip
+                      className={clsx(classes.chip, className)}
+                      icon={<FaceIcon />}
+                      label="Ban công"
+                      clickable
+                      color="primary"
+                      variant="outlined"
+                    />
+                    )}
+                  </Grid>
+                  <Grid>
+                    {place.waterHeater && (
+                    <Chip
+                      className={clsx(classes.chip, className)}
+                      icon={<FaceIcon />}
+                      label="Nóng lạnh"
+                      clickable
+                      color="primary"
+                      variant="outlined"
+                    />
+                    )}
+                  </Grid>
+                </Box>
+              </Grid>
+            </Grid>
+            <Box mt={0.6}>
               <Typography
-                variant="h6"
+                variant="h4"
                 color="textPrimary"
               >
-                {place.address}
+                Thông tin thêm
               </Typography>
-              <Box mt={3}>
-                <Typography
-                  variant="subtitle2"
-                  color="textSecondary"
-                >
-                  Thông tin chung
-                </Typography>
-                <List>
-                  <ListItem>
-                    <ListItemAvatar>
-                      <Avatar>
-                        <ImageIcon />
-                      </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText primary="Loại phòng" secondary={place.type} />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemAvatar>
-                      <Avatar>
-                        <WorkIcon />
-                      </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText primary="Số phòng" secondary={place.room} />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemAvatar>
-                      <Avatar>
-                        <BeachAccessIcon />
-                      </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText primary="Diện tích" secondary={place.area} />
-                  </ListItem>
-                </List>
-              </Box>
-              <Box mt={3}>
-                <Typography
-                  variant="subtitle2"
-                  color="textSecondary"
-                >
-                  Cơ sở vật chất
-                </Typography>
-                <Chip
-                  icon={<FaceIcon />}
-                  label={place.kitchen}
-                  clickable
-                  color="primary"
-                  variant="outlined"
-                />
-                <Chip
-                  icon={<FaceIcon />}
-                  label={`Phòng tắm ${place.bathroom}`}
-                  clickable
-                  color="primary"
-                  variant="outlined"
-                />
-                {place.host && (
-                <Chip
-                  icon={<FaceIcon />}
-                  label="Chung chủ"
-                  clickable
-                  color="primary"
-                  variant="outlined"
-                />
-                )}
-                {place.airconditioner
-              && (
-              <Chip
-                icon={<FaceIcon />}
-                label="Điều hòa"
-                clickable
-                color="primary"
-                variant="outlined"
-              />
-              )}
-                {place.balcony && (
-                <Chip
-                  icon={<FaceIcon />}
-                  label="Ban công"
-                  clickable
-                  color="primary"
-                  variant="outlined"
-                />
-                )}
-                {place.waterHeater && (
-                <Chip
-                  icon={<FaceIcon />}
-                  label="Nóng lạnh"
-                  clickable
-                  color="primary"
-                  variant="outlined"
-                />
-                )}
-              </Box>
-            </Grid>
-          </Grid>
-          <Box mt={3}>
+              <Typography
+                variant="body1"
+                color="textSecondary"
+                style={{ marginTop: 3 }}
+              >
+                {place.description}
+              </Typography>
+            </Box>
+          </CardContent>
+          <Divider />
+          <CardContent>
             <Typography
-              variant="subtitle2"
-              color="textSecondary"
+              variant="h3"
+              color="textPrimary"
+              style={{ marginBottom: 5 }}
             >
-              Thông tin thêm
+              Vị trí
             </Typography>
             <Typography
-              variant="body1"
+              variant="body2"
               color="textSecondary"
+              style={{ marginBottom: 10 }}
             >
-              {place.description}
+              {place.address}
             </Typography>
-          </Box>
-        </CardContent>
-      </Card>
-      <Card>
-        <Maps marker={place.location} />
-      </Card>
+            <Maps marker={place.location} />
+          </CardContent>
+        </Card>
+      </Box>
     </>
   );
 }

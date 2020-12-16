@@ -83,13 +83,13 @@ function Holder({ place, className, ...rest }) {
               variant="subtitle2"
               color="textPrimary"
             >
-              Deadline
+              Chủ sở hữu
             </Typography>
             <Typography
               variant="h6"
               color="textSecondary"
             >
-              ABC
+              VSsYii
             </Typography>
           </ListItem>
           <ListItem
@@ -101,7 +101,7 @@ function Holder({ place, className, ...rest }) {
               variant="subtitle2"
               color="textPrimary"
             >
-              Per Project
+              Địa chỉ
             </Typography>
             <Typography
               variant="h6"
@@ -121,13 +121,13 @@ function Holder({ place, className, ...rest }) {
               variant="subtitle2"
               color="textPrimary"
             >
-              Last Update
+              Số điện thoại
             </Typography>
             <Typography
               variant="h6"
               color="textSecondary"
             >
-              ABC
+              031346466
             </Typography>
           </ListItem>
         </List>
