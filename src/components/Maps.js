@@ -19,7 +19,7 @@ const useStyles = makeStyles(() => ({
 const libraries = ['places'];
 
 function Maps({
-  className, onAddressChange, onLocationChange, error, helperText, ...rest
+  className, search, onAddressChange, onLocationChange, error, helperText, marker, ...rest
 }) {
   const classes = useStyles();
   const [searchBox, setSearchBox] = useState();
@@ -44,6 +44,8 @@ function Maps({
         googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API}
         libraries={libraries}
       >
+        {search
+        && (
         <StandaloneSearchBox
           onLoad={onLoad}
           onPlacesChanged={onPlacesChanged}
@@ -58,11 +60,17 @@ function Maps({
             style={{ marginBottom: 10 }}
           />
         </StandaloneSearchBox>
+        )}
         <GoogleMap
           mapContainerStyle={mapContainerStyle}
           zoom={13}
-          center={center}
+          center={marker || center}
         >
+          {marker && (
+          <Marker
+            position={marker}
+          />
+          )}
           {searchBox && (
           <Marker
             position={coordinate}
@@ -76,10 +84,12 @@ function Maps({
 
 Maps.propTypes = {
   className: PropTypes.string,
+  search: PropTypes.bool,
   error: PropTypes.bool,
   helperText: PropTypes.string,
   onAddressChange: PropTypes.func,
-  onLocationChange: PropTypes.func
+  onLocationChange: PropTypes.func,
+  marker: PropTypes.object
 };
 
 export default React.memo(Maps);

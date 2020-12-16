@@ -168,7 +168,7 @@ function Brief({ place, className, ...rest }) {
         </CardContent>
       </Card>
       <Card>
-        <Maps />
+        <Maps marker={place.location} />
       </Card>
     </>
   );

@@ -439,6 +439,7 @@ function PlaceCreateForm({ className, ...rest }) {
                       item
                     >
                       <Maps
+                        search
                         error={Boolean(touched.address && errors.address)}
                         helperText={touched.address && errors.address}
                         onAddressChange={(e) => setFieldValue('address', e)}
