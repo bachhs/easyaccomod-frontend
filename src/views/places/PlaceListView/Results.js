@@ -18,7 +18,7 @@ import {
 } from '@material-ui/lab';
 import ViewModuleIcon from '@material-ui/icons/ViewModule';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import ProjectCard from 'src/components/ProjectCard';
+import PlaceCard from 'src/components/PlaceCard';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Results({ className, projects, ...rest }) {
+function Results({ className, places, ...rest }) {
   const classes = useStyles();
   const sortRef = useRef(null);
   const [openSort, setOpenSort] = useState(false);
@@ -84,9 +84,9 @@ function Results({ className, projects, ...rest }) {
         >
           Showing
           {' '}
-          {projects.length}
+          {places.length}
           {' '}
-          projects
+          places
         </Typography>
         <Box
           display="flex"
@@ -116,15 +116,15 @@ function Results({ className, projects, ...rest }) {
         container
         spacing={3}
       >
-        {projects.map((project) => (
+        {places.map((place) => (
           <Grid
             item
-            key={project.id}
+            key={place.id}
             md={mode === 'grid' ? 4 : 12}
             sm={mode === 'grid' ? 6 : 12}
             xs={12}
           >
-            <ProjectCard project={project} />
+            <PlaceCard place={place} />
           </Grid>
         ))}
       </Grid>
@@ -159,7 +159,7 @@ function Results({ className, projects, ...rest }) {
 
 Results.propTypes = {
   className: PropTypes.string,
-  projects: PropTypes.array.isRequired
+  places: PropTypes.array.isRequired
 };
 
 export default Results;

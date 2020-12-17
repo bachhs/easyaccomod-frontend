@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -19,7 +19,6 @@ import {
   makeStyles
 } from '@material-ui/core';
 import { Rating } from '@material-ui/lab';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import getInitials from 'src/utils/getInitials';
@@ -39,20 +38,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function ProjectCard({ project, className, ...rest }) {
+function PlaceCard({ place, className, ...rest }) {
   const classes = useStyles();
-  const [isLiked, setLiked] = useState(project.isLiked);
-  const [likes, setLikes] = useState(project.likes);
-
-  const handleLike = () => {
-    setLiked(true);
-    setLikes((prevLikes) => prevLikes + 1);
-  };
-
-  const handleUnlike = () => {
-    setLiked(false);
-    setLikes((prevLikes) => prevLikes - 1);
-  };
 
   return (
     <Card
@@ -62,7 +49,7 @@ function ProjectCard({ project, className, ...rest }) {
       <Box p={3}>
         <CardMedia
           className={classes.media}
-          image={project.media}
+          image={place.creator.avatar}
         />
         <Box
           display="flex"
@@ -71,9 +58,9 @@ function ProjectCard({ project, className, ...rest }) {
         >
           <Avatar
             alt="Author"
-            src={project.author.avatar}
+            src={place.creator.avatar}
           >
-            {getInitials(project.author.name)}
+            {getInitials(place.creator.name)}
           </Avatar>
           <Box ml={2}>
             <Link
@@ -82,7 +69,7 @@ function ProjectCard({ project, className, ...rest }) {
               to="#"
               variant="h5"
             >
-              {project.title}
+              {place.title}
             </Link>
             <Typography
               variant="body2"
@@ -96,12 +83,12 @@ function ProjectCard({ project, className, ...rest }) {
                 to="#"
                 variant="h6"
               >
-                {project.author.name}
+                {place.creator.username}
               </Link>
               {' '}
               | Updated
               {' '}
-              {moment(project.updatedAt).fromNow()}
+              {moment(place.date).fromNow()}
             </Typography>
           </Box>
         </Box>
@@ -114,7 +101,7 @@ function ProjectCard({ project, className, ...rest }) {
           color="textSecondary"
           variant="body2"
         >
-          {project.description}
+          {place.description}
         </Typography>
       </Box>
       <Box
@@ -132,7 +119,7 @@ function ProjectCard({ project, className, ...rest }) {
               variant="h5"
               color="textPrimary"
             >
-              {project.location}
+              {place.location}
             </Typography>
             <Typography
               variant="body2"
@@ -146,7 +133,7 @@ function ProjectCard({ project, className, ...rest }) {
               variant="h5"
               color="textPrimary"
             >
-              {project.type}
+              {place.type}
             </Typography>
             <Typography
               variant="body2"
@@ -160,7 +147,7 @@ function ProjectCard({ project, className, ...rest }) {
               variant="h5"
               color="textPrimary"
             >
-              {project.technology}
+              {place.technology}
             </Typography>
             <Typography
               variant="body2"
@@ -179,27 +166,16 @@ function ProjectCard({ project, className, ...rest }) {
         display="flex"
         alignItems="center"
       >
-        {isLiked ? (
-          <Tooltip title="Unlike">
-            <IconButton
-              className={classes.likedButton}
-              onClick={handleUnlike}
-            >
-              <FavoriteIcon fontSize="small" />
-            </IconButton>
-          </Tooltip>
-        ) : (
-          <Tooltip title="Like">
-            <IconButton onClick={handleLike}>
-              <FavoriteBorderIcon fontSize="small" />
-            </IconButton>
-          </Tooltip>
-        )}
+        <Tooltip title="Like">
+          <IconButton>
+            <FavoriteBorderIcon fontSize="small" />
+          </IconButton>
+        </Tooltip>
         <Typography
           variant="subtitle2"
           color="textSecondary"
         >
-          {likes}
+          4
         </Typography>
         <SvgIcon
           fontSize="small"
@@ -212,11 +188,11 @@ function ProjectCard({ project, className, ...rest }) {
           variant="subtitle2"
           color="textSecondary"
         >
-          {project.subscribers}
+          {place.subscribers}
         </Typography>
         <Box flexGrow={1} />
         <Rating
-          value={project.rating}
+          value={place.rating}
           size="small"
           readOnly
         />
@@ -225,9 +201,9 @@ function ProjectCard({ project, className, ...rest }) {
   );
 }
 
-ProjectCard.propTypes = {
+PlaceCard.propTypes = {
   className: PropTypes.string,
-  project: PropTypes.object.isRequired
+  place: PropTypes.object.isRequired
 };
 
-export default ProjectCard;
+export default PlaceCard;
