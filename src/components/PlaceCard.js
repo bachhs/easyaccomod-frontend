@@ -12,15 +12,13 @@ import {
   Grid,
   IconButton,
   Link,
-  SvgIcon,
   Tooltip,
   Typography,
   colors,
   makeStyles
 } from '@material-ui/core';
 import { Rating } from '@material-ui/lab';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 import getInitials from 'src/utils/getInitials';
 
 const useStyles = makeStyles((theme) => ({
@@ -67,7 +65,7 @@ function PlaceCard({ place, className, ...rest }) {
               color="textPrimary"
               component={RouterLink}
               to="#"
-              variant="h5"
+              variant="h4"
             >
               {place.title}
             </Link>
@@ -86,7 +84,7 @@ function PlaceCard({ place, className, ...rest }) {
                 {place.creator.username}
               </Link>
               {' '}
-              | Updated
+              | Cập nhật
               {' '}
               {moment(place.date).fromNow()}
             </Typography>
@@ -94,11 +92,20 @@ function PlaceCard({ place, className, ...rest }) {
         </Box>
       </Box>
       <Box
-        pb={2}
+        pb={1}
         px={3}
       >
         <Typography
-          color="textSecondary"
+          color="textPrimary"
+          variant="subtitle2"
+          style={{ marginBottom: 6, fontSize: 15 }}
+        >
+          Địa chỉ :
+          {' '}
+          {place.address}
+        </Typography>
+        <Typography
+          color="textPrimary"
           variant="body2"
         >
           {place.description}
@@ -119,41 +126,46 @@ function PlaceCard({ place, className, ...rest }) {
               variant="h5"
               color="textPrimary"
             >
-              {place.location}
+              Giá phòng
             </Typography>
             <Typography
               variant="body2"
-              color="textSecondary"
+              color="textPrimary"
             >
-              Location
+              {place.price}
+              {' '}
+              VND
             </Typography>
           </Grid>
           <Grid item>
             <Typography
               variant="h5"
+              color="textPrimary"
+            >
+              Loại phòng
+            </Typography>
+            <Typography
+              variant="body2"
               color="textPrimary"
             >
               {place.type}
             </Typography>
-            <Typography
-              variant="body2"
-              color="textSecondary"
-            >
-              Type
-            </Typography>
           </Grid>
           <Grid item>
             <Typography
               variant="h5"
               color="textPrimary"
             >
-              {place.technology}
+              Diện tích
             </Typography>
             <Typography
               variant="body2"
-              color="textSecondary"
+              color="textPrimary"
             >
-              Technology
+              {place.area}
+              {' '}
+              m
+              <sup>2</sup>
             </Typography>
           </Grid>
         </Grid>
@@ -166,24 +178,17 @@ function PlaceCard({ place, className, ...rest }) {
         display="flex"
         alignItems="center"
       >
-        <Tooltip title="Like">
+        <Tooltip title="View">
           <IconButton>
-            <FavoriteBorderIcon fontSize="small" />
+            <VisibilityIcon fontSize="small" />
           </IconButton>
         </Tooltip>
         <Typography
           variant="subtitle2"
           color="textSecondary"
         >
-          4
+          400
         </Typography>
-        <SvgIcon
-          fontSize="small"
-          color="action"
-          className={classes.subscribersIcon}
-        >
-          <AccountCircleIcon />
-        </SvgIcon>
         <Typography
           variant="subtitle2"
           color="textSecondary"

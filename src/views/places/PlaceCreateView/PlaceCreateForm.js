@@ -275,7 +275,7 @@ function PlaceCreateForm({ className, ...rest }) {
                           variant="outlined"
                           InputProps={{
                             // eslint-disable-next-line react/jsx-one-expression-per-line
-                            endAdornment: <InputAdornment position="end">m<sub>2</sub></InputAdornment>
+                            endAdornment: <InputAdornment position="end">m<sup>2</sup></InputAdornment>
                           }}
                         />
                       </Grid>
