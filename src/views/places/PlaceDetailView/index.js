@@ -34,6 +34,7 @@ function PlaceDetailView() {
   const { pid } = useParams();
   const [currentTab, setCurrentTab] = useState('overview');
   const [place, setPlace] = useState(null);
+  const [creator, setCreator] = useState(null);
   const tabs = [
     { value: 'overview', label: 'Overview' },
     { value: 'files', label: 'Files' },
@@ -48,6 +49,7 @@ function PlaceDetailView() {
       .get(`${process.env.REACT_APP_API}/places/${pid}`)
       .then((response) => {
         if (isMountedRef.current) {
+          setCreator(response.data.creator);
           setPlace(response.data.place);
         }
       });
@@ -87,7 +89,7 @@ function PlaceDetailView() {
         </Box>
         <Divider />
         <Box mt={3}>
-          {currentTab === 'overview' && <Overview place={place} />}
+          {currentTab === 'overview' && <Overview place={place} creator={creator} />}
           {currentTab === 'files' && <Files files={place.files} />}
         </Box>
       </Container>

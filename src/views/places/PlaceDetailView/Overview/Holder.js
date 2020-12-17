@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Holder({ place, className, ...rest }) {
+function Holder({ creator, className, ...rest }) {
   const classes = useStyles();
 
   return (
@@ -40,13 +40,14 @@ function Holder({ place, className, ...rest }) {
       <CardHeader
         avatar={(
           <Avatar
-            alt="Author"
+            alt="Creator"
             className={classes.avatar}
             component={RouterLink}
-            src=""
-            to="#"
+            src={creator.avatar}
+            // eslint-disable-next-line no-underscore-dangle
+            to={`/users/${creator._id}`}
           >
-            {getInitials('Bach Luu')}
+            {getInitials(creator.username)}
           </Avatar>
         )}
         className={classes.header}
@@ -55,11 +56,12 @@ function Holder({ place, className, ...rest }) {
           <Link
             color="textPrimary"
             component={RouterLink}
-            to="#"
+            // eslint-disable-next-line no-underscore-dangle
+            to={`/users/${creator._id}`}
             underline="none"
             variant="h6"
           >
-            Bach Luu
+            {creator.username}
           </Link>
         )}
         title={(
@@ -68,30 +70,12 @@ function Holder({ place, className, ...rest }) {
             variant="overline"
             color="textSecondary"
           >
-            Contest holder
+            Chủ sở hữu
           </Typography>
         )}
       />
       <CardContent className={classes.content}>
         <List>
-          <ListItem
-            className={classes.listItem}
-            disableGutters
-            divider
-          >
-            <Typography
-              variant="subtitle2"
-              color="textPrimary"
-            >
-              Chủ sở hữu
-            </Typography>
-            <Typography
-              variant="h6"
-              color="textSecondary"
-            >
-              VSsYii
-            </Typography>
-          </ListItem>
           <ListItem
             className={classes.listItem}
             disableGutters
@@ -107,9 +91,25 @@ function Holder({ place, className, ...rest }) {
               variant="h6"
               color="textSecondary"
             >
-              {place.price}
-              {' '}
-              {place.host}
+              {creator.address}
+            </Typography>
+          </ListItem>
+          <ListItem
+            className={classes.listItem}
+            disableGutters
+            divider
+          >
+            <Typography
+              variant="subtitle2"
+              color="textPrimary"
+            >
+              Email
+            </Typography>
+            <Typography
+              variant="h6"
+              color="textSecondary"
+            >
+              {creator.email}
             </Typography>
           </ListItem>
           <ListItem
@@ -127,7 +127,7 @@ function Holder({ place, className, ...rest }) {
               variant="h6"
               color="textSecondary"
             >
-              031346466
+              {creator.phone}
             </Typography>
           </ListItem>
         </List>
@@ -138,7 +138,7 @@ function Holder({ place, className, ...rest }) {
 
 Holder.propTypes = {
   className: PropTypes.string,
-  place: PropTypes.object.isRequired
+  creator: PropTypes.object.isRequired
 };
 
 export default Holder;

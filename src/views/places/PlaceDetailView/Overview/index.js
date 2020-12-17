@@ -13,7 +13,9 @@ const useStyles = makeStyles(() => ({
   root: {}
 }));
 
-function Overview({ place, className, ...rest }) {
+function Overview({
+  place, creator, className, ...rest
+}) {
   const classes = useStyles();
 
   return (
@@ -38,7 +40,7 @@ function Overview({ place, className, ...rest }) {
         xs={12}
       >
         <Box>
-          <Holder place={place} />
+          <Holder creator={creator} />
         </Box>
       </Grid>
     </Grid>
@@ -47,7 +49,8 @@ function Overview({ place, className, ...rest }) {
 
 Overview.propTypes = {
   className: PropTypes.string,
-  place: PropTypes.object.isRequired
+  place: PropTypes.object.isRequired,
+  creator: PropTypes.object.isRequired
 };
 
 export default Overview;

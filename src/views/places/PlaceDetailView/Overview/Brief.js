@@ -17,10 +17,12 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
-import ImageIcon from '@material-ui/icons/Image';
-import WorkIcon from '@material-ui/icons/Work';
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import FaceIcon from '@material-ui/icons/Face';
-import BeachAccessIcon from '@material-ui/icons/BeachAccess';
+import FlashOnIcon from '@material-ui/icons/FlashOn';
+import HouseIcon from '@material-ui/icons/House';
+import OpacityIcon from '@material-ui/icons/Opacity';
+import SquareFootIcon from '@material-ui/icons/SquareFoot';
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -44,7 +46,7 @@ function Brief({ place, className, ...rest }) {
               variant="h4"
               color="textPrimary"
             >
-              Hình ảnh minh họa
+              Hình ảnh
             </Typography>
           </CardContent>
           <Divider />
@@ -90,7 +92,7 @@ function Brief({ place, className, ...rest }) {
                         <ListItem>
                           <ListItemAvatar>
                             <Avatar>
-                              <ImageIcon />
+                              <HouseIcon />
                             </Avatar>
                           </ListItemAvatar>
                           <ListItemText primary="Loại phòng" secondary={place.type} />
@@ -98,7 +100,7 @@ function Brief({ place, className, ...rest }) {
                         <ListItem>
                           <ListItemAvatar>
                             <Avatar>
-                              <WorkIcon />
+                              <HouseIcon />
                             </Avatar>
                           </ListItemAvatar>
                           <ListItemText primary="Số phòng" secondary={place.room} />
@@ -106,10 +108,10 @@ function Brief({ place, className, ...rest }) {
                         <ListItem>
                           <ListItemAvatar>
                             <Avatar>
-                              <BeachAccessIcon />
+                              <SquareFootIcon />
                             </Avatar>
                           </ListItemAvatar>
-                          <ListItemText primary="Diện tích" secondary={`${place.price} m2`} />
+                          <ListItemText primary="Diện tích" secondary={`${place.area} m2`} />
                         </ListItem>
                       </List>
                     </Grid>
@@ -122,7 +124,7 @@ function Brief({ place, className, ...rest }) {
                         <ListItem>
                           <ListItemAvatar>
                             <Avatar>
-                              <ImageIcon />
+                              <AttachMoneyIcon />
                             </Avatar>
                           </ListItemAvatar>
                           <ListItemText primary="Giá phòng" secondary={`${place.price} VNĐ`} />
@@ -130,7 +132,7 @@ function Brief({ place, className, ...rest }) {
                         <ListItem>
                           <ListItemAvatar>
                             <Avatar>
-                              <WorkIcon />
+                              <FlashOnIcon />
                             </Avatar>
                           </ListItemAvatar>
                           <ListItemText primary="Giá điện" secondary={`${place.electricPrice} VNĐ/1`} />
@@ -138,7 +140,7 @@ function Brief({ place, className, ...rest }) {
                         <ListItem>
                           <ListItemAvatar>
                             <Avatar>
-                              <BeachAccessIcon />
+                              <OpacityIcon />
                             </Avatar>
                           </ListItemAvatar>
                           <ListItemText primary="Giá nước" secondary={`${place.waterPrice} VNĐ/1`} />
