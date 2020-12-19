@@ -131,7 +131,7 @@ function Header({
                 </Label>
               )
               : (
-                <Label color="warning">
+                <Label color="error">
                   Chưa xác thực
                 </Label>
               )
