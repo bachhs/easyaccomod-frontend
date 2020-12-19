@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
         visibility: 'visible'
       }
     },
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('md')]: {
       height: 220
     }
   },
