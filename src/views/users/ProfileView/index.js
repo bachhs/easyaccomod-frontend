@@ -40,8 +40,8 @@ function ProfileView() {
 
   const getPosts = useCallback(() => {
     const mock = {
-      cover: 'https://www.google.com/logos/doodles/2020/december-holidays-days-2-30-6753651837108830.3-law.gif',
-      avatar: 'https://www.google.com/logos/doodles/2020/december-holidays-days-2-30-6753651837108830.3-law.gif',
+      cover: 'https://www.ubackground.com/_ph/2/40551154.jpg',
+      avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaFH1DOqJKOErNawDF2d1EsYwg_cOoDRypUQ&usqp=CAU',
       bio: 'ABC',
       name: 'Bach Luu',
       role: 'owner',

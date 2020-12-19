@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   root: {},
   cover: {
     position: 'relative',
-    height: 460,
+    height: 500,
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
@@ -39,6 +39,9 @@ const useStyles = makeStyles((theme) => ({
       '& $changeButton': {
         visibility: 'visible'
       }
+    },
+    [theme.breakpoints.down('lg')]: {
+      height: 220
     }
   },
   changeButton: {

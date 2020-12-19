@@ -16,7 +16,8 @@ import {
 import getInitials from 'src/utils/getInitials';
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
+  root: {
+  },
   header: {
     paddingBottom: 0
   },
