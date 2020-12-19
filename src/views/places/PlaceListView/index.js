@@ -10,6 +10,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 import Page from 'src/components/Page';
+import axios from 'src/utils/axios';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import Header from './Header';
 import Filter from './Filter';
@@ -30,28 +31,14 @@ function ProjectBrowseView() {
   const [places, setPlaces] = useState([]);
 
   const getPlaces = useCallback(() => {
-    const mock = [
-      {
-        id: 'tjwqejew',
-        title: 'khanhlinhxacsuat',
-        date: new Date(),
-        description: 'Chính Chủ cho thuê giá rẻ mặt tiền ngang lớn 8x20m, Nguyễn Tri Phương Q10. 3 lầu, Giá chỉ 120tr/th Vị trí cực kỳ đắc địa. Nằm đoạn đẹp nhất con đường, tuyến phố thương hiệu nổi tiếng về kinh doanh ẩm thực. ',
-        address: 'số nhà 3, ngõ 47, Nguyễn Hoàng, phường Mỹ Đình 2, quận Nam Từ Liêm, Hà Nội',
-        price: '4000000',
-        type: 'Chung cư mini',
-        image: 'https://scontent.fhan5-6.fna.fbcdn.net/v/t1.0-9/119138461_1589984874505246_3417111486019479937_o.jpg?_nc_cat=107&ccb=2&_nc_sid=174925&_nc_ohc=HPOzHIoCMVAAX85CxRg&_nc_ht=scontent.fhan5-6.fna&oh=2031c0427e9bd29930e16d09b28e06f8&oe=6000EB2E',
-        star: 4.5,
-        views: 100,
-        area: '12',
-        creator: {
-          username: 'Bach Luu',
-          avatar: 'https://scontent.fhan5-6.fna.fbcdn.net/v/t1.0-9/119138461_1589984874505246_3417111486019479937_o.jpg?_nc_cat=107&ccb=2&_nc_sid=174925&_nc_ohc=HPOzHIoCMVAAX85CxRg&_nc_ht=scontent.fhan5-6.fna&oh=2031c0427e9bd29930e16d09b28e06f8&oe=6000EB2E'
+    axios
+      .get(`${process.env.REACT_APP_API}/places`)
+      .then((response) => {
+        if (isMountedRef.current) {
+          console.log(response.data);
+          setPlaces(response.data);
         }
-      },
-    ];
-    if (isMountedRef.current) {
-      setPlaces(mock);
-    }
+      });
   }, [isMountedRef]);
 
   useEffect(() => {

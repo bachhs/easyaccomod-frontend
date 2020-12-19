@@ -12,7 +12,6 @@ import {
   Grid,
   IconButton,
   Link,
-  Tooltip,
   Typography,
   colors,
   makeStyles
@@ -64,7 +63,7 @@ function PlaceCard({ place, className, ...rest }) {
             <Link
               color="textPrimary"
               component={RouterLink}
-              to="#"
+              to={`/places/${place.id}`}
               variant="h4"
             >
               {place.title}
@@ -178,11 +177,9 @@ function PlaceCard({ place, className, ...rest }) {
         display="flex"
         alignItems="center"
       >
-        <Tooltip title="View">
-          <IconButton>
-            <VisibilityIcon fontSize="small" />
-          </IconButton>
-        </Tooltip>
+        <IconButton>
+          <VisibilityIcon fontSize="small" />
+        </IconButton>
         <Typography
           variant="subtitle2"
           color="textSecondary"
@@ -197,7 +194,7 @@ function PlaceCard({ place, className, ...rest }) {
         </Typography>
         <Box flexGrow={1} />
         <Rating
-          value={place.rating}
+          value={place.star}
           size="small"
           readOnly
         />
