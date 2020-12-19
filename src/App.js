@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
+import 'moment/locale/vi';
 import Auth from 'src/components/Auth';
 import ScrollReset from 'src/components/ScrollReset';
 import useSettings from 'src/hooks/useSettings';

@@ -72,20 +72,20 @@ function PlaceCard({ place, className, ...rest }) {
               variant="body2"
               color="textSecondary"
             >
-              by
+              đăng bởi
               {' '}
               <Link
                 color="textPrimary"
                 component={RouterLink}
-                to="#"
+                to={`/users/${place.creator.id}`}
                 variant="h6"
               >
                 {place.creator.username}
               </Link>
               {' '}
-              | Cập nhật
+              | Đăng lúc
               {' '}
-              {moment(place.date).fromNow()}
+              {moment(place.createdDate).fromNow()}
             </Typography>
           </Box>
         </Box>

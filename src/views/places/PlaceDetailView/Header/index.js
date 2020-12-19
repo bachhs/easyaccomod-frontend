@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import moment from 'moment';
-import 'moment/locale/vi';
 import {
   Box,
   Button,
