@@ -35,8 +35,7 @@ function ProjectBrowseView() {
       .get(`${process.env.REACT_APP_API}/places`)
       .then((response) => {
         if (isMountedRef.current) {
-          console.log(response.data);
-          setPlaces(response.data);
+          setPlaces(response.data.places);
         }
       });
   }, [isMountedRef]);

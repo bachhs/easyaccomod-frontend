@@ -11,6 +11,8 @@ import {
   Tab,
   makeStyles
 } from '@material-ui/core';
+import { useHistory } from 'react-router';
+import { useSnackbar } from 'notistack';
 import axios from 'src/utils/axios';
 import { useParams } from 'react-router-dom';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
@@ -31,6 +33,8 @@ const useStyles = makeStyles((theme) => ({
 function PlaceDetailView() {
   const classes = useStyles();
   const isMountedRef = useIsMountedRef();
+  const history = useHistory();
+  const { enqueueSnackbar } = useSnackbar();
   const { pid } = useParams();
   const [currentTab, setCurrentTab] = useState('overview');
   const [place, setPlace] = useState(null);
@@ -52,6 +56,12 @@ function PlaceDetailView() {
           setCreator(response.data.creator);
           setPlace(response.data.place);
         }
+      })
+      .catch(() => {
+        enqueueSnackbar('Không thể tìm thấy phòng trọ', {
+          variant: 'error'
+        });
+        history.push('/404');
       });
   }, [isMountedRef]);
 
