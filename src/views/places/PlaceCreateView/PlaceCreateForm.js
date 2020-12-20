@@ -79,6 +79,7 @@ function PlaceCreateForm({ className, ...rest }) {
         balcony: Yup.boolean(),
         electricPrice: Yup.number().positive('Must be a positive').required('Number is required'),
         waterPrice: Yup.number().positive('Must be a positive').required('Number is required'),
+        images: Yup.array().min(3, 'Upload tối thiểu 3 ảnh').required('Vui lòng đăng ảnh minh họa'),
         endDate: Yup.date().min(moment(new Date()).add(6, 'days'), 'Thời gian đăng bài tối thiểu 1 tuần').required('End date is required'),
       })}
       onSubmit={async (values, {
@@ -454,12 +455,22 @@ function PlaceCreateForm({ className, ...rest }) {
                   <CardHeader title="Hình ảnh" />
                   <Divider />
                   <CardContent>
-                    <FilesDropzone />
+                    <FilesDropzone onUploaded={(e) => {
+                      setFieldValue('images', e);
+                    }}
+                    />
                   </CardContent>
                 </Card>
               </Box>
             </Grid>
           </Grid>
+          {Boolean(touched.images && errors.images) && (
+            <Box mt={3}>
+              <FormHelperText error>
+                {touched.images && errors.images}
+              </FormHelperText>
+            </Box>
+          )}
           {errors.submit && (
             <Box mt={3}>
               <FormHelperText error>

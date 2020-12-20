@@ -2,6 +2,7 @@
 import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import axios from 'axios';
 import { useDropzone } from 'react-dropzone';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
@@ -17,6 +18,7 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
+import { useSnackbar } from 'notistack';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import bytesToSize from 'src/utils/bytesToSize';
@@ -60,12 +62,15 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function FilesDropzone({ className, ...rest }) {
+function FilesDropzone({ className, onUploaded, ...rest }) {
   const classes = useStyles();
+  const { enqueueSnackbar } = useSnackbar();
   const [files, setFiles] = useState([]);
 
   const handleDrop = useCallback((acceptedFiles) => {
-    setFiles((prevFiles) => [...prevFiles].concat(acceptedFiles));
+    setFiles(acceptedFiles.map((file) => Object.assign(file, {
+      preview: URL.createObjectURL(file)
+    })));
   }, []);
 
   const handleRemoveAll = () => {
@@ -73,12 +78,30 @@ function FilesDropzone({ className, ...rest }) {
   };
 
   const handleUpload = () => {
-    const data = new FormData();
-    data.append('file', files);
+    const images = [];
+    const uploaders = files.map((file) => {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', 'qx52o297');
+      formData.append('api_key', '129679773661522');
+      formData.append('timestamp', (Date.now() / 1000) || 0);
+
+      return axios.post('https://api.cloudinary.com/v1_1/bachhs/image/upload', formData).then((response) => {
+        const { data } = response;
+        images.push(data.secure_url);
+      });
+    });
+
+    Promise.all(uploaders).then(() => {
+      enqueueSnackbar('Tải ảnh lên thành công', {
+        variant: 'success'
+      });
+      onUploaded(images);
+    });
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop: handleDrop
+    onDrop: handleDrop, accept: 'image/*'
   });
 
   return (
@@ -171,7 +194,8 @@ function FilesDropzone({ className, ...rest }) {
 }
 
 FilesDropzone.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
+  onUploaded: PropTypes.func
 };
 
 export default FilesDropzone;

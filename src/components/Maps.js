@@ -24,7 +24,7 @@ function Maps({
   const classes = useStyles();
   const [searchBox, setSearchBox] = useState();
   const onLoad = (ref) => setSearchBox(ref);
-  const center = { lat: 21.0388785, lng: 105.7780865 };
+  const [center, setCenter] = useState({ lat: 21.0388785, lng: 105.7780865 });
   let address;
   const [coordinate, setCoordinate] = useState();
   Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API);
@@ -34,6 +34,7 @@ function Maps({
       lat: searchBox.getPlaces()[0].geometry.location.lat(),
       lng: searchBox.getPlaces()[0].geometry.location.lng()
     };
+    setCenter(location);
     onAddressChange(searchBox.getPlaces()[0].formatted_address);
     onLocationChange(location);
     setCoordinate(location);

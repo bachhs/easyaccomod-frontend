@@ -48,7 +48,6 @@ function Header({ place, className, ...rest }) {
     axios
       .patch(`${process.env.REACT_APP_API}/users/${account.user.id}`, { placeID: place.id })
       .then(() => {
-        console.log('updated');
       });
   };
 
