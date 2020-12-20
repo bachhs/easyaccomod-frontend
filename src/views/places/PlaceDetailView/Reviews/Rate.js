@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
+import { Alert, Rating } from '@material-ui/lab';
 import {
   Box,
   Button,
   Dialog,
   TextField,
+  Grid,
   Typography,
   makeStyles
 } from '@material-ui/core';
@@ -29,6 +31,7 @@ function Rate({
   className,
   ...rest
 }) {
+  const rating = 4;
   const [value, setValue] = useState('');
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
@@ -62,27 +65,63 @@ function Rate({
           variant="h3"
           color="textPrimary"
         >
-          The project owner requires an introduction
+          Viết nhận xét và đánh giá
         </Typography>
-        <Typography
-          align="center"
-          variant="subtitle2"
-          color="textSecondary"
+        <Alert
+          severity="info"
         >
-          Write down a short note with your Rate regarding why you
-          think you&apos;d be a good fit for this position.
-        </Typography>
+          <Typography
+            align="center"
+            variant="subtitle2"
+            color="textSecondary"
+          >
+            Viết nhận xét và đánh giá về bài viết để hữu ích cho nhưng người xem sau
+          </Typography>
+        </Alert>
+        <Box mt={3} mb={3}>
+          <Grid
+            alignItems="center"
+            container
+            spacing={3}
+          >
+            <Grid item>
+              <Typography
+                variant="h5"
+                color="textPrimary"
+              >
+                Đánh giá
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Box
+                display="flex"
+              >
+                <Rating value={rating} />
+                <Typography
+                  className={classes.rating}
+                  variant="h6"
+                  color="textPrimary"
+                  style={{ paddingLeft: 10, paddingTop: 3.5 }}
+                >
+                  {rating}
+                  {' '}
+                  / 5
+                </Typography>
+              </Box>
+            </Grid>
+          </Grid>
+        </Box>
         <Box mt={3}>
           <TextField
             autoFocus
             FormHelperTextProps={{ classes: { root: classes.helperText } }}
             fullWidth
-            helperText={`${200 - value.length} characters left`}
-            label="Short Note"
+            helperText={`${300 - value.length} kí tự còn lại`}
+            label="Nhận xét"
             multiline
             onChange={handleChange}
-            placeholder="What excites you about this project?"
-            rows={5}
+            placeholder="Bạn nghĩ gì về căn phòng này?"
+            rows={6}
             value={value}
             variant="outlined"
           />
@@ -97,7 +136,7 @@ function Rate({
             fullWidth
             color="primary"
           >
-            Apply for a role
+            Hoàn tất
           </Button>
         </Box>
       </div>

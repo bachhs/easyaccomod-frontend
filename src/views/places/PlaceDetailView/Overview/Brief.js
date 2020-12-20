@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
       height: 0
     },
   },
-  changeButton: {
+  allWiewButton: {
     position: 'absolute',
     bottom: theme.spacing(1),
     right: theme.spacing(1),
@@ -70,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: '#66c2ff'
     }
   },
-  addPhotoIcon: {
+  ViewComfyIcon: {
     marginRight: theme.spacing(1)
   },
   image1: {
@@ -173,10 +173,10 @@ function Brief({ place, className, ...rest }) {
                   </Grid>
                 </Grid>
                 <Button
-                  className={classes.changeButton}
+                  className={classes.allWiewButton}
                   variant="contained"
                 >
-                  <ViewComfyIcon className={classes.addPhotoIcon} />
+                  <ViewComfyIcon className={classes.ViewComfyIcon} />
                   Hiển thị tất cả
                 </Button>
               </Grid>

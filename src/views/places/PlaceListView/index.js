@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
       backgroundImage: 'linear-gradient(-180deg, rgba(0,0,0,0.00) 58%, rgba(0,0,0,0.32) 100%)'
     },
     '&:hover': {
-      '& $changeButton': {
+      '& $inviteButton': {
         visibility: 'visible'
       }
     },
@@ -79,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: '10%',
     marginTop: 60
   },
-  changeButton: {
+  inviteButton: {
     position: 'absolute',
     marginTop: 20,
     left: '10%',
@@ -147,7 +147,7 @@ function ProjectBrowseView() {
             Tìm nhà nhanh như người yêu cũ trở mặt!!!
           </Typography>
           <Button
-            className={classes.changeButton}
+            className={classes.inviteButton}
             variant="contained"
           >
             <FingerprintIcon className={classes.addPhotoIcon} />

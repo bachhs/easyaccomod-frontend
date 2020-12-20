@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { Button, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import OverallReviews from './OverallReviews';
 import ReviewCard from './ReviewCard';
-import Rate from './Rate';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -18,15 +17,6 @@ function Reviews({ className, ...rest }) {
   const classes = useStyles();
   const isMountedRef = useIsMountedRef();
   const [reviews, setReviews] = useState(null);
-  const [openRate, setOpenRate] = useState(false);
-
-  const handleRateOpen = () => {
-    setOpenRate(true);
-  };
-
-  const handleRateClose = () => {
-    setOpenRate(false);
-  };
 
   const getReviews = useCallback(() => {
     const mock = [
@@ -84,7 +74,6 @@ function Reviews({ className, ...rest }) {
       {...rest}
     >
       <OverallReviews ratings={reviews.map((review) => review.rating)} />
-      <Button onClick={handleRateOpen}>Rate</Button>
       {reviews.map((review) => (
         <ReviewCard
           className={classes.review}
@@ -92,11 +81,6 @@ function Reviews({ className, ...rest }) {
           review={review}
         />
       ))}
-      <Rate
-        onApply={handleRateClose}
-        onClose={handleRateClose}
-        open={openRate}
-      />
     </div>
   );
 }

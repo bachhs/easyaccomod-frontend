@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {
   Box,
+  Button,
+  colors,
   Card,
   CardContent,
   Grid,
@@ -10,17 +12,36 @@ import {
   makeStyles
 } from '@material-ui/core';
 import { Rating } from '@material-ui/lab';
+import RateReviewIcon from '@material-ui/icons/RateReview';
+import Rate from './Rate';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
   rating: {
     marginLeft: theme.spacing(2),
     fontWeight: theme.typography.fontWeightBold
+  },
+  rateButton: {
+    '&:hover': {
+      backgroundColor: colors.blueGrey[500]
+    }
+  },
+  RateReviewIcon: {
+    marginRight: theme.spacing(1)
   }
 }));
 
 function OverallReviews({ ratings, className, ...rest }) {
   const classes = useStyles();
+  const [openRate, setOpenRate] = useState(false);
+
+  const handleRateOpen = () => {
+    setOpenRate(true);
+  };
+
+  const handleRateClose = () => {
+    setOpenRate(false);
+  };
   let rating = 0;
 
   if (ratings.length > 0) {
@@ -34,46 +55,71 @@ function OverallReviews({ ratings, className, ...rest }) {
     >
       <CardContent>
         <Grid
-          alignItems="center"
           container
           spacing={3}
+          justify="space-between"
+          {...rest}
         >
           <Grid item>
-            <Typography
-              variant="h5"
-              color="textPrimary"
-            >
-              Overall Reviews
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Box
-              display="flex"
+            <Grid
               alignItems="center"
+              container
+              spacing={3}
             >
-              <Rating value={rating} readOnly />
-              <Typography
-                className={classes.rating}
-                variant="h6"
-                color="textPrimary"
-              >
-                {rating}
-              </Typography>
-            </Box>
+              <Grid item>
+                <Typography
+                  variant="h5"
+                  color="textPrimary"
+                >
+                  Overall Reviews
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                >
+                  <Rating value={rating} readOnly />
+                  <Typography
+                    className={classes.rating}
+                    variant="h6"
+                    color="textPrimary"
+                  >
+                    {rating}
+                  </Typography>
+                </Box>
+              </Grid>
+              <Grid item>
+                <Typography
+                  className={classes.total}
+                  color="textSecondary"
+                  variant="body2"
+                >
+                  {ratings.length}
+                  {' '}
+                  reviews in total
+                </Typography>
+              </Grid>
+            </Grid>
           </Grid>
           <Grid item>
-            <Typography
-              className={classes.total}
-              color="textSecondary"
-              variant="body2"
+            <Button
+              className={classes.inviteButton}
+              variant="contained"
+              color="primary"
+              onClick={handleRateOpen}
             >
-              {ratings.length}
-              {' '}
-              reviews in total
-            </Typography>
+              <RateReviewIcon className={classes.RateReviewIcon} />
+              Đánh giá và nhận xét
+            </Button>
           </Grid>
         </Grid>
       </CardContent>
+      <Rate
+        onApply={handleRateClose}
+        onClose={handleRateClose}
+        open={openRate}
+      />
     </Card>
   );
 }
