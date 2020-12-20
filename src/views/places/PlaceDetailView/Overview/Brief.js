@@ -29,6 +29,9 @@ const useStyles = makeStyles(() => ({
   chip: {
     marginBottom: 8
   },
+  image: {
+    height: 130
+  },
 }));
 
 function Brief({ place, className, ...rest }) {
@@ -48,6 +51,9 @@ function Brief({ place, className, ...rest }) {
             >
               Hình ảnh
             </Typography>
+            {place.images.map((image) => (
+              <img className={classes.image} src={image} alt="Minh hoa" />
+            ))}
           </CardContent>
           <Divider />
           <CardContent>
