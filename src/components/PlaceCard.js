@@ -31,6 +31,10 @@ const useStyles = makeStyles((theme) => ({
   subscribersIcon: {
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(1)
+  },
+  VisibilityIcon: {
+    marginRight: theme.spacing(1),
+    opacity: 0.75
   }
 }));
 
@@ -176,7 +180,7 @@ function PlaceCard({ place, className, ...rest }) {
         display="flex"
         alignItems="center"
       >
-        <VisibilityIcon fontSize="small" />
+        <VisibilityIcon className={clsx(classes.VisibilityIcon, className)} fontSize="small" />
         <Typography
           variant="subtitle2"
           color="textSecondary"
