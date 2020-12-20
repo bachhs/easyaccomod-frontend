@@ -51,10 +51,8 @@ const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.down('md')]: {
       height: 220
-    }
-  },
-  rot: {
-
+    },
+    backgroundImage: `url(${'/static/images/covers/cover.jpg'})`
   },
   title: {
     color: '#ffffff',
@@ -114,7 +112,6 @@ function ProjectBrowseView() {
     >
       <div
         className={classes.cover}
-        style={{ backgroundImage: `url(${'/static/images/covers/cover.jpg'})` }}
       >
         <div maxWidth="lg" className={classes.container}>
           <h1 className={classes.title}>

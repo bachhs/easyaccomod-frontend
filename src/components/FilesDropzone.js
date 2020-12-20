@@ -82,6 +82,7 @@ function FilesDropzone({ className, onUploaded, ...rest }) {
     const uploaders = files.map((file) => {
       const formData = new FormData();
       formData.append('file', file);
+      formData.append('folder', 'places');
       formData.append('upload_preset', 'qx52o297');
       formData.append('api_key', '129679773661522');
       formData.append('timestamp', (Date.now() / 1000) || 0);

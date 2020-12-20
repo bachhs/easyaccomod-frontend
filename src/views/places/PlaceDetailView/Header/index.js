@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import clsx from 'clsx';
@@ -43,12 +43,21 @@ const useStyles = makeStyles((theme) => ({
 function Header({ place, className, ...rest }) {
   const classes = useStyles();
   const account = useSelector((state) => state.account);
+  const [liked, setLiked] = useState(false);
+
+  useEffect(() => {
+    if (account.user) {
+      axios
+        .get(`${process.env.REACT_APP_API}/users/favorite`)
+        .then((response) => {
+          if (response.data.favorite.includes(place.id)) { setLiked(true); }
+        });
+    }
+  }, []);
 
   const addFavorite = () => {
-    axios
-      .patch(`${process.env.REACT_APP_API}/users/${account.user.id}`, { placeID: place.id })
-      .then(() => {
-      });
+    axios.patch(`${process.env.REACT_APP_API}/users/favorite`, { placeId: place.id })
+      .then(setLiked(true));
   };
 
   return (
@@ -136,12 +145,23 @@ function Header({ place, className, ...rest }) {
           color="secondary"
           onClick={addFavorite}
         >
-          <SvgIcon
-            fontSize="small"
-            className={classes.actionIcon}
-          >
-            <FavoriteIcon />
-          </SvgIcon>
+          {liked
+            ? (
+              <SvgIcon
+                fontSize="small"
+                className={classes.actionIcon}
+              >
+                <CheckIcon />
+              </SvgIcon>
+            )
+            : (
+              <SvgIcon
+                fontSize="small"
+                className={classes.actionIcon}
+              >
+                <FavoriteIcon />
+              </SvgIcon>
+            )}
           Yêu thích
         </Button>
       </Grid>
