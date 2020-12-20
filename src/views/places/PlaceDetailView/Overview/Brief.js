@@ -36,7 +36,16 @@ const useStyles = makeStyles((theme) => ({
     height: 350
   },
   imageRoot: {
-    position: 'relative'
+    position: 'relative',
+    '&:before': {
+      position: 'absolute',
+      backgroundImage: 'linear-gradient(-180deg, rgba(0,0,0,0.00) 58%, rgba(0,0,0,0.32) 100%)'
+    },
+    '&:hover': {
+      '& $allWiewButton': {
+        visibility: 'visible'
+      }
+    },
   },
   image1Container: {
     height: 400,
@@ -58,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
   },
   allWiewButton: {
     position: 'absolute',
+    visibility: 'hidden',
     bottom: theme.spacing(1),
     right: theme.spacing(1),
     backgroundColor: '#ffffff',
