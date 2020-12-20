@@ -91,12 +91,14 @@ function ProjectBrowseView() {
   const classes = useStyles();
   const isMountedRef = useIsMountedRef();
   const [places, setPlaces] = useState([]);
+  const [placeCount, setPlaceCount] = useState(3);
 
   const getPlaces = useCallback((page) => {
     axios
       .get(`${process.env.REACT_APP_API}/places?page=${page}`)
       .then((response) => {
         if (isMountedRef.current) {
+          setPlaceCount(response.data.placeCount);
           setPlaces(response.data.places);
         }
       });
@@ -142,7 +144,7 @@ function ProjectBrowseView() {
             <Filter />
           </Box>
           <Box mt={6}>
-            <Results places={places} />
+            <Results places={places} getPlaces={getPlaces} placeCount={placeCount} />
           </Box>
         </Container>
       </Page>

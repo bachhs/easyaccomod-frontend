@@ -57,7 +57,7 @@ function Header({ place, className, ...rest }) {
 
   const addFavorite = () => {
     axios.patch(`${process.env.REACT_APP_API}/users/favorite`, { placeId: place.id })
-      .then(setLiked(true));
+      .then(setLiked(!liked));
   };
 
   return (

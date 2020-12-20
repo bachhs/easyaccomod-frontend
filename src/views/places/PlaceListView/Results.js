@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Results({
-  className, getPlaces, places, ...rest
+  className, getPlaces, places, placeCount, ...rest
 }) {
   const classes = useStyles();
   const sortRef = useRef(null);
@@ -136,7 +136,7 @@ function Results({
         justifyContent="center"
       >
         <Pagination
-          count={3}
+          count={Math.ceil(placeCount / 6)}
           onChange={(event, value) => {
             getPlaces(value);
           }}
@@ -167,7 +167,8 @@ function Results({
 Results.propTypes = {
   className: PropTypes.string,
   getPlaces: PropTypes.func,
-  places: PropTypes.array.isRequired
+  places: PropTypes.array.isRequired,
+  placeCount: PropTypes.number.isRequired
 };
 
 export default Results;
