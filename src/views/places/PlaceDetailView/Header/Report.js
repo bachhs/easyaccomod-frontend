@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
+import { Alert } from '@material-ui/lab';
 import {
-  Avatar,
   Box,
   Button,
   Dialog,
@@ -11,7 +11,6 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
-import getInitials from 'src/utils/getInitials';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -64,56 +63,33 @@ function Report({
           variant="h3"
           color="textPrimary"
         >
-          The project owner requires an introduction
+          Báo cáo bài đăng
         </Typography>
-        <Typography
-          align="center"
-          variant="subtitle2"
-          color="textSecondary"
+        <Alert
+          severity="error"
         >
-          Write down a short note with your Report regarding why you
-          think you&apos;d be a good fit for this position.
-        </Typography>
+          <Typography
+            align="center"
+            variant="subtitle2"
+            color="textSecondary"
+          >
+            Nếu bạn chắc chắn đây là một nội dung vi phạm, viết lí do vào form bên dưới
+          </Typography>
+        </Alert>
         <Box mt={3}>
           <TextField
             autoFocus
             FormHelperTextProps={{ classes: { root: classes.helperText } }}
             fullWidth
-            helperText={`${200 - value.length} characters left`}
-            label="Short Note"
+            helperText={`${300 - value.length} kí tự còn lại`}
+            label="Báo cáo"
             multiline
             onChange={handleChange}
-            placeholder="What excites you about this project?"
+            placeholder="Bài đăng đã vi phạm gì?"
             rows={5}
             value={value}
             variant="outlined"
           />
-          <Box
-            mt={6}
-            display="flex"
-            alignItems="center"
-          >
-            <Avatar
-              alt="Author"
-              src={author.avatar}
-            >
-              {getInitials(author.name)}
-            </Avatar>
-            <Box ml={2}>
-              <Typography
-                variant="h3"
-                color="textPrimary"
-              >
-                {author.name}
-              </Typography>
-              <Typography
-                variant="subtitle2"
-                color="textPrimary"
-              >
-                {author.bio}
-              </Typography>
-            </Box>
-          </Box>
         </Box>
         <Box
           mt={3}
@@ -125,7 +101,7 @@ function Report({
             fullWidth
             color="primary"
           >
-            Apply for a role
+            Hoàn tất báo cáo
           </Button>
         </Box>
       </div>
