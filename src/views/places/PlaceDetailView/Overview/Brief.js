@@ -39,40 +39,22 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative'
   },
   image1Container: {
-    backgroundColor: 'red',
     height: 400,
-    borderRight: 3,
-    borderRightColor: '#ffffff',
-    borderRightStyle: 'solid',
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center',
     [theme.breakpoints.down('md')]: {
       height: 250
     }
   },
   image2Container: {
-    backgroundColor: 'yellow',
     height: 200,
-    borderBottom: 3,
-    borderBottomStyle: 'solid',
-    borderBottomColor: '#ffffff',
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center',
     [theme.breakpoints.down('md')]: {
       height: 0
     }
   },
   image3Container: {
-    backgroundColor: 'green',
     height: 200,
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center',
     [theme.breakpoints.down('md')]: {
       height: 0
-    }
+    },
   },
   changeButton: {
     position: 'absolute',
@@ -85,15 +67,49 @@ const useStyles = makeStyles((theme) => ({
       top: 'auto'
     },
     '&:hover': {
-      backgroundColor: '#red'
+      backgroundColor: '#66c2ff'
     }
   },
   addPhotoIcon: {
     marginRight: theme.spacing(1)
   },
-  image1111: {
-    objectFit: 'cover',
-    height: 400
+  image1: {
+    maxWidth: '99%',
+    minWidth: '99%',
+    height: 400,
+    [theme.breakpoints.down('md')]: {
+      height: 250,
+    },
+    cursor: 'pointer',
+    '&:hover': {
+      opacity: '0.85'
+    }
+  },
+  image2: {
+    maxWidth: '100%',
+    minWidth: '100%',
+    height: 196,
+    [theme.breakpoints.down('md')]: {
+      minHeight: 0,
+      height: 0
+    },
+    cursor: 'pointer',
+    '&:hover': {
+      opacity: '0.85'
+    },
+  },
+  image3: {
+    maxWidth: '100%',
+    minWidth: '100%',
+    height: 200,
+    [theme.breakpoints.down('md')]: {
+      minHeight: 0,
+      height: 0
+    },
+    cursor: 'pointer',
+    '&:hover': {
+      opacity: '0.85'
+    }
   }
 }));
 
@@ -130,7 +146,7 @@ function Brief({ place, className, ...rest }) {
                 lg={7}
                 xs={12}
               >
-                <image className={clsx(classes.image1111, className)} src="https://i.imgur.com/BzjmIgD.png" alt="Minh hoa" />
+                <img className={clsx(classes.image1, className)} src="https://4kwallpapers.com/images/walls/thumbs_2t/129.jpg" alt="Hình ảnh" />
               </Grid>
               <Grid
                 item
@@ -144,17 +160,17 @@ function Brief({ place, className, ...rest }) {
                   <Grid
                     item
                     className={clsx(classes.image2Container, className)}
-                    sm={6}
                     md={12}
-                    style={{ backgroundImage: `url(${'https://img3.goodfon.com/wallpaper/nbig/3/b1/asus-rog-wallpaper-dark.jpg'})` }}
-                  />
+                  >
+                    <img className={clsx(classes.image2, className)} src="https://img3.goodfon.com/wallpaper/nbig/3/b1/asus-rog-wallpaper-dark.jpg" alt="Hình ảnh" />
+                  </Grid>
                   <Grid
                     item
                     className={clsx(classes.image3Container, className)}
-                    sm={6}
                     md={12}
-                    style={{ backgroundImage: `url(${'https://rog.asus.com/media/1589570302548.jpg'})` }}
-                  />
+                  >
+                    <img className={clsx(classes.image3, className)} src="https://rog.asus.com/media/1589570302548.jpg" alt="Hình ảnh" />
+                  </Grid>
                 </Grid>
                 <Button
                   className={classes.changeButton}
@@ -202,7 +218,7 @@ function Brief({ place, className, ...rest }) {
                   >
                     <Grid
                       item
-                      sm={12}
+                      sm={6}
                       md={6}
                     >
                       <List>
@@ -234,7 +250,7 @@ function Brief({ place, className, ...rest }) {
                     </Grid>
                     <Grid
                       item
-                      sm={12}
+                      sm={6}
                       md={6}
                     >
                       <List>
