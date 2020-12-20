@@ -18,6 +18,7 @@ import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import ClearIcon from '@material-ui/icons/Clear';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import Report from './Report';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -43,6 +44,15 @@ const useStyles = makeStyles((theme) => ({
 function Header({ place, className, ...rest }) {
   const classes = useStyles();
   const account = useSelector((state) => state.account);
+  const [openReport, setOpenReport] = useState(false);
+
+  const handleReportOpen = () => {
+    setOpenReport(true);
+  };
+
+  const handleReportClose = () => {
+    setOpenReport(false);
+  };
   const [liked, setLiked] = useState(false);
 
   useEffect(() => {
@@ -130,7 +140,7 @@ function Header({ place, className, ...rest }) {
         </Box>
       </Grid>
       <Grid item>
-        <Button className={classes.action}>
+        <Button className={classes.action} onClick={handleReportOpen}>
           <SvgIcon
             fontSize="small"
             className={classes.actionIcon}
@@ -164,6 +174,12 @@ function Header({ place, className, ...rest }) {
             )}
           Yêu thích
         </Button>
+        <Report
+          author={place.creator}
+          onApply={handleReportClose}
+          onClose={handleReportClose}
+          open={openReport}
+        />
       </Grid>
     </Grid>
   );

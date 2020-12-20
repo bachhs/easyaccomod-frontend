@@ -19,7 +19,7 @@ import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import Page from 'src/components/Page';
 import Header from './Header';
 import Overview from './Overview';
-import Files from './Files';
+import Reviews from './Reviews';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,8 +40,8 @@ function PlaceDetailView() {
   const [place, setPlace] = useState(null);
   const [creator, setCreator] = useState(null);
   const tabs = [
-    { value: 'overview', label: 'Overview' },
-    { value: 'files', label: 'Files' },
+    { value: 'overview', label: 'Thông tin chung' },
+    { value: 'reviews', label: 'Đánh giá' },
   ];
 
   const handleTabsChange = (event, value) => {
@@ -100,7 +100,7 @@ function PlaceDetailView() {
         <Divider />
         <Box mt={3}>
           {currentTab === 'overview' && <Overview place={place} creator={creator} />}
-          {currentTab === 'files' && <Files files={place.files} />}
+          {currentTab === 'reviews' && <Reviews reviews={place.reviews} />}
         </Box>
       </Container>
     </Page>

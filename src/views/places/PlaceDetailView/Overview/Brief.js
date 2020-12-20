@@ -130,7 +130,7 @@ function Brief({ place, className, ...rest }) {
                 lg={7}
                 xs={12}
               >
-                <image className={clsx(classes.image1111, className)} src="https://i.imgur.com/BzjmIgD.png" />
+                <image className={clsx(classes.image1111, className)} src="https://i.imgur.com/BzjmIgD.png" alt="Minh hoa" />
               </Grid>
               <Grid
                 item
