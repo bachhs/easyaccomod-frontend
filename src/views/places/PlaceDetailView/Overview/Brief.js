@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {
   Box,
+  Button,
   Card,
   CardContent,
   Chip,
   Divider,
   Grid,
   Typography,
-  makeStyles
+  makeStyles,
+  CardHeader
 } from '@material-ui/core';
 import Maps from 'src/components/Maps';
 import List from '@material-ui/core/List';
@@ -23,15 +25,76 @@ import FlashOnIcon from '@material-ui/icons/FlashOn';
 import HouseIcon from '@material-ui/icons/House';
 import OpacityIcon from '@material-ui/icons/Opacity';
 import SquareFootIcon from '@material-ui/icons/SquareFoot';
+import ViewComfyIcon from '@material-ui/icons/ViewComfy';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {},
   chip: {
     marginBottom: 8
   },
   image: {
-    height: 130
+    height: 350
   },
+  imageRoot: {
+    position: 'relative'
+  },
+  image1Container: {
+    backgroundColor: 'red',
+    height: 400,
+    borderRight: 3,
+    borderRightColor: '#ffffff',
+    borderRightStyle: 'solid',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    [theme.breakpoints.down('md')]: {
+      height: 250
+    }
+  },
+  image2Container: {
+    backgroundColor: 'yellow',
+    height: 200,
+    borderBottom: 3,
+    borderBottomStyle: 'solid',
+    borderBottomColor: '#ffffff',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    [theme.breakpoints.down('md')]: {
+      height: 0
+    }
+  },
+  image3Container: {
+    backgroundColor: 'green',
+    height: 200,
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    [theme.breakpoints.down('md')]: {
+      height: 0
+    }
+  },
+  changeButton: {
+    position: 'absolute',
+    bottom: theme.spacing(1),
+    right: theme.spacing(1),
+    backgroundColor: '#ffffff',
+    color: theme.palette.common.dark,
+    [theme.breakpoints.down('md')]: {
+      bot: theme.spacing(2),
+      top: 'auto'
+    },
+    '&:hover': {
+      backgroundColor: '#red'
+    }
+  },
+  addPhotoIcon: {
+    marginRight: theme.spacing(1)
+  },
+  image1111: {
+    objectFit: 'cover',
+    height: 400
+  }
 }));
 
 function Brief({ place, className, ...rest }) {
@@ -44,16 +107,64 @@ function Brief({ place, className, ...rest }) {
           className={clsx(classes.root, className)}
           {...rest}
         >
-          <CardContent>
+          <CardHeader
+            title="Hình ảnh"
+          >
             <Typography
               variant="h4"
               color="textPrimary"
             >
               Hình ảnh
             </Typography>
-            {place.images.map((image) => (
-              <img className={classes.image} src={image} alt="Minh hoa" />
-            ))}
+          </CardHeader>
+          <Divider />
+          <CardContent>
+            <Grid
+              container
+              className={clsx(classes.imageRoot, className)}
+            >
+              <Grid
+                item
+                className={clsx(classes.image1Container, className)}
+                xl={7}
+                lg={7}
+                xs={12}
+              >
+                <image className={clsx(classes.image1111, className)} src="https://i.imgur.com/BzjmIgD.png" />
+              </Grid>
+              <Grid
+                item
+                xl={5}
+                lg={5}
+                xs={12}
+              >
+                <Grid
+                  container
+                >
+                  <Grid
+                    item
+                    className={clsx(classes.image2Container, className)}
+                    sm={6}
+                    md={12}
+                    style={{ backgroundImage: `url(${'https://img3.goodfon.com/wallpaper/nbig/3/b1/asus-rog-wallpaper-dark.jpg'})` }}
+                  />
+                  <Grid
+                    item
+                    className={clsx(classes.image3Container, className)}
+                    sm={6}
+                    md={12}
+                    style={{ backgroundImage: `url(${'https://rog.asus.com/media/1589570302548.jpg'})` }}
+                  />
+                </Grid>
+                <Button
+                  className={classes.changeButton}
+                  variant="contained"
+                >
+                  <ViewComfyIcon className={classes.addPhotoIcon} />
+                  Hiển thị tất cả
+                </Button>
+              </Grid>
+            </Grid>
           </CardContent>
           <Divider />
           <CardContent>
