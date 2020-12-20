@@ -9,7 +9,8 @@ import {
   Container,
   makeStyles,
   Button,
-  colors
+  colors,
+  Typography
 } from '@material-ui/core';
 import Page from 'src/components/Page';
 import axios from 'src/utils/axios';
@@ -49,8 +50,11 @@ const useStyles = makeStyles((theme) => ({
         visibility: 'visible'
       }
     },
+    [theme.breakpoints.down('lg')]: {
+      height: 600
+    },
     [theme.breakpoints.down('md')]: {
-      height: 220
+      height: 400
     },
     backgroundImage: `url(${'/static/images/covers/cover.jpg'})`
   },
@@ -58,25 +62,31 @@ const useStyles = makeStyles((theme) => ({
     color: '#ffffff',
     fontFamily: '"Segoe UI"',
     fontWeight: 'bold',
-    fontSize: '3rem',
   },
   span: {
-    color: 'greenyellow'
+    color: 'greenyellow',
+    fontFamily: '"Segoe UI"',
+    fontWeight: 'bold',
+    marginTop: 7,
+  },
+  subtext: {
+    color: 'white',
+    fontFamily: '"Segoe UI"',
+    fontWeight: 'bold',
+    marginTop: 4
   },
   container: {
-    textAlign: 'center',
-    paddingLeft: 150,
+    paddingLeft: '10%',
     marginTop: 60
   },
   changeButton: {
     position: 'absolute',
     marginTop: 20,
-    left: 300,
+    left: '10%',
     backgroundColor: '#ffffff',
     color: theme.palette.common.dark,
-    [theme.breakpoints.down('md')]: {
-      visibility: 'hidden',
-      top: theme.spacing(3),
+    [theme.breakpoints.down('xs')]: {
+      left: theme.spacing(6),
     },
     '&:hover': {
       backgroundColor: colors.blueGrey[500]
@@ -115,16 +125,27 @@ function ProjectBrowseView() {
       <div
         className={classes.cover}
       >
-        <div maxWidth="lg" className={classes.container}>
-          <h1 className={classes.title}>
+        <Box
+          className={classes.container}
+        >
+          <Typography
+            variant="h1"
+            className={classes.title}
+          >
             Chào mừng đến
-            {' '}
-            <br />
-            {' '}
-            <span className={classes.span}>FLASH HOME</span>
-            {' '}
-          </h1>
-          <h3 style={{ color: '#ffffff', fontFamily: '"Segoe UI"', marginTop: 10 }}>Tìm nhà nhanh như người yêu cũ trở mặt!!!</h3>
+          </Typography>
+          <Typography
+            variant="h1"
+            className={classes.span}
+          >
+            FLASH HOME
+          </Typography>
+          <Typography
+            variant="h4"
+            className={classes.subtext}
+          >
+            Tìm nhà nhanh như người yêu cũ trở mặt!!!
+          </Typography>
           <Button
             className={classes.changeButton}
             variant="contained"
@@ -132,7 +153,7 @@ function ProjectBrowseView() {
             <FingerprintIcon className={classes.addPhotoIcon} />
             Tham gia với chúng tôi
           </Button>
-        </div>
+        </Box>
       </div>
       <Page
         className={classes.root}

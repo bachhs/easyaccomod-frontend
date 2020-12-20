@@ -1,7 +1,7 @@
 export default {
   h1: {
     fontWeight: 500,
-    fontSize: 35,
+    fontSize: 45,
     letterSpacing: '-0.24px'
   },
   h2: {
