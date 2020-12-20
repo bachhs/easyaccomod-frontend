@@ -10,7 +10,6 @@ import {
   CardMedia,
   Divider,
   Grid,
-  IconButton,
   Link,
   Typography,
   colors,
@@ -177,9 +176,7 @@ function PlaceCard({ place, className, ...rest }) {
         display="flex"
         alignItems="center"
       >
-        <IconButton>
-          <VisibilityIcon fontSize="small" />
-        </IconButton>
+        <VisibilityIcon fontSize="small" />
         <Typography
           variant="subtitle2"
           color="textSecondary"

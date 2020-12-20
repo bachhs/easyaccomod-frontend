@@ -30,9 +30,9 @@ function ProjectBrowseView() {
   const isMountedRef = useIsMountedRef();
   const [places, setPlaces] = useState([]);
 
-  const getPlaces = useCallback(() => {
+  const getPlaces = useCallback((page) => {
     axios
-      .get(`${process.env.REACT_APP_API}/places`)
+      .get(`${process.env.REACT_APP_API}/places?page=${page}`)
       .then((response) => {
         if (isMountedRef.current) {
           setPlaces(response.data.places);
@@ -55,7 +55,7 @@ function ProjectBrowseView() {
           <Filter />
         </Box>
         <Box mt={6}>
-          <Results places={places} />
+          <Results getPlaces={getPlaces} places={places} />
         </Box>
       </Container>
     </Page>

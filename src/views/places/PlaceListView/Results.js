@@ -41,7 +41,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Results({ className, places, ...rest }) {
+function Results({
+  className, getPlaces, places, ...rest
+}) {
   const classes = useStyles();
   const sortRef = useRef(null);
   const [openSort, setOpenSort] = useState(false);
@@ -133,7 +135,12 @@ function Results({ className, places, ...rest }) {
         display="flex"
         justifyContent="center"
       >
-        <Pagination count={3} />
+        <Pagination
+          count={3}
+          onChange={(event, value) => {
+            getPlaces(value);
+          }}
+        />
       </Box>
       <Menu
         anchorEl={sortRef.current}
@@ -159,6 +166,7 @@ function Results({ className, places, ...rest }) {
 
 Results.propTypes = {
   className: PropTypes.string,
+  getPlaces: PropTypes.func,
   places: PropTypes.array.isRequired
 };
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import clsx from 'clsx';
 import moment from 'moment';
 import {
@@ -10,6 +11,7 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
+import axios from 'src/utils/axios';
 import ReportIcon from '@material-ui/icons/Report';
 import CheckIcon from '@material-ui/icons/Check';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
@@ -40,6 +42,15 @@ const useStyles = makeStyles((theme) => ({
 
 function Header({ place, className, ...rest }) {
   const classes = useStyles();
+  const account = useSelector((state) => state.account);
+
+  const addFavorite = () => {
+    axios
+      .patch(`${process.env.REACT_APP_API}/users/${account.user.id}`, { placeID: place.id })
+      .then(() => {
+        console.log('updated');
+      });
+  };
 
   return (
     <Grid
@@ -124,6 +135,7 @@ function Header({ place, className, ...rest }) {
           className={classes.action}
           variant="contained"
           color="secondary"
+          onClick={addFavorite}
         >
           <SvgIcon
             fontSize="small"

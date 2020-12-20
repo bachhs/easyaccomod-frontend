@@ -45,8 +45,7 @@ function Holder({ creator, className, ...rest }) {
             className={classes.avatar}
             component={RouterLink}
             src={creator.avatar}
-            // eslint-disable-next-line no-underscore-dangle
-            to={`/users/${creator._id}`}
+            to={`/users/${creator.id}`}
           >
             {getInitials(creator.username)}
           </Avatar>
@@ -57,8 +56,7 @@ function Holder({ creator, className, ...rest }) {
           <Link
             color="textPrimary"
             component={RouterLink}
-            // eslint-disable-next-line no-underscore-dangle
-            to={`/users/${creator._id}`}
+            to={`/users/${creator.id}`}
             underline="none"
             variant="h6"
           >
