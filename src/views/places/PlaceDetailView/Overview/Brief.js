@@ -143,7 +143,6 @@ function Brief({ place, className, ...rest }) {
               Hình ảnh
             </Typography>
           </CardHeader>
-          <Divider />
           <CardContent>
             <Grid
               container

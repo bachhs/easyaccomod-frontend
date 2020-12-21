@@ -11,7 +11,6 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
 import 'moment/locale/vi';
 import Auth from 'src/components/Auth';
-import ScrollReset from 'src/components/ScrollReset';
 import useSettings from 'src/hooks/useSettings';
 import { createTheme } from 'src/theme';
 import Routes from 'src/Routes';
@@ -53,7 +52,6 @@ function App() {
         <SnackbarProvider maxSnack={1} autoHideDuration={3000}>
           <Router history={history}>
             <Auth>
-              <ScrollReset />
               <Routes />
             </Auth>
           </Router>

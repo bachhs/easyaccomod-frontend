@@ -92,16 +92,21 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: colors.blueGrey[500]
     }
   },
-  addPhotoIcon: {
-    marginRight: theme.spacing(1)
-  }
 }));
 
 function ProjectBrowseView() {
   const classes = useStyles();
   const isMountedRef = useIsMountedRef();
   const [places, setPlaces] = useState([]);
-  const [placeCount, setPlaceCount] = useState(3);
+  const [placeCount, setPlaceCount] = useState(0);
+
+  const handleClick = (event) => {
+    const anchor = (event.target.ownerDocument || document).querySelector('#Main');
+
+    if (anchor) {
+      anchor.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
 
   const getPlaces = useCallback((page) => {
     axios
@@ -149,8 +154,9 @@ function ProjectBrowseView() {
           <Button
             className={classes.inviteButton}
             variant="contained"
+            startIcon={<FingerprintIcon />}
+            onClick={handleClick}
           >
-            <FingerprintIcon className={classes.addPhotoIcon} />
             Tham gia với chúng tôi
           </Button>
         </Box>
@@ -158,6 +164,7 @@ function ProjectBrowseView() {
       <Page
         className={classes.root}
         title="Project List"
+        id="Main"
       >
         <Container maxWidth="lg">
           <Header />
