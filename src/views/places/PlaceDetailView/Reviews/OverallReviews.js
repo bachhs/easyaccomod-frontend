@@ -31,7 +31,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function OverallReviews({ ratings, className, ...rest }) {
+function OverallReviews({
+  ratings, getReviews, reviewed, className, ...rest
+}) {
   const classes = useStyles();
   const [openRate, setOpenRate] = useState(false);
 
@@ -41,11 +43,13 @@ function OverallReviews({ ratings, className, ...rest }) {
 
   const handleRateClose = () => {
     setOpenRate(false);
+    getReviews();
   };
   let rating = 0;
 
-  if (ratings.length > 0) {
+  if (ratings && ratings.length > 0) {
     rating = ratings.reduce((prev, current) => prev + current, 0) / ratings.length;
+    rating = Math.round(rating * 10) / 10;
   }
 
   return (
@@ -60,54 +64,69 @@ function OverallReviews({ ratings, className, ...rest }) {
           justify="space-between"
           {...rest}
         >
-          <Grid item>
-            <Grid
-              alignItems="center"
-              container
-              spacing={3}
-            >
+          {rating ? (
+            <Grid item>
+              <Grid
+                alignItems="center"
+                container
+                spacing={3}
+              >
+                <Grid item>
+                  <Typography
+                    variant="h5"
+                    color="textPrimary"
+                  >
+                    Đánh giá
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                  >
+                    <Rating value={rating} precision={0.1} readOnly />
+                    <Typography
+                      className={classes.rating}
+                      variant="h6"
+                      color="textPrimary"
+                    >
+                      {rating}
+                    </Typography>
+                  </Box>
+                </Grid>
+                <Grid item>
+                  <Typography
+                    className={classes.total}
+                    color="textSecondary"
+                    variant="body2"
+                  >
+                    trên tổng số
+                    {' '}
+                    {ratings.length}
+                    {' '}
+                    đánh giá
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Grid>
+          )
+            : (
               <Grid item>
                 <Typography
                   variant="h5"
                   color="textPrimary"
                 >
-                  Overall Reviews
+                  Chưa có bài đánh giá nào
                 </Typography>
               </Grid>
-              <Grid item>
-                <Box
-                  display="flex"
-                  alignItems="center"
-                >
-                  <Rating value={rating} readOnly />
-                  <Typography
-                    className={classes.rating}
-                    variant="h6"
-                    color="textPrimary"
-                  >
-                    {rating}
-                  </Typography>
-                </Box>
-              </Grid>
-              <Grid item>
-                <Typography
-                  className={classes.total}
-                  color="textSecondary"
-                  variant="body2"
-                >
-                  {ratings.length}
-                  {' '}
-                  reviews in total
-                </Typography>
-              </Grid>
-            </Grid>
-          </Grid>
+            )}
           <Grid item>
             <Button
               className={classes.inviteButton}
               variant="contained"
               color="primary"
               onClick={handleRateOpen}
+              disabled={reviewed}
             >
               <RateReviewIcon className={classes.RateReviewIcon} />
               Đánh giá và nhận xét
@@ -126,7 +145,9 @@ function OverallReviews({ ratings, className, ...rest }) {
 
 OverallReviews.propTypes = {
   className: PropTypes.string,
-  ratings: PropTypes.array.isRequired
+  ratings: PropTypes.array,
+  getReviews: PropTypes.func,
+  reviewed: PropTypes.bool
 };
 
 export default OverallReviews;

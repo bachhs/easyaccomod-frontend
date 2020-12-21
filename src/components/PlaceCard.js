@@ -12,7 +12,6 @@ import {
   Grid,
   Link,
   Typography,
-  colors,
   makeStyles
 } from '@material-ui/core';
 import { Rating } from '@material-ui/lab';
@@ -24,13 +23,6 @@ const useStyles = makeStyles((theme) => ({
   media: {
     height: 200,
     backgroundColor: theme.palette.background.dark
-  },
-  likedButton: {
-    color: colors.red[600]
-  },
-  subscribersIcon: {
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(1)
   },
   VisibilityIcon: {
     marginRight: theme.spacing(1),

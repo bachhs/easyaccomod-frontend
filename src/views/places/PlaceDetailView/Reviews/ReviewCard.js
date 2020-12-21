@@ -14,6 +14,7 @@ import {
 } from '@material-ui/core';
 import { Rating } from '@material-ui/lab';
 import getInitials from 'src/utils/getInitials';
+import { labels } from './Rate';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -36,9 +37,9 @@ function ReviewCard({ review, className, ...rest }) {
           <Avatar
             alt="Reviewer"
             className={classes.avatar}
-            src={review.reviewer.avatar}
+            src={review.creator.avatar}
           >
-            {getInitials(review.reviewer.name)}
+            {getInitials(review.creator.username)}
           </Avatar>
         )}
         disableTypography
@@ -65,15 +66,15 @@ function ReviewCard({ review, className, ...rest }) {
               variant="body2"
               color="textSecondary"
             >
-              | Reviewd by
+              | Đăng bởi
               {' '}
               <Link
                 color="textPrimary"
                 component={RouterLink}
-                to="#"
+                to={`/users/${review.creator.id}`}
                 variant="h6"
               >
-                {review.reviewer.name}
+                {review.creator.username}
               </Link>
               {' '}
               |
@@ -83,14 +84,12 @@ function ReviewCard({ review, className, ...rest }) {
           </Box>
         )}
         title={(
-          <Link
+          <Typography
             color="textPrimary"
-            component={RouterLink}
-            to="#"
             variant="h5"
           >
-            {review.project.title}
-          </Link>
+            {labels[review.rating]}
+          </Typography>
         )}
       />
       <Box

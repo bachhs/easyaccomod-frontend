@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import clsx from 'clsx';
 import moment from 'moment';
 import {
@@ -36,14 +38,12 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: theme.spacing(1)
     }
   },
-  actionIcon: {
-    marginRight: theme.spacing(1)
-  }
 }));
 
 function Header({ place, className, ...rest }) {
   const classes = useStyles();
   const account = useSelector((state) => state.account);
+  const history = useHistory();
   const [openReport, setOpenReport] = useState(false);
 
   const handleReportOpen = () => {
@@ -60,12 +60,15 @@ function Header({ place, className, ...rest }) {
       axios
         .get(`${process.env.REACT_APP_API}/users/favorite`)
         .then((response) => {
-          if (response.data.favorite.includes(place.id)) { setLiked(true); }
+          if (response.data.user.favorite.includes(place.id)) { setLiked(true); }
         });
     }
   }, []);
 
   const addFavorite = () => {
+    if (!account.user) {
+      history.push('/login');
+    }
     axios.patch(`${process.env.REACT_APP_API}/users/favorite`, { placeId: place.id })
       .then(setLiked(!liked));
   };
@@ -154,24 +157,8 @@ function Header({ place, className, ...rest }) {
           variant="contained"
           color="secondary"
           onClick={addFavorite}
+          startIcon={liked ? <CheckIcon /> : <FavoriteIcon />}
         >
-          {liked
-            ? (
-              <SvgIcon
-                fontSize="small"
-                className={classes.actionIcon}
-              >
-                <CheckIcon />
-              </SvgIcon>
-            )
-            : (
-              <SvgIcon
-                fontSize="small"
-                className={classes.actionIcon}
-              >
-                <FavoriteIcon />
-              </SvgIcon>
-            )}
           Yêu thích
         </Button>
         <Report

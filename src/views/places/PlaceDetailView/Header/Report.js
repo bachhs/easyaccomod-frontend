@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Report({
-  author,
   open,
   onClose,
   onApply,
@@ -110,7 +109,6 @@ function Report({
 }
 
 Report.propTypes = {
-  author: PropTypes.object.isRequired,
   className: PropTypes.string,
   onApply: PropTypes.func,
   onClose: PropTypes.func,

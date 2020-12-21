@@ -1,6 +1,9 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
 import { Alert, Rating } from '@material-ui/lab';
 import {
@@ -12,40 +15,57 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
+import axios from 'src/utils/axios';
+
+export const labels = {
+  1: 'Ghét',
+  2: 'Không thích',
+  3: 'Chỉ OK',
+  4: 'Thích',
+  5: 'Rất thích',
+};
 
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(3)
   },
-  helperText: {
-    textAlign: 'right',
-    marginRight: 0
+  rating: {
+    paddingLeft: 10,
+    paddingTop: 3.5
   }
 }));
 
 function Rate({
-  author,
   open,
   onClose,
   onApply,
   className,
   ...rest
 }) {
-  const rating = 4;
-  const [value, setValue] = useState('');
   const classes = useStyles();
+  const [rating, setRating] = useState(4);
+  const [message, setMessage] = useState('');
+  const [hover, setHover] = React.useState(-1);
   const { enqueueSnackbar } = useSnackbar();
-
-  const handleChange = (event) => {
-    event.persist();
-    setValue(event.target.value);
-  };
+  const { pid } = useParams();
+  const account = useSelector((state) => state.account);
 
   const handleApply = () => {
-    enqueueSnackbar('Request sent', {
-      variant: 'success'
-    });
-    onApply();
+    axios
+      .post(`${process.env.REACT_APP_API}/places/${pid}/review`, {
+        review: {
+          creator: account.user.id,
+          rating,
+          message
+        }
+      })
+      .then(() => enqueueSnackbar('Đánh giá thành công', {
+        variant: 'success'
+      }))
+      .catch((err) => enqueueSnackbar('Không thể đánh giá', {
+        variant: 'error'
+      }))
+      .finally(() => onApply());
   };
 
   return (
@@ -96,17 +116,17 @@ function Rate({
               <Box
                 display="flex"
               >
-                <Rating value={rating} />
-                <Typography
-                  className={classes.rating}
-                  variant="h6"
-                  color="textPrimary"
-                  style={{ paddingLeft: 10, paddingTop: 3.5 }}
-                >
-                  {rating}
-                  {' '}
-                  / 5
-                </Typography>
+                <Rating
+                  name="hover-feedback"
+                  value={rating}
+                  onChange={(event, newValue) => {
+                    setRating(newValue);
+                  }}
+                  onChangeActive={(event, newHover) => {
+                    setHover(newHover);
+                  }}
+                />
+                {rating !== null && <Box ml={2}>{labels[hover !== -1 ? hover : rating]}</Box>}
               </Box>
             </Grid>
           </Grid>
@@ -114,15 +134,13 @@ function Rate({
         <Box mt={3}>
           <TextField
             autoFocus
-            FormHelperTextProps={{ classes: { root: classes.helperText } }}
             fullWidth
-            helperText={`${300 - value.length} kí tự còn lại`}
             label="Nhận xét"
             multiline
-            onChange={handleChange}
+            onChange={(e) => setMessage(e.target.value)}
             placeholder="Bạn nghĩ gì về căn phòng này?"
             rows={6}
-            value={value}
+            value={message}
             variant="outlined"
           />
         </Box>
@@ -145,7 +163,6 @@ function Rate({
 }
 
 Rate.propTypes = {
-  author: PropTypes.object.isRequired,
   className: PropTypes.string,
   onApply: PropTypes.func,
   onClose: PropTypes.func,
