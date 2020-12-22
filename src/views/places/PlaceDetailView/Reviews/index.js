@@ -46,7 +46,7 @@ function Reviews({ className, ...rest }) {
       <OverallReviews
         getReviews={getReviews}
         ratings={reviews ? reviews.map((review) => {
-          if (review.creator.id === account.user.id) {
+          if (account.user && review.creator.id === account.user.id) {
             reviewed = true;
           }
           return review.rating;
