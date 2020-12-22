@@ -44,12 +44,7 @@ const useStyles = makeStyles((theme) => ({
     '&:before': {
       position: 'absolute',
       backgroundImage: 'linear-gradient(-180deg, rgba(0,0,0,0.00) 58%, rgba(0,0,0,0.32) 100%)'
-    },
-    '&:hover': {
-      '& $allWiewButton': {
-        visibility: 'visible'
-      }
-    },
+    }
   },
   image1Container: {
     height: 400,
@@ -71,7 +66,6 @@ const useStyles = makeStyles((theme) => ({
   },
   allWiewButton: {
     position: 'absolute',
-    visibility: 'hidden',
     bottom: theme.spacing(1),
     right: theme.spacing(1),
     backgroundColor: '#ffffff',
@@ -83,9 +77,6 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       backgroundColor: '#66c2ff'
     }
-  },
-  ViewComfyIcon: {
-    marginRight: theme.spacing(1)
   },
   image1: {
     maxWidth: '99%',
@@ -188,8 +179,8 @@ function Brief({ place, className, ...rest }) {
                 <Button
                   className={classes.allWiewButton}
                   variant="contained"
+                  startIcon={<ViewComfyIcon className={classes.ViewComfyIcon} />}
                 >
-                  <ViewComfyIcon className={classes.ViewComfyIcon} />
                   Hiển thị tất cả
                 </Button>
               </Grid>

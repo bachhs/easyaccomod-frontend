@@ -216,7 +216,7 @@ function PlaceCreateForm({ className, ...rest }) {
                         >
                           <MenuItem value="Phòng trọ">Phòng trọ</MenuItem>
                           <MenuItem value="Chung cư">Chung cư mini</MenuItem>
-                          <MenuItem value="Nhà nguyên căn">Chung cư nguyên căn</MenuItem>
+                          <MenuItem value="Nhà nguyên căn">Nhà nguyên căn</MenuItem>
                         </TextField>
                       </Grid>
                       <Grid
