@@ -19,10 +19,14 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
+import AcUnitIcon from '@material-ui/icons/AcUnit';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import BathtubIcon from '@material-ui/icons/Bathtub';
 import FaceIcon from '@material-ui/icons/Face';
+import FireplaceIcon from '@material-ui/icons/Fireplace';
 import FlashOnIcon from '@material-ui/icons/FlashOn';
 import HouseIcon from '@material-ui/icons/House';
+import KitchenIcon from '@material-ui/icons/Kitchen';
 import OpacityIcon from '@material-ui/icons/Opacity';
 import SquareFootIcon from '@material-ui/icons/SquareFoot';
 import ViewComfyIcon from '@material-ui/icons/ViewComfy';
@@ -155,7 +159,7 @@ function Brief({ place, className, ...rest }) {
                 lg={7}
                 xs={12}
               >
-                <img className={clsx(classes.image1, className)} src="https://4kwallpapers.com/images/walls/thumbs_2t/129.jpg" alt="Hình ảnh" />
+                <img className={clsx(classes.image1, className)} src={place.images[0]} alt="Hình ảnh" />
               </Grid>
               <Grid
                 item
@@ -171,14 +175,14 @@ function Brief({ place, className, ...rest }) {
                     className={clsx(classes.image2Container, className)}
                     md={12}
                   >
-                    <img className={clsx(classes.image2, className)} src="https://img3.goodfon.com/wallpaper/nbig/3/b1/asus-rog-wallpaper-dark.jpg" alt="Hình ảnh" />
+                    <img className={clsx(classes.image2, className)} src={place.images[1]} alt="Hình ảnh" />
                   </Grid>
                   <Grid
                     item
                     className={clsx(classes.image3Container, className)}
                     md={12}
                   >
-                    <img className={clsx(classes.image3, className)} src="https://rog.asus.com/media/1589570302548.jpg" alt="Hình ảnh" />
+                    <img className={clsx(classes.image3, className)} src={place.images[2]} alt="Hình ảnh" />
                   </Grid>
                 </Grid>
                 <Button
@@ -302,7 +306,7 @@ function Brief({ place, className, ...rest }) {
                   <Grid>
                     <Chip
                       className={clsx(classes.chip, className)}
-                      icon={<FaceIcon />}
+                      icon={<KitchenIcon />}
                       label={place.kitchen}
                       clickable
                       color="primary"
@@ -312,7 +316,7 @@ function Brief({ place, className, ...rest }) {
                   <Grid>
                     <Chip
                       className={clsx(classes.chip, className)}
-                      icon={<FaceIcon />}
+                      icon={<BathtubIcon />}
                       label={`Phòng tắm ${place.bathroom}`}
                       clickable
                       color="primary"
@@ -335,7 +339,7 @@ function Brief({ place, className, ...rest }) {
                     {place.airconditioner && (
                     <Chip
                       className={clsx(classes.chip, className)}
-                      icon={<FaceIcon />}
+                      icon={<AcUnitIcon />}
                       label="Điều hòa"
                       clickable
                       color="primary"
@@ -347,7 +351,7 @@ function Brief({ place, className, ...rest }) {
                     {place.balcony && (
                     <Chip
                       className={clsx(classes.chip, className)}
-                      icon={<FaceIcon />}
+                      icon={<HouseIcon />}
                       label="Ban công"
                       clickable
                       color="primary"
@@ -359,7 +363,7 @@ function Brief({ place, className, ...rest }) {
                     {place.waterHeater && (
                     <Chip
                       className={clsx(classes.chip, className)}
-                      icon={<FaceIcon />}
+                      icon={<FireplaceIcon />}
                       label="Nóng lạnh"
                       clickable
                       color="primary"

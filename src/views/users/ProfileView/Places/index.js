@@ -22,7 +22,7 @@ function Places({ className, ...rest }) {
     const mock = [
       {
         id: 'tjwqejew',
-        title: 'khanhlinhxacsuat',
+        title: 'Test',
         date: new Date(),
         description: 'Chính Chủ cho thuê giá rẻ mặt tiền ngang lớn 8x20m, Nguyễn Tri Phương Q10. 3 lầu, Giá chỉ 120tr/th Vị trí cực kỳ đắc địa. Nằm đoạn đẹp nhất con đường, tuyến phố thương hiệu nổi tiếng về kinh doanh ẩm thực. ',
         address: 'số nhà 3, ngõ 47, Nguyễn Hoàng, phường Mỹ Đình 2, quận Nam Từ Liêm, Hà Nội',

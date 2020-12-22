@@ -104,7 +104,7 @@ function ProjectBrowseView() {
     const anchor = (event.target.ownerDocument || document).querySelector('#Main');
 
     if (anchor) {
-      anchor.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      anchor.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -163,7 +163,7 @@ function ProjectBrowseView() {
       </div>
       <Page
         className={classes.root}
-        title="Project List"
+        title="Tomahawk Home - Tìm nhà trọ nhanh như tên lửa hành trình"
         id="Main"
       >
         <Container maxWidth="lg">

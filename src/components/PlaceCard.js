@@ -41,7 +41,7 @@ function PlaceCard({ place, className, ...rest }) {
       <Box p={3}>
         <CardMedia
           className={classes.media}
-          image={place.creator.avatar}
+          image={place.image}
         />
         <Box
           display="flex"
@@ -177,7 +177,7 @@ function PlaceCard({ place, className, ...rest }) {
           variant="subtitle2"
           color="textSecondary"
         >
-          400
+          {place.views}
         </Typography>
         <Typography
           variant="subtitle2"
@@ -187,6 +187,7 @@ function PlaceCard({ place, className, ...rest }) {
         </Typography>
         <Box flexGrow={1} />
         <Rating
+          precision={0.1}
           value={place.star}
           size="small"
           readOnly

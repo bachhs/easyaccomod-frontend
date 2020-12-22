@@ -9,7 +9,8 @@ import {
   CardContent,
   Grid,
   Typography,
-  makeStyles
+  makeStyles,
+  Tooltip
 } from '@material-ui/core';
 import { Rating } from '@material-ui/lab';
 import RateReviewIcon from '@material-ui/icons/RateReview';
@@ -121,16 +122,20 @@ function OverallReviews({
               </Grid>
             )}
           <Grid item>
-            <Button
-              className={classes.inviteButton}
-              variant="contained"
-              color="primary"
-              onClick={handleRateOpen}
-              disabled={reviewed}
-            >
-              <RateReviewIcon className={classes.RateReviewIcon} />
-              Đánh giá và nhận xét
-            </Button>
+            <Tooltip title={reviewed ? 'Bạn đã đánh giá rồi' : 'Đánh giá bài đăng'}>
+              <span>
+                <Button
+                  className={classes.inviteButton}
+                  variant="contained"
+                  color="primary"
+                  onClick={handleRateOpen}
+                  disabled={reviewed}
+                >
+                  <RateReviewIcon className={classes.RateReviewIcon} />
+                  Đánh giá và nhận xét
+                </Button>
+              </span>
+            </Tooltip>
           </Grid>
         </Grid>
       </CardContent>

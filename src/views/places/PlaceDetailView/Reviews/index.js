@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import axios from 'src/utils/axios';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import OverallReviews from './OverallReviews';
@@ -17,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Reviews({ className, ...rest }) {
   const classes = useStyles();
+  const account = useSelector((state) => state.account);
   const { pid } = useParams();
   const isMountedRef = useIsMountedRef();
   const [reviews, setReviews] = useState(null);
@@ -44,7 +46,7 @@ function Reviews({ className, ...rest }) {
       <OverallReviews
         getReviews={getReviews}
         ratings={reviews ? reviews.map((review) => {
-          if (review.creator.id === '5fcc32b365f2eb1d40e22c9c') {
+          if (review.creator.id === account.user.id) {
             reviewed = true;
           }
           return review.rating;
