@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core';
 import axios from 'src/utils/axios';
 import Page from 'src/components/Page';
+import { useSnackbar } from 'notistack';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import Header from './Header';
 import Results from './Results';
@@ -27,6 +28,7 @@ function CustomerListView() {
   const classes = useStyles();
   const isMountedRef = useIsMountedRef();
   const [customers, setCustomers] = useState(null);
+  const { enqueueSnackbar } = useSnackbar();
 
   const getCustomers = useCallback(() => {
     axios
@@ -37,6 +39,22 @@ function CustomerListView() {
         }
       });
   }, [isMountedRef]);
+
+  const activateCustomer = (id) => {
+    axios
+      .patch(`${process.env.REACT_APP_API}/users/activate/${id}/`)
+      .then(() => {
+        enqueueSnackbar('Xác thực thành công', {
+          variant: 'success'
+        });
+        getCustomers();
+      })
+      .catch(() => {
+        enqueueSnackbar('Xác thực không thành công', {
+          variant: 'error'
+        });
+      });
+  };
 
   useEffect(() => {
     getCustomers();
@@ -55,7 +73,7 @@ function CustomerListView() {
         <Header />
         {customers && (
           <Box mt={3}>
-            <Results customers={customers} />
+            <Results customers={customers} activateCustomer={activateCustomer} />
           </Box>
         )}
       </Container>

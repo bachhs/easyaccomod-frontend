@@ -81,56 +81,64 @@ function Account() {
           </Typography>
         </Hidden>
       </Box>
-      <Menu
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center'
-        }}
-        keepMounted
-        PaperProps={{ className: classes.popover }}
-        getContentAnchorEl={null}
-        anchorEl={ref.current}
-        open={isOpen}
-      >
-        {account.user ? (
-          <>
-            <MenuItem
-              onClick={handleClose}
-              component={RouterLink}
-              to={`/users/${account.user.id}`}
-            >
-              Tài khoản
-            </MenuItem>
-            <MenuItem
-              onClick={handleClose}
-              component={RouterLink}
-              to="/users"
-            >
-              Danh sách người dùng
-            </MenuItem>
-            <MenuItem onClick={handleLogout}>
-              Đăng xuất
-            </MenuItem>
-          </>
-        )
-          : (
-            <>
-              <MenuItem
-                component={RouterLink}
-                to="/login"
-              >
-                Đăng nhập
-              </MenuItem>
-              <MenuItem
-                component={RouterLink}
-                to="/register"
-              >
-                Đăng ký
-              </MenuItem>
-            </>
-          )}
-      </Menu>
+      {account.user ? (
+        <Menu
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center'
+          }}
+          keepMounted
+          PaperProps={{ className: classes.popover }}
+          getContentAnchorEl={null}
+          anchorEl={ref.current}
+          open={isOpen}
+        >
+          <MenuItem
+            onClick={handleClose}
+            component={RouterLink}
+            to={`/users/${account.user.id}`}
+          >
+            Tài khoản
+          </MenuItem>
+          <MenuItem
+            onClick={handleClose}
+            component={RouterLink}
+            to="/users"
+          >
+            Danh sách người dùng
+          </MenuItem>
+          <MenuItem onClick={handleLogout}>
+            Đăng xuất
+          </MenuItem>
+        </Menu>
+      ) : (
+        <Menu
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center'
+          }}
+          keepMounted
+          PaperProps={{ className: classes.popover }}
+          getContentAnchorEl={null}
+          anchorEl={ref.current}
+          open={isOpen}
+        >
+          <MenuItem
+            component={RouterLink}
+            to="/login"
+          >
+            Đăng nhập
+          </MenuItem>
+          <MenuItem
+            component={RouterLink}
+            to="/register"
+          >
+            Đăng ký
+          </MenuItem>
+        </Menu>
+      )}
     </>
   );
 }

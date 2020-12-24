@@ -36,7 +36,7 @@ function Header({ className, ...rest }) {
           variant="h3"
           color="textPrimary"
         >
-          All Customers
+          Tất cả người dùng
         </Typography>
       </Grid>
     </Grid>

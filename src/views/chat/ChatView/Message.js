@@ -62,7 +62,7 @@ function Message({
             <Link
               color="inherit"
               component={RouterLink}
-              to="#"
+              to={`/users/${message.sender.id}`}
               variant="h6"
             >
               {message.sender.username}

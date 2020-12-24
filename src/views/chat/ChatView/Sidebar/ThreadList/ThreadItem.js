@@ -38,7 +38,7 @@ function ThreadItem({
   const account = useSelector((state) => state.account);
   const { uid } = useParams();
   const contact = thread.recipients[0] === uid ? thread.recipients[0] : thread.recipients[1];
-  const lastMessageInfo = `${thread.lastestMessage.sender === account.user.id ? 'Me:' : ''} ${thread.lastestMessage.body}`;
+  const lastMessageInfo = `${thread.lastestMessage.sender === account.user.id ? 'Bạn:' : ''} ${thread.lastestMessage.body}`;
 
   return (
     <ListItem
@@ -50,8 +50,7 @@ function ThreadItem({
         className
       )}
       component={RouterLink}
-      // eslint-disable-next-line no-underscore-dangle
-      to={`/chat/${contact._id}`}
+      to={`/chat/${contact.id}`}
       {...rest}
     >
       <ListItemAvatar>

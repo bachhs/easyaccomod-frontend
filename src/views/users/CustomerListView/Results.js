@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
@@ -11,7 +10,6 @@ import {
   Divider,
   IconButton,
   Link,
-  SvgIcon,
   Tab,
   Table,
   TableBody,
@@ -23,10 +21,16 @@ import {
   makeStyles,
   TableContainer
 } from '@material-ui/core';
-import EditIcon from '@material-ui/icons/Edit';
-import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import MessageIcon from '@material-ui/icons/Message';
+import CheckIcon from '@material-ui/icons/Check';
 import getInitials from 'src/utils/getInitials';
 import Label from 'src/components/Label';
+
+export const roles = {
+  admin: 'Admin',
+  renter: 'Người thuê',
+  owner: 'Chủ sở hữu'
+};
 
 const tabs = [
   {
@@ -89,7 +93,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Results({ className, customers, ...rest }) {
+function Results({
+  className, customers, activateCustomer, ...rest
+}) {
   const classes = useStyles();
   const [currentTab, setCurrentTab] = useState('all');
   const [filters, setFilters] = useState({
@@ -183,7 +189,7 @@ function Results({ className, customers, ...rest }) {
                         <Link
                           color="inherit"
                           component={RouterLink}
-                          to="/app/management/customers/1"
+                          to={`/users/${customer.id}`}
                           variant="h6"
                         >
                           {customer.username}
@@ -198,13 +204,13 @@ function Results({ className, customers, ...rest }) {
                     </Box>
                   </TableCell>
                   <TableCell>
-                    {customer.role}
+                    {roles[customer.role]}
                   </TableCell>
                   <TableCell>
-                    <Label color={customer.available ? 'success' : 'error'}>
-                      {customer.available
-                        ? 'Đã xác thực'
-                        : 'Chưa xác thực'}
+                    <Label color={(customer.role === 'owner' && !customer.activated) ? 'error' : 'success'}>
+                      {(customer.role === 'owner' && !customer.activated)
+                        ? 'Chưa xác thực'
+                        : 'Đã xác thực'}
                     </Label>
                   </TableCell>
                   <TableCell>
@@ -215,20 +221,15 @@ function Results({ className, customers, ...rest }) {
                   </TableCell>
                   <TableCell align="right">
                     <IconButton
-                      component={RouterLink}
-                      to="/app/management/customers/1/edit"
+                      onClick={() => activateCustomer(customer.id)}
                     >
-                      <SvgIcon fontSize="small">
-                        <EditIcon />
-                      </SvgIcon>
+                      <CheckIcon />
                     </IconButton>
                     <IconButton
                       component={RouterLink}
-                      to="/app/management/customers/1"
+                      to={`chat/${customer.id}`}
                     >
-                      <SvgIcon fontSize="small">
-                        <ArrowRightIcon />
-                      </SvgIcon>
+                      <MessageIcon />
                     </IconButton>
                   </TableCell>
                 </TableRow>
@@ -243,6 +244,7 @@ function Results({ className, customers, ...rest }) {
 
 Results.propTypes = {
   className: PropTypes.string,
+  activateCustomer: PropTypes.func,
   customers: PropTypes.array
 };
 

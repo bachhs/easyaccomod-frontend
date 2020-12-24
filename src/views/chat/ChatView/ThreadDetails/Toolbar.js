@@ -2,14 +2,16 @@ import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import axios from 'src/utils/axios';
-import { useParams } from 'react-router-dom';
+import { useParams, Link as RouterLink } from 'react-router-dom';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import {
   Avatar,
   Box,
+  Link,
   Typography,
   makeStyles,
 } from '@material-ui/core';
+import { roles } from 'src/views/users/CustomerListView/Results';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -67,12 +69,14 @@ function Toolbar({
         >
           <Avatar src={contact.avatar} />
           <Box ml={1}>
-            <Typography
+            <Link
+              color="inherit"
+              component={RouterLink}
+              to={`/users/${contact.id}`}
               variant="h6"
-              color="textPrimary"
             >
               {contact.username}
-            </Typography>
+            </Link>
             <Box
               display="flex"
               alignItems="center"
@@ -81,7 +85,7 @@ function Toolbar({
                 color="textSecondary"
                 variant="caption"
               >
-                Chủ trọ
+                {roles[contact.role]}
               </Typography>
             </Box>
           </Box>
