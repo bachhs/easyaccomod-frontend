@@ -11,11 +11,14 @@ import {
   Grid,
   SvgIcon,
   Typography,
+  IconButton,
+  Tooltip,
   makeStyles
 } from '@material-ui/core';
 import axios from 'src/utils/axios';
 import ReportIcon from '@material-ui/icons/Report';
 import CheckIcon from '@material-ui/icons/Check';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import ClearIcon from '@material-ui/icons/Clear';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
@@ -99,6 +102,13 @@ function Header({ place, className, ...rest }) {
           >
             {place.activated ? 'Đã duyệt' : 'Chưa duyệt'}
           </Label>
+          <Tooltip title="Notifications" style={{ paddingRight: 20 }}>
+            <IconButton
+              color="inherit"
+            >
+              <CheckCircleOutlineIcon />
+            </IconButton>
+          </Tooltip>
         </Typography>
         <Box
           mx={-2}

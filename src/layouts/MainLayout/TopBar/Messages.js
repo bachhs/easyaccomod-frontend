@@ -65,7 +65,7 @@ function Messages() {
 
   return (
     <>
-      <Tooltip title="Notifications">
+      <Tooltip title="Notifications" style={{ paddingLeft: 30 }}>
         <IconButton
           color="inherit"
           ref={ref}

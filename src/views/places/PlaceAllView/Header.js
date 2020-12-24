@@ -36,7 +36,7 @@ function Header({ className, ...rest }) {
           variant="h3"
           color="textPrimary"
         >
-          Tất cả người dùng
+          Tất cả bài đăng
         </Typography>
       </Grid>
     </Grid>

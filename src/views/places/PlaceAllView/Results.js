@@ -21,15 +21,13 @@ import {
   makeStyles,
   TableContainer
 } from '@material-ui/core';
-import MessageIcon from '@material-ui/icons/Message';
 import CheckIcon from '@material-ui/icons/Check';
 import getInitials from 'src/utils/getInitials';
 import Label from 'src/components/Label';
 
 export const roles = {
-  admin: 'Admin',
-  renter: 'Người thuê',
-  owner: 'Chủ sở hữu'
+  Unapproved: 'Chưa duyệt',
+  Approved: 'Đã duyệt'
 };
 
 const tabs = [
@@ -38,16 +36,12 @@ const tabs = [
     label: 'Tất cả'
   },
   {
-    value: 'owner',
-    label: 'Chủ sở hữu'
+    value: 'Unapproved',
+    label: 'Chưa duyệt'
   },
   {
-    value: 'renter',
-    label: 'Người thuê'
-  },
-  {
-    value: 'admin',
-    label: 'Admin'
+    value: 'Approved',
+    label: 'Đã duyệt'
   }
 ];
 
@@ -99,17 +93,15 @@ function Results({
   const classes = useStyles();
   const [currentTab, setCurrentTab] = useState('all');
   const [filters, setFilters] = useState({
-    owner: null,
-    renter: null,
-    admin: null
+    Unapproved: null,
+    Approved: null
   });
 
   const handleTabsChange = (event, value) => {
     const updatedFilters = {
       ...filters,
-      owner: null,
-      renter: null,
-      admin: null
+      Unapproved: null,
+      Approved: null
     };
 
     if (value !== 'all') {
@@ -149,16 +141,13 @@ function Results({
             <TableHead>
               <TableRow>
                 <TableCell>
-                  Name
-                </TableCell>
-                <TableCell>
-                  Loại
+                  Chủ sở hữu
                 </TableCell>
                 <TableCell>
                   Trạng Thái
                 </TableCell>
                 <TableCell>
-                  Số điện thoại
+                  Loại phòng
                 </TableCell>
                 <TableCell>
                   Địa chỉ
@@ -204,13 +193,10 @@ function Results({
                     </Box>
                   </TableCell>
                   <TableCell>
-                    {roles[customer.role]}
-                  </TableCell>
-                  <TableCell>
-                    <Label color={(customer.role === 'owner' && !customer.activated) ? 'error' : 'success'}>
-                      {(customer.role === 'owner' && !customer.activated)
-                        ? 'Chưa xác thực'
-                        : 'Đã xác thực'}
+                    <Label color={(customer.role === 'Unapproved' && !customer.activated) ? 'error' : 'success'}>
+                      {(customer.role === 'Unapproved' && !customer.activated)
+                        ? 'Chưa duyệt'
+                        : 'Đã duyệt'}
                     </Label>
                   </TableCell>
                   <TableCell>
@@ -224,12 +210,6 @@ function Results({
                       onClick={() => activateCustomer(customer.id)}
                     >
                       <CheckIcon />
-                    </IconButton>
-                    <IconButton
-                      component={RouterLink}
-                      to={`chat/${customer.id}`}
-                    >
-                      <MessageIcon />
                     </IconButton>
                   </TableCell>
                 </TableRow>

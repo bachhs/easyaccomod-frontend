@@ -149,7 +149,7 @@ function Results({
             <TableHead>
               <TableRow>
                 <TableCell>
-                  Name
+                  Tên
                 </TableCell>
                 <TableCell>
                   Loại

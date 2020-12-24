@@ -44,13 +44,13 @@ function CustomerListView() {
     axios
       .patch(`${process.env.REACT_APP_API}/users/activate/${id}/`)
       .then(() => {
-        enqueueSnackbar('Xác thực thành công', {
+        enqueueSnackbar('Duyệt bài thành công', {
           variant: 'success'
         });
         getCustomers();
       })
       .catch(() => {
-        enqueueSnackbar('Xác thực không thành công', {
+        enqueueSnackbar('Duyệt bài không thành công', {
           variant: 'error'
         });
       });
