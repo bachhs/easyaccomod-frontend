@@ -41,6 +41,11 @@ function Routes() {
                   path="/"
                   component={lazy(() => import('src/views/places/PlaceListView'))}
                 />
+                <Route
+                  exact
+                  path="/places/"
+                  component={lazy(() => import('src/views/places/PlaceAllView'))}
+                />
                 <ActivatedRoute
                   exact
                   path="/places/new"

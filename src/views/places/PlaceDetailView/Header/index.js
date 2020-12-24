@@ -93,16 +93,12 @@ function Header({ place, className, ...rest }) {
           color="textPrimary"
         >
           {place.title}
-          <Button
-            variant="container"
-            className={clsx(classes.buttonActivated, className)}
+          {' '}
+          <Label
+            color={place.activated ? 'success' : 'error'}
           >
-            <Label
-              color={account.user.activated ? 'success' : 'error'}
-            >
-              {account.user.activated ? 'Đã duyệt' : 'Chưa duyệt'}
-            </Label>
-          </Button>
+            {place.activated ? 'Đã duyệt' : 'Chưa duyệt'}
+          </Label>
         </Typography>
         <Box
           mx={-2}

@@ -24,13 +24,13 @@ import {
   makeStyles
 } from '@material-ui/core';
 import AllInboxIcon from '@material-ui/icons/AllInbox';
-import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
+import MailIcon from '@material-ui/icons/Mail';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import { getNotifications } from 'src/actions/notificationsActions';
 
 const iconsMap = {
   order_placed: AllInboxIcon,
-  new_message: ChatBubbleOutlineIcon,
+  new_message: MailIcon,
   item_shipped: LocalShippingIcon
 };
 
@@ -71,7 +71,7 @@ function Messages() {
           ref={ref}
           onClick={handleOpen}
         >
-          <ChatBubbleOutlineIcon />
+          <MailIcon />
         </IconButton>
       </Tooltip>
       <Popover

@@ -23,15 +23,14 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
-import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
 import AllInboxIcon from '@material-ui/icons/AllInbox';
-import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
+import NotificationsIcon from '@material-ui/icons/Notifications';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import { getNotifications } from 'src/actions/notificationsActions';
 
 const iconsMap = {
   order_placed: AllInboxIcon,
-  new_message: ChatBubbleOutlineIcon,
+  new_message: NotificationsIcon,
   item_shipped: LocalShippingIcon
 };
 
@@ -72,7 +71,7 @@ function Notifications() {
           ref={ref}
           onClick={handleOpen}
         >
-          <NotificationsNoneIcon />
+          <NotificationsIcon />
         </IconButton>
       </Tooltip>
       <Popover
