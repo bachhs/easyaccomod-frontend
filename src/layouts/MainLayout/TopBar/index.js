@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {
@@ -28,7 +27,6 @@ function TopBar({
   ...rest
 }) {
   const classes = useStyles();
-  const account = useSelector((state) => state.account);
 
   return (
     <AppBar
@@ -44,13 +42,11 @@ function TopBar({
           flexGrow={1}
         />
         <Search />
-        {account.user && (
-          <>
-            <Box ml={2}>
-              <Account />
-            </Box>
-          </>
-        )}
+        <>
+          <Box ml={2}>
+            <Account />
+          </Box>
+        </>
       </Toolbar>
     </AppBar>
   );

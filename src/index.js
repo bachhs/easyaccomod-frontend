@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'react-perfect-scrollbar/dist/css/styles.css';
 import { Provider } from 'react-redux';
 import { SettingsProvider } from 'src/context/SettingsContext';
 import { configureStore } from 'src/store';

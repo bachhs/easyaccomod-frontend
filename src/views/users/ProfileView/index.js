@@ -3,6 +3,7 @@ import React, {
   useState,
   useEffect
 } from 'react';
+import { useParams } from 'react-router-dom';
 import {
   Box,
   Container,
@@ -12,6 +13,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
+import axios from 'src/utils/axios';
 import Page from 'src/components/Page';
 import Header from './Header';
 import Places from './Places';
@@ -31,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
 function ProfileView() {
   const classes = useStyles();
   const isMountedRef = useIsMountedRef();
+  const { uid } = useParams();
   const [currentTab, setCurrentTab] = useState('favorite');
   const [user, setUser] = useState(null);
 
@@ -39,15 +42,14 @@ function ProfileView() {
   };
 
   const getPosts = useCallback(() => {
-    const mock = {
-      cover: 'https://www.ubackground.com/_ph/2/40551154.jpg',
-      avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaFH1DOqJKOErNawDF2d1EsYwg_cOoDRypUQ&usqp=CAU',
-      bio: 'ABC',
-      name: 'Bach Luu',
-      role: 'owner',
-      activated: false
-    };
-    setUser(mock);
+    axios
+      .get(`${process.env.REACT_APP_API}/users/${uid}`)
+      .then((response) => {
+        setUser(response.data.user);
+      })
+      .catch(() => {
+
+      });
   }, [isMountedRef]);
 
   useEffect(() => {

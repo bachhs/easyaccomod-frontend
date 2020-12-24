@@ -58,7 +58,7 @@ function Header({ place, className, ...rest }) {
   useEffect(() => {
     if (account.user) {
       axios
-        .get(`${process.env.REACT_APP_API}/users/favorite`)
+        .get(`${process.env.REACT_APP_API}/users/${account.user.id}/favorite`)
         .then((response) => {
           if (response.data.user.favorite.includes(place.id)) { setLiked(true); }
         });

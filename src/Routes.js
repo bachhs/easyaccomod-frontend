@@ -56,6 +56,16 @@ function Routes() {
                   path="/users/:uid"
                   component={lazy(() => import('src/views/users/ProfileView'))}
                 />
+                <Route
+                  exact
+                  path="/chat/:uid"
+                  component={lazy(() => import('src/views/chat/ChatView'))}
+                />
+                <Route
+                  exact
+                  path="/users"
+                  component={lazy(() => import('src/views/users/CustomerListView'))}
+                />
                 <Redirect to="/404" />
               </Switch>
             </MainLayout>

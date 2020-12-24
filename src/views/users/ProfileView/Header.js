@@ -122,7 +122,7 @@ function Header({
               variant="h4"
               color="textPrimary"
             >
-              {user.name}
+              {user.username}
             </Typography>
           </Box>
           <Box flexGrow={1} />
@@ -138,13 +138,12 @@ function Header({
                   Chưa xác thực
                 </Label>
               )
-
             )}
             <Button
               color="secondary"
               component={RouterLink}
               size="small"
-              to="/app/chat"
+              to={`/chat/${user.id}`}
               variant="contained"
               className={classes.action}
             >

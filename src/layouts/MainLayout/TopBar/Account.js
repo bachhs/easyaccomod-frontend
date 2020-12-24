@@ -30,11 +30,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Account() {
-  const account = useSelector((state) => state.account);
   const classes = useStyles();
   const history = useHistory();
   const ref = useRef(null);
   const dispatch = useDispatch();
+  const account = useSelector((state) => state.account);
   const { enqueueSnackbar } = useSnackbar();
   const [isOpen, setOpen] = useState(false);
 
@@ -70,14 +70,14 @@ function Account() {
         <Avatar
           alt="User"
           className={classes.avatar}
-          src={account.user.avatar}
+          src={account.user ? account.user.avatar : null}
         />
         <Hidden smDown>
           <Typography
             variant="h6"
             color="inherit"
           >
-            {account.user.username}
+            {account.user ? account.user.username : 'Tài khoản'}
           </Typography>
         </Hidden>
       </Box>
@@ -93,21 +93,43 @@ function Account() {
         anchorEl={ref.current}
         open={isOpen}
       >
-        <MenuItem
-          component={RouterLink}
-          to="/app/social/profile"
-        >
-          Profile
-        </MenuItem>
-        <MenuItem
-          component={RouterLink}
-          to="/app/account"
-        >
-          Account
-        </MenuItem>
-        <MenuItem onClick={handleLogout}>
-          Logout
-        </MenuItem>
+        {account.user ? (
+          <>
+            <MenuItem
+              onClick={handleClose}
+              component={RouterLink}
+              to={`/users/${account.user.id}`}
+            >
+              Tài khoản
+            </MenuItem>
+            <MenuItem
+              onClick={handleClose}
+              component={RouterLink}
+              to="/users"
+            >
+              Danh sách người dùng
+            </MenuItem>
+            <MenuItem onClick={handleLogout}>
+              Đăng xuất
+            </MenuItem>
+          </>
+        )
+          : (
+            <>
+              <MenuItem
+                component={RouterLink}
+                to="/login"
+              >
+                Đăng nhập
+              </MenuItem>
+              <MenuItem
+                component={RouterLink}
+                to="/register"
+              >
+                Đăng ký
+              </MenuItem>
+            </>
+          )}
       </Menu>
     </>
   );
