@@ -65,7 +65,7 @@ function Notifications() {
 
   return (
     <>
-      <Tooltip title="Notifications" style={{ paddingRight: 20 }}>
+      <Tooltip title="Notifications" style={{ marginRight: 12 }}>
         <IconButton
           color="inherit"
           ref={ref}

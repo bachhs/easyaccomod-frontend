@@ -20,7 +20,9 @@ import ReportIcon from '@material-ui/icons/Report';
 import CheckIcon from '@material-ui/icons/Check';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
+import EventBusyIcon from '@material-ui/icons/EventBusy';
 import ClearIcon from '@material-ui/icons/Clear';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import Label from 'src/components/Label';
@@ -46,6 +48,12 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       backgroundColor: theme.palette.background.dark
     }
+  },
+  checkCircleIcon: {
+    fill: theme.palette.success.main
+  },
+  HighlightOffIcon: {
+    fill: theme.palette.error.main
   }
 }));
 
@@ -97,16 +105,18 @@ function Header({ place, className, ...rest }) {
         >
           {place.title}
           {' '}
-          <Label
-            color={place.activated ? 'success' : 'error'}
-          >
-            {place.activated ? 'Đã duyệt' : 'Chưa duyệt'}
-          </Label>
-          <Tooltip title="Notifications" style={{ paddingRight: 20 }}>
-            <IconButton
-              color="inherit"
+          <Button disabled>
+            <Label
+              color={place.activated ? 'success' : 'error'}
             >
-              <CheckCircleOutlineIcon />
+              {place.activated ? 'Đã duyệt' : 'Chưa duyệt'}
+            </Label>
+          </Button>
+          <Tooltip title="check or X">
+            <IconButton>
+              {place.activated
+                ? (<CheckCircleOutlineIcon className={clsx(classes.checkCircleIcon, className)} />)
+                : (<HighlightOffIcon className={clsx(classes.HighlightOffIcon, className)} />)}
             </IconButton>
           </Tooltip>
         </Typography>
@@ -133,19 +143,41 @@ function Header({ place, className, ...rest }) {
             </Typography>
           </div>
           <div className={classes.badge}>
-            <SvgIcon
-              fontSize="small"
-              className={classes.badgeIcon}
-            >
-              <EventAvailableIcon />
-            </SvgIcon>
-            <Typography
-              variant="body1"
-              color="inherit"
-              component="span"
-            >
-              {`Kết thúc vào ${moment(place.endDate).fromNow()}`}
-            </Typography>
+            {moment(place.endDate).isAfter(moment().toDate())
+              ? (
+                <>
+                  <SvgIcon
+                    fontSize="small"
+                    className={classes.badgeIcon}
+                  >
+                    <EventAvailableIcon />
+                  </SvgIcon>
+                  <Typography
+                    variant="body1"
+                    color="inherit"
+                    component="span"
+                  >
+                    {`Kết thúc vào ${moment(place.endDate).fromNow()}`}
+                  </Typography>
+                </>
+              )
+              : (
+                <>
+                  <SvgIcon
+                    fontSize="small"
+                    className={classes.badgeIcon}
+                  >
+                    <EventBusyIcon />
+                  </SvgIcon>
+                  <Typography
+                    variant="body1"
+                    color="inherit"
+                    component="span"
+                  >
+                    Liên hệ với admin để gia hạn bài viết
+                  </Typography>
+                </>
+              )}
           </div>
           <div className={classes.badge}>
             <SvgIcon

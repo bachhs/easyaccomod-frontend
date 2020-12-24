@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'inline-flex',
     flexGrow: 0,
     whiteSpace: 'nowrap',
-    cursor: 'pointer',
+    cursor: 'default',
     flexShrink: 0,
     fontSize: theme.typography.pxToRem(12),
     fontWeight: theme.typography.fontWeightMedium,
