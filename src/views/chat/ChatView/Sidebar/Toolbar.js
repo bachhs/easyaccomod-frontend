@@ -28,7 +28,7 @@ function Toolbar({ className, ...rest }) {
         variant="h3"
         color="textPrimary"
       >
-        Chats
+        Tin nhắn
       </Typography>
     </div>
   );

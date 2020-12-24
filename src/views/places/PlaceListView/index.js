@@ -15,7 +15,7 @@ import {
 import Page from 'src/components/Page';
 import axios from 'src/utils/axios';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
-import FingerprintIcon from '@material-ui/icons/Fingerprint';
+import PlayForWorkOutlinedIcon from '@material-ui/icons/PlayForWorkOutlined';
 import Header from './Header';
 import Filter from './Filter';
 import Results from './Results';
@@ -154,7 +154,7 @@ function ProjectBrowseView() {
           <Button
             className={classes.inviteButton}
             variant="contained"
-            startIcon={<FingerprintIcon />}
+            startIcon={<PlayForWorkOutlinedIcon />}
             onClick={handleClick}
           >
             Tham gia với chúng tôi

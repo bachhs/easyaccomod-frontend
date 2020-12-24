@@ -51,7 +51,7 @@ function CustomerListView() {
       className={classes.root}
       title="Customer List"
     >
-      <Container maxWidth={false}>
+      <Container maxWidth="lg">
         <Header />
         {customers && (
           <Box mt={3}>

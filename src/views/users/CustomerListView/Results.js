@@ -26,6 +26,7 @@ import {
 import EditIcon from '@material-ui/icons/Edit';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import getInitials from 'src/utils/getInitials';
+import Label from 'src/components/Label';
 
 const tabs = [
   {
@@ -148,13 +149,16 @@ function Results({ className, customers, ...rest }) {
                   Loại
                 </TableCell>
                 <TableCell>
-                  Orders
+                  Trạng Thái
                 </TableCell>
                 <TableCell>
-                  Spent
+                  Số điện thoại
+                </TableCell>
+                <TableCell>
+                  Địa chỉ
                 </TableCell>
                 <TableCell align="right">
-                  Actions
+                  Hành động
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -197,11 +201,17 @@ function Results({ className, customers, ...rest }) {
                     {customer.role}
                   </TableCell>
                   <TableCell>
-                    {customer.orders}
+                    <Label color={customer.available ? 'success' : 'error'}>
+                      {customer.available
+                        ? 'Đã xác thực'
+                        : 'Chưa xác thực'}
+                    </Label>
                   </TableCell>
                   <TableCell>
-                    {customer.currency}
-                    {customer.spent}
+                    {customer.phone}
+                  </TableCell>
+                  <TableCell>
+                    {customer.address}
                   </TableCell>
                   <TableCell align="right">
                     <IconButton
