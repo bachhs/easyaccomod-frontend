@@ -20,6 +20,7 @@ import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import ClearIcon from '@material-ui/icons/Clear';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import Label from 'src/components/Label';
 import Report from './Report';
 
 const useStyles = makeStyles((theme) => ({
@@ -38,6 +39,11 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: theme.spacing(1)
     }
   },
+  buttonActivated: {
+    '&:hover': {
+      backgroundColor: theme.palette.background.dark
+    }
+  }
 }));
 
 function Header({ place, className, ...rest }) {
@@ -87,6 +93,16 @@ function Header({ place, className, ...rest }) {
           color="textPrimary"
         >
           {place.title}
+          <Button
+            variant="container"
+            className={clsx(classes.buttonActivated, className)}
+          >
+            <Label
+              color={account.user.activated ? 'success' : 'error'}
+            >
+              {account.user.activated ? 'Đã duyệt' : 'Chưa duyệt'}
+            </Label>
+          </Button>
         </Typography>
         <Box
           mx={-2}

@@ -11,12 +11,17 @@ import {
   List,
   ListItem,
   Typography,
-  makeStyles
+  makeStyles,
+  Button
 } from '@material-ui/core';
 import getInitials from 'src/utils/getInitials';
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    position: 'relative'
   },
   header: {
     paddingBottom: 0
@@ -27,17 +32,55 @@ const useStyles = makeStyles((theme) => ({
   listItem: {
     padding: theme.spacing(2, 0),
     justifyContent: 'space-between'
+  },
+  buttonChat: {
+    position: 'absolute',
+    top: theme.spacing(3.5),
+    right: theme.spacing(3),
+    borderRadius: 600
+  },
+  MaiIcon: {
+    [theme.breakpoints.down('md')]: {
+      marginRight: theme.spacing(1.5)
+    }
   }
 }));
 
 function Holder({ creator, className, ...rest }) {
   const classes = useStyles();
+  const theme = useTheme(Holder);
+  const matchesMD = useMediaQuery(theme.breakpoints.down('md'));
+  const matchesXS = useMediaQuery(theme.breakpoints.down('xs'));
 
   return (
     <Card
       className={clsx(classes.root, className)}
       {...rest}
     >
+      {!matchesXS
+        ? (
+          <Button
+            variant="outlined"
+            color="secondary"
+            component={RouterLink}
+            className={clsx(classes.buttonChat, className)}
+            to={`/chat/${creator.id}`}
+          >
+            <MailOutlineIcon className={clsx(classes.MaiIcon, className)} />
+            {matchesMD ? 'Nhắn tin cho chủ nhà' : ''}
+          </Button>
+        )
+        : (
+          <Button
+            variant="outlined"
+            color="secondary"
+            component={RouterLink}
+            className={clsx(classes.buttonChat, className)}
+            to={`/chat/${creator.id}`}
+          >
+            <MailOutlineIcon />
+          </Button>
+        )}
       <CardHeader
         avatar={(
           <Avatar
