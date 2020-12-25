@@ -16,7 +16,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 import axios from 'src/utils/axios';
-import AutorenewIcon from '@material-ui/icons/Autorenew';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import ReportIcon from '@material-ui/icons/Report';
 import CheckIcon from '@material-ui/icons/Check';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
@@ -24,9 +24,9 @@ import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import EventBusyIcon from '@material-ui/icons/EventBusy';
 import ClearIcon from '@material-ui/icons/Clear';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import Label from 'src/components/Label';
 import Report from './Report';
 
 const useStyles = makeStyles((theme) => ({
@@ -51,10 +51,12 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   checkCircleIcon: {
-    fill: theme.palette.success.main
+    fill: theme.palette.success.main,
+    fontSize: 20
   },
   HighlightOffIcon: {
-    fill: theme.palette.error.main
+    fill: theme.palette.error.main,
+    fontSize: 20
   }
 }));
 
@@ -108,23 +110,38 @@ function Header({
         >
           {place.title}
           {' '}
-          <IconButton disabled>
+          <IconButton disabled style={{ marginLeft: -12, marginRight: '3%' }}>
             {place.activated
               ? (<CheckCircleOutlineIcon className={clsx(classes.checkCircleIcon, className)} />)
               : (<HighlightOffIcon className={clsx(classes.HighlightOffIcon, className)} />)}
           </IconButton>
-          <Button
-            variant="outlined"
-            color="secondary"
-            onClick={() => activatePlace(place.id)}
-          >
-            Duyệt
-          </Button>
-          <Tooltip title="Sửa bài đăng">
-            <IconButton>
-              <AutorenewIcon color="secondary" />
-            </IconButton>
-          </Tooltip>
+          {!place.activated
+            ? (
+              <>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  onClick={() => activatePlace(place.id)}
+                  style={{ fontSize: 12 }}
+                >
+                  Duyệt
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  startIcon={<HomeOutlinedIcon />}
+                  style={{ fontSize: 12, marginLeft: 12 }}
+                >
+                  Còn phòng
+                </Button>
+                <Tooltip title="Sửa bài đăng">
+                  <IconButton>
+                    <EditOutlinedIcon color="secondary" />
+                  </IconButton>
+                </Tooltip>
+              </>
+            )
+            : (<Typography />)}
         </Typography>
         <Box
           mx={-2}

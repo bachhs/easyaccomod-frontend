@@ -11,7 +11,8 @@ import {
   Grid,
   Typography,
   makeStyles,
-  CardHeader
+  CardHeader,
+  CardMedia
 } from '@material-ui/core';
 import Maps from 'src/components/Maps';
 import List from '@material-ui/core/List';
@@ -49,6 +50,9 @@ const useStyles = makeStyles((theme) => ({
   image1Container: {
     height: 400,
     [theme.breakpoints.down('md')]: {
+      height: 500
+    },
+    [theme.breakpoints.down('xs')]: {
       height: 250
     }
   },
@@ -83,7 +87,10 @@ const useStyles = makeStyles((theme) => ({
     minWidth: '99%',
     height: 400,
     [theme.breakpoints.down('md')]: {
-      height: 250,
+      height: 500
+    },
+    [theme.breakpoints.down('xs')]: {
+      height: 250
     },
     cursor: 'pointer',
     '&:hover': {
@@ -115,7 +122,7 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       opacity: '0.85'
     }
-  }
+  },
 }));
 
 function Brief({ place, className, ...rest }) {
@@ -150,7 +157,10 @@ function Brief({ place, className, ...rest }) {
                 lg={7}
                 xs={12}
               >
-                <img className={clsx(classes.image1, className)} src={place.images[0]} alt="Hình ảnh" />
+                <CardMedia
+                  className={classes.image1}
+                  image={place.images[0]}
+                />
               </Grid>
               <Grid
                 item
@@ -166,14 +176,20 @@ function Brief({ place, className, ...rest }) {
                     className={clsx(classes.image2Container, className)}
                     md={12}
                   >
-                    <img className={clsx(classes.image2, className)} src={place.images[1]} alt="Hình ảnh" />
+                    <CardMedia
+                      className={classes.image2}
+                      image={place.images[1]}
+                    />
                   </Grid>
                   <Grid
                     item
                     className={clsx(classes.image3Container, className)}
                     md={12}
                   >
-                    <img className={clsx(classes.image3, className)} src={place.images[2]} alt="Hình ảnh" />
+                    <CardMedia
+                      className={classes.image3}
+                      image={place.images[2]}
+                    />
                   </Grid>
                 </Grid>
                 <Button
