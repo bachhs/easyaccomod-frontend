@@ -27,6 +27,9 @@ const useStyles = makeStyles((theme) => ({
   VisibilityIcon: {
     marginRight: theme.spacing(1),
     opacity: 0.75
+  },
+  box: {
+    height: 100
   }
 }));
 
@@ -88,6 +91,7 @@ function PlaceCard({ place, className, ...rest }) {
       <Box
         pb={1}
         px={3}
+        className={classes.box}
       >
         <Typography
           color="textPrimary"
@@ -102,7 +106,7 @@ function PlaceCard({ place, className, ...rest }) {
           color="textPrimary"
           variant="body2"
         >
-          {place.description}
+          {place.description.slice(0, 138)}
         </Typography>
       </Box>
       <Box

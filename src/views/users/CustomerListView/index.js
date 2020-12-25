@@ -42,7 +42,7 @@ function CustomerListView() {
 
   const activateCustomer = (id) => {
     axios
-      .patch(`${process.env.REACT_APP_API}/users/activate/${id}/`)
+      .patch(`${process.env.REACT_APP_API}/users/${id}/activate`)
       .then(() => {
         enqueueSnackbar('Xác thực thành công', {
           variant: 'success'

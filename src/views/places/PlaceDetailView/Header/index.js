@@ -58,7 +58,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Header({ place, className, ...rest }) {
+function Header({
+  place, activatePlace, className, ...rest
+}) {
   const classes = useStyles();
   const account = useSelector((state) => state.account);
   const history = useHistory();
@@ -114,6 +116,7 @@ function Header({ place, className, ...rest }) {
           <Button
             variant="outlined"
             color="secondary"
+            onClick={() => activatePlace(place.id)}
           >
             Duyệt
           </Button>
@@ -231,6 +234,7 @@ function Header({ place, className, ...rest }) {
 
 Header.propTypes = {
   className: PropTypes.string,
+  activatePlace: PropTypes.func,
   place: PropTypes.object.isRequired
 };
 

@@ -65,6 +65,22 @@ function PlaceDetailView() {
       });
   }, [isMountedRef]);
 
+  const activatePlace = (id) => {
+    axios
+      .patch(`${process.env.REACT_APP_API}/places/${id}/activate`)
+      .then(() => {
+        enqueueSnackbar('Xác thực thành công', {
+          variant: 'success'
+        });
+        getPlace();
+      })
+      .catch(() => {
+        enqueueSnackbar('Xác thực không thành công', {
+          variant: 'error'
+        });
+      });
+  };
+
   useEffect(() => {
     getPlace();
   }, [getPlace]);
@@ -79,7 +95,7 @@ function PlaceDetailView() {
       title={place.title}
     >
       <Container maxWidth="lg">
-        <Header place={place} />
+        <Header place={place} activatePlace={activatePlace} />
         <Box mt={3}>
           <Tabs
             onChange={handleTabsChange}
