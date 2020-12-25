@@ -46,7 +46,16 @@ const useStyles = makeStyles((theme) => ({
     color: 'black'
   },
   listIcon: {
-
+    [theme.breakpoints.down('xs')]: {
+      marginLeft: 'auto',
+      marginRight: 'auto'
+    }
+  },
+  copyRight: {
+    [theme.breakpoints.down('xs')]: {
+      marginLeft: 'auto',
+      marginRight: 'auto'
+    }
   },
   Typo: {
     padding: theme.spacing(1.5)
@@ -66,7 +75,7 @@ const Footer = (props) => {
       <div className={classes.footerContainer}>
         <Grid
           container
-          justify="space-around"
+          justify="space-between"
           className={classes.Container}
         >
           <Grid
@@ -158,7 +167,7 @@ const Footer = (props) => {
               variant="body2"
               className={classes.Typo}
             >
-              Việc làm
+              Ứng tuyển việc làm công ty
             </Typography>
           </Grid>
           <Grid
@@ -271,10 +280,11 @@ const Footer = (props) => {
         <Divider />
         <Grid
           container
-          justify="space-around"
+          justify="space-between"
         >
           <Grid
             item
+            className={classes.copyRight}
           >
             <Typography style={{ marginLeft: 20, paddingTop: 10 }}>
               © 2020 Rune Team. All rights reserved
@@ -282,6 +292,7 @@ const Footer = (props) => {
           </Grid>
           <Grid
             item
+            className={classes.listIcon}
           >
             <List className={classes.listIcon} disablePadding>
               <ListItem disableGutters>
