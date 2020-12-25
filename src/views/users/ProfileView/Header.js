@@ -115,7 +115,7 @@ function Header({
             >
               {user.username}
             </Typography>
-            <Label color="success">
+            <Label color="secondary">
               {roles[user.role]}
             </Label>
           </Box>
