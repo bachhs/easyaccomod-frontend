@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -72,6 +73,7 @@ function TopBar({
   ...rest
 }) {
   const classes = useStyles();
+  const [search, setSearch] = useState('');
 
   return (
     <AppBar
@@ -96,7 +98,15 @@ function TopBar({
               root: classes.inputRoot,
               input: classes.inputInput,
             }}
+            value={search}
             inputProps={{ 'aria-label': 'search' }}
+            onChange={(event) => setSearch(event.target.value)}
+            onKeyPress={(event) => {
+              if (event.key === 'Enter') {
+                // Do code here
+                event.preventDefault();
+              }
+            }}
           />
         </div>
         <Messages />

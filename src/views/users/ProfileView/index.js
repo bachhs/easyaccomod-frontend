@@ -39,6 +39,7 @@ function ProfileView() {
 
   const handleTabsChange = (event, value) => {
     setCurrentTab(value);
+    event.preventDefault();
   };
 
   const getPosts = useCallback(() => {
@@ -89,7 +90,8 @@ function ProfileView() {
           py={3}
           pb={6}
         >
-          {currentTab === 'places' && <Places />}
+          {currentTab === 'places' && <Places uid={uid} variant="places" />}
+          {currentTab === 'favorite' && <Places uid={uid} variant="favorite" />}
         </Box>
       </Container>
     </Page>

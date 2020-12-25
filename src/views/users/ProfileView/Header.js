@@ -15,8 +15,8 @@ import {
   makeStyles
 } from '@material-ui/core';
 import Label from 'src/components/Label';
-import AddPhotoIcon from '@material-ui/icons/AddPhotoAlternate';
 import EditIcon from '@material-ui/icons/Edit';
+import { roles } from 'src/constants';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -81,7 +81,6 @@ function Header({
   ...rest
 }) {
   const classes = useStyles();
-
   return (
     <div
       className={clsx(classes.root, className)}
@@ -90,15 +89,7 @@ function Header({
       <div
         className={classes.cover}
         style={{ backgroundImage: `url(${user.cover})` }}
-      >
-        <Button
-          className={classes.changeButton}
-          variant="contained"
-        >
-          <AddPhotoIcon className={classes.addPhotoIcon} />
-          Change Cover
-        </Button>
-      </div>
+      />
       <Container maxWidth="lg">
         <Box
           position="relative"
@@ -124,21 +115,12 @@ function Header({
             >
               {user.username}
             </Typography>
+            <Label color="success">
+              {roles[user.role]}
+            </Label>
           </Box>
           <Box flexGrow={1} />
           <Hidden smDown>
-            {user.role === 'owner' && (user.activated
-              ? (
-                <Label color="success">
-                  Đã xác thực
-                </Label>
-              )
-              : (
-                <Label color="error">
-                  Chưa xác thực
-                </Label>
-              )
-            )}
             <Button
               color="secondary"
               component={RouterLink}

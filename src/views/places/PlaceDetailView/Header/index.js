@@ -77,7 +77,7 @@ function Header({ place, className, ...rest }) {
       axios
         .get(`${process.env.REACT_APP_API}/users/${account.user.id}/favorite`)
         .then((response) => {
-          if (response.data.user.favorite.includes(place.id)) { setLiked(true); }
+          setLiked(response.data.user.places.some((favorite) => favorite.id === place.id));
         });
     }
   }, []);

@@ -2,3 +2,9 @@
 export const THEMES = {
   LIGHT: 'LIGHT'
 };
+
+export const roles = {
+  admin: 'Admin',
+  renter: 'Người thuê',
+  owner: 'Chủ sở hữu'
+};

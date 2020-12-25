@@ -8,39 +8,27 @@ import clsx from 'clsx';
 import { Grid, makeStyles } from '@material-ui/core';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import PlaceCard from 'src/components/PlaceCard';
+import axios from 'src/utils/axios';
 
 const useStyles = makeStyles(() => ({
   root: {}
 }));
 
-function Places({ className, ...rest }) {
+function Places({
+  className, uid, variant, ...rest
+}) {
   const classes = useStyles();
   const isMountedRef = useIsMountedRef();
-  const [places, setPlaces] = useState(null);
+  const [places, setPlaces] = useState([]);
 
   const getPlaces = useCallback(() => {
-    const mock = [
-      {
-        id: 'tjwqejew',
-        title: 'Test',
-        date: new Date(),
-        description: 'Chính Chủ cho thuê giá rẻ mặt tiền ngang lớn 8x20m, Nguyễn Tri Phương Q10. 3 lầu, Giá chỉ 120tr/th Vị trí cực kỳ đắc địa. Nằm đoạn đẹp nhất con đường, tuyến phố thương hiệu nổi tiếng về kinh doanh ẩm thực. ',
-        address: 'số nhà 3, ngõ 47, Nguyễn Hoàng, phường Mỹ Đình 2, quận Nam Từ Liêm, Hà Nội',
-        price: '4000000',
-        type: 'Chung cư mini',
-        image: 'https://www.google.com/logos/doodles/2020/december-holidays-days-2-30-6753651837108830.3-law.gif',
-        star: 4.5,
-        views: 100,
-        area: '12',
-        creator: {
-          username: 'Bach Luu',
-          avatar: 'https://www.google.com/logos/doodles/2020/december-holidays-days-2-30-6753651837108830.3-law.gif'
+    axios
+      .get(`${process.env.REACT_APP_API}/users/${uid}/${variant}`)
+      .then((response) => {
+        if (isMountedRef.current) {
+          setPlaces(response.data.user.places);
         }
-      },
-    ];
-    if (isMountedRef.current) {
-      setPlaces(mock);
-    }
+      });
   }, [isMountedRef]);
 
   useEffect(() => {
@@ -78,7 +66,9 @@ function Places({ className, ...rest }) {
 }
 
 Places.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
+  uid: PropTypes.string,
+  variant: PropTypes.string
 };
 
 export default Places;
