@@ -10,7 +10,8 @@ import {
   makeStyles,
   Button,
   colors,
-  Typography
+  Typography,
+  Divider
 } from '@material-ui/core';
 import Page from 'src/components/Page';
 import axios from 'src/utils/axios';
@@ -18,6 +19,7 @@ import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import PlayForWorkOutlinedIcon from '@material-ui/icons/PlayForWorkOutlined';
 import Header from './Header';
 import Filter from './Filter';
+import Footer from './Footer';
 import Results from './Results';
 
 const useStyles = makeStyles((theme) => ({
@@ -176,6 +178,8 @@ function ProjectBrowseView() {
           </Box>
         </Container>
       </Page>
+      <Divider />
+      <Footer />
     </div>
   );
 }
