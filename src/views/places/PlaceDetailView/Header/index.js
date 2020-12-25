@@ -16,6 +16,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 import axios from 'src/utils/axios';
+import AutorenewIcon from '@material-ui/icons/Autorenew';
 import ReportIcon from '@material-ui/icons/Report';
 import CheckIcon from '@material-ui/icons/Check';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
@@ -105,18 +106,20 @@ function Header({ place, className, ...rest }) {
         >
           {place.title}
           {' '}
-          <Button disabled>
-            <Label
-              color={place.activated ? 'success' : 'error'}
-            >
-              {place.activated ? 'Đã duyệt' : 'Chưa duyệt'}
-            </Label>
+          <IconButton disabled>
+            {place.activated
+              ? (<CheckCircleOutlineIcon className={clsx(classes.checkCircleIcon, className)} />)
+              : (<HighlightOffIcon className={clsx(classes.HighlightOffIcon, className)} />)}
+          </IconButton>
+          <Button
+            variant="outlined"
+            color="secondary"
+          >
+            Duyệt
           </Button>
-          <Tooltip title="check or X">
+          <Tooltip title="Sửa bài đăng">
             <IconButton>
-              {place.activated
-                ? (<CheckCircleOutlineIcon className={clsx(classes.checkCircleIcon, className)} />)
-                : (<HighlightOffIcon className={clsx(classes.HighlightOffIcon, className)} />)}
+              <AutorenewIcon color="secondary" />
             </IconButton>
           </Tooltip>
         </Typography>
