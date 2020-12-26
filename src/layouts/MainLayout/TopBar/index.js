@@ -16,7 +16,6 @@ import Logo from 'src/components/Logo';
 import SearchIcon from '@material-ui/icons/Search';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
 import Account from './Account';
-import Notifications from './Notifications';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -114,7 +113,6 @@ function TopBar({
         <IconButton href={`/chat/${account.user.id}`} color="inherit">
           <ChatBubbleIcon />
         </IconButton>
-        <Notifications />
         <Account />
       </Toolbar>
     </AppBar>
