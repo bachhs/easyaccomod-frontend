@@ -1,4 +1,5 @@
-import React, { Fragment } from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {
@@ -12,9 +13,12 @@ import {
   Typography,
   makeStyles,
   CardHeader,
-  CardMedia
+  CardMedia,
+  CardActions,
+  Dialog
 } from '@material-ui/core';
 import Maps from 'src/components/Maps';
+import ImageViewer from 'react-simple-image-viewer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -34,6 +38,9 @@ import ViewComfyIcon from '@material-ui/icons/ViewComfy';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
+  imageViewer: {
+    padding: 100
+  },
   chip: {
     marginBottom: 8
   },
@@ -92,10 +99,6 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('xs')]: {
       height: 250
     },
-    cursor: 'pointer',
-    '&:hover': {
-      opacity: '0.85'
-    }
   },
   image2: {
     maxWidth: '100%',
@@ -104,10 +107,6 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('md')]: {
       minHeight: 0,
       height: 0
-    },
-    cursor: 'pointer',
-    '&:hover': {
-      opacity: '0.85'
     },
   },
   image3: {
@@ -118,14 +117,12 @@ const useStyles = makeStyles((theme) => ({
       minHeight: 0,
       height: 0
     },
-    cursor: 'pointer',
-    '&:hover': {
-      opacity: '0.85'
-    }
   },
 }));
 
-function Brief({ place, className, ...rest }) {
+function Brief({
+  place, handleImageOpen, className, ...rest
+}) {
   const classes = useStyles();
 
   return (
@@ -196,6 +193,7 @@ function Brief({ place, className, ...rest }) {
                   className={classes.allWiewButton}
                   variant="contained"
                   startIcon={<ViewComfyIcon className={classes.ViewComfyIcon} />}
+                  onClick={handleImageOpen}
                 >
                   Hiển thị tất cả
                 </Button>
@@ -423,6 +421,8 @@ function Brief({ place, className, ...rest }) {
 
 Brief.propTypes = {
   place: PropTypes.object.isRequired,
+  imageViewer: PropTypes.bool,
+  handleImageOpen: PropTypes.func,
   className: PropTypes.string
 };
 

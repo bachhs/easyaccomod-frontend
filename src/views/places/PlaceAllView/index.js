@@ -24,30 +24,30 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function CustomerListView() {
+function PlaceAllView() {
   const classes = useStyles();
   const isMountedRef = useIsMountedRef();
-  const [customers, setCustomers] = useState(null);
+  const [places, setPlaces] = useState(null);
   const { enqueueSnackbar } = useSnackbar();
 
-  const getCustomers = useCallback(() => {
+  const getPlaces = useCallback(() => {
     axios
-      .get(`${process.env.REACT_APP_API}/users`)
+      .get(`${process.env.REACT_APP_API}/places`)
       .then((response) => {
         if (isMountedRef.current) {
-          setCustomers(response.data.users);
+          setPlaces(response.data.places);
         }
       });
   }, [isMountedRef]);
 
-  const activateCustomer = (id) => {
+  const activatePlace = (id) => {
     axios
-      .patch(`${process.env.REACT_APP_API}/users/${id}/activate`)
+      .patch(`${process.env.REACT_APP_API}/places/${id}/activate`)
       .then(() => {
         enqueueSnackbar('Duyệt bài thành công', {
           variant: 'success'
         });
-        getCustomers();
+        getPlaces();
       })
       .catch(() => {
         enqueueSnackbar('Duyệt bài không thành công', {
@@ -57,10 +57,10 @@ function CustomerListView() {
   };
 
   useEffect(() => {
-    getCustomers();
-  }, [getCustomers]);
+    getPlaces();
+  }, [getPlaces]);
 
-  if (!customers) {
+  if (!places) {
     return null;
   }
 
@@ -71,9 +71,9 @@ function CustomerListView() {
     >
       <Container maxWidth="lg">
         <Header />
-        {customers && (
+        {places && (
           <Box mt={3}>
-            <Results customers={customers} activateCustomer={activateCustomer} />
+            <Results places={places} activatePlace={activatePlace} />
           </Box>
         )}
       </Container>
@@ -81,4 +81,4 @@ function CustomerListView() {
   );
 }
 
-export default CustomerListView;
+export default PlaceAllView;

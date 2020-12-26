@@ -1,5 +1,5 @@
-/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -7,14 +7,15 @@ import {
   AppBar,
   Box,
   InputBase,
+  IconButton,
   Toolbar,
   makeStyles,
   fade
 } from '@material-ui/core';
 import Logo from 'src/components/Logo';
 import SearchIcon from '@material-ui/icons/Search';
+import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
 import Account from './Account';
-import Messages from './Messages';
 import Notifications from './Notifications';
 
 const useStyles = makeStyles((theme) => ({
@@ -73,6 +74,7 @@ function TopBar({
   ...rest
 }) {
   const classes = useStyles();
+  const account = useSelector((state) => state.account);
   const [search, setSearch] = useState('');
 
   return (
@@ -109,7 +111,9 @@ function TopBar({
             }}
           />
         </div>
-        <Messages />
+        <IconButton href={`/chat/${account.user.id}`} color="inherit">
+          <ChatBubbleIcon />
+        </IconButton>
         <Notifications />
         <Account />
       </Toolbar>

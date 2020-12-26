@@ -106,7 +106,8 @@ function PlaceCard({ place, className, ...rest }) {
           color="textPrimary"
           variant="body2"
         >
-          {place.description.slice(0, 138)}
+          {place.description.slice(0, 110)}
+          {'...'}
         </Typography>
       </Box>
       <Box

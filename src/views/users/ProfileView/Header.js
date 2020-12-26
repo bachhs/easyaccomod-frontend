@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {
@@ -81,6 +82,7 @@ function Header({
   ...rest
 }) {
   const classes = useStyles();
+  const account = useSelector((state) => state.account);
   return (
     <div
       className={clsx(classes.root, className)}
@@ -120,6 +122,7 @@ function Header({
             </Label>
           </Box>
           <Box flexGrow={1} />
+          {account.user.id !== user.id && (
           <Hidden smDown>
             <Button
               color="secondary"
@@ -132,11 +135,14 @@ function Header({
               Gửi tin nhắn
             </Button>
           </Hidden>
+          )}
+          {(account.user.role === 'admin' || account.user.id === user.id) && (
           <Tooltip title="Thay đổi thông tin">
             <IconButton className={classes.action}>
               <EditIcon />
             </IconButton>
           </Tooltip>
+          )}
         </Box>
       </Container>
     </div>

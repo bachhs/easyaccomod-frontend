@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Header({
-  place, activatePlace, className, ...rest
+  place, activatePlace, setAvailablePlace, className, ...rest
 }) {
   const classes = useStyles();
   const account = useSelector((state) => state.account);
@@ -110,38 +110,40 @@ function Header({
         >
           {place.title}
           {' '}
-          <IconButton disabled style={{ marginLeft: -12, marginRight: '3%' }}>
+          <IconButton disabled style={{ marginLeft: -12 }}>
             {place.activated
               ? (<CheckCircleOutlineIcon className={clsx(classes.checkCircleIcon, className)} />)
               : (<HighlightOffIcon className={clsx(classes.HighlightOffIcon, className)} />)}
           </IconButton>
-          {!place.activated
-            ? (
-              <>
-                <Button
-                  variant="outlined"
-                  color="secondary"
-                  onClick={() => activatePlace(place.id)}
-                  style={{ fontSize: 12 }}
-                >
-                  Duyệt
-                </Button>
-                <Button
-                  variant="outlined"
-                  color="secondary"
-                  startIcon={<HomeOutlinedIcon />}
-                  style={{ fontSize: 12, marginLeft: 12 }}
-                >
-                  Còn phòng
-                </Button>
-                <Tooltip title="Sửa bài đăng">
-                  <IconButton>
-                    <EditOutlinedIcon color="secondary" />
-                  </IconButton>
-                </Tooltip>
-              </>
-            )
-            : (<Typography />)}
+          {place.available && (account.user.role === 'admin' || place.creator === account.user.id) && (
+            <Button
+              className={classes.badgeIcon}
+              variant="outlined"
+              color="secondary"
+              startIcon={<HomeOutlinedIcon />}
+              onClick={() => setAvailablePlace(place.id)}
+            >
+              Hết phòng
+            </Button>
+          )}
+          {!place.activated && (account.user.role === 'admin') && (
+            <>
+              <Button
+                variant="outlined"
+                color="secondary"
+                onClick={() => activatePlace(place.id)}
+              >
+                Duyệt
+              </Button>
+            </>
+          )}
+          {(account.user.role === 'admin' || place.creator === account.user.id) && (
+          <Tooltip title="Sửa bài đăng">
+            <IconButton>
+              <EditOutlinedIcon color="secondary" />
+            </IconButton>
+          </Tooltip>
+          )}
         </Typography>
         <Box
           mx={-2}
@@ -252,6 +254,7 @@ function Header({
 Header.propTypes = {
   className: PropTypes.string,
   activatePlace: PropTypes.func,
+  setAvailablePlace: PropTypes.func,
   place: PropTypes.object.isRequired
 };
 

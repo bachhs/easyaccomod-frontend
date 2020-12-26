@@ -108,6 +108,15 @@ function Account() {
           >
             Danh sách người dùng
           </MenuItem>
+          {account.user.role === 'admin' && (
+          <MenuItem
+            onClick={handleClose}
+            component={RouterLink}
+            to="/places"
+          >
+            Danh sách bài đăng
+          </MenuItem>
+          )}
           <MenuItem onClick={handleLogout}>
             Đăng xuất
           </MenuItem>

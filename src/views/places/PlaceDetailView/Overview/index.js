@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {
@@ -8,6 +8,7 @@ import {
 } from '@material-ui/core';
 import Brief from './Brief';
 import Holder from './Holder';
+import ImageView from './ImageView';
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -17,6 +18,14 @@ function Overview({
   place, creator, className, ...rest
 }) {
   const classes = useStyles();
+  const [openImage, setOpenImage] = useState(false);
+  const handleImageOpen = () => {
+    setOpenImage(true);
+  };
+
+  const handleImageClose = () => {
+    setOpenImage(false);
+  };
 
   return (
     <Grid
@@ -31,7 +40,18 @@ function Overview({
         xl={9}
         xs={12}
       >
-        <Brief place={place} />
+        <Brief
+          place={place}
+          imageViewer={openImage}
+          handleImageOpen={handleImageOpen}
+        />
+        <ImageView
+          images={place.images}
+          author={place.creator}
+          onApply={handleImageClose}
+          onClose={handleImageClose}
+          open={openImage}
+        />
       </Grid>
       <Grid
         item

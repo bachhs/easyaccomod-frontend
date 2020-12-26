@@ -25,34 +25,24 @@ import CheckIcon from '@material-ui/icons/Check';
 import getInitials from 'src/utils/getInitials';
 import Label from 'src/components/Label';
 
-export const roles = {
-  Unapproved: 'Chưa duyệt',
-  Approved: 'Đã duyệt'
-};
-
 const tabs = [
   {
     value: 'all',
     label: 'Tất cả'
   },
   {
-    value: 'Unapproved',
+    value: 'unactivated',
     label: 'Chưa duyệt'
   },
-  {
-    value: 'Approved',
-    label: 'Đã duyệt'
-  }
 ];
 
-function applyFilters(customers, filters) {
-  return customers.filter((customer) => {
+function applyFilters(places, filters) {
+  return places.filter((place) => {
     let matches = true;
 
     Object.keys(filters).forEach((key) => {
       const value = filters[key];
-
-      if (value && customer.role !== key) {
+      if (value && place.activated === value) {
         matches = false;
       }
     });
@@ -88,31 +78,28 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Results({
-  className, customers, activateCustomer, ...rest
+  className, places, activatePlace, ...rest
 }) {
   const classes = useStyles();
   const [currentTab, setCurrentTab] = useState('all');
   const [filters, setFilters] = useState({
-    Unapproved: null,
-    Approved: null
+    unactivated: null,
   });
 
   const handleTabsChange = (event, value) => {
     const updatedFilters = {
       ...filters,
-      Unapproved: null,
-      Approved: null
+      unactivated: null,
     };
 
     if (value !== 'all') {
       updatedFilters[value] = true;
     }
-
     setFilters(updatedFilters);
     setCurrentTab(value);
   };
 
-  const filteredCustomers = applyFilters(customers, filters);
+  const filteredPlaces = applyFilters(places, filters);
 
   return (
     <Card
@@ -141,16 +128,25 @@ function Results({
             <TableHead>
               <TableRow>
                 <TableCell>
+                  Tên bài
+                </TableCell>
+                <TableCell>
                   Chủ sở hữu
+                </TableCell>
+                <TableCell>
+                  Địa chỉ
                 </TableCell>
                 <TableCell>
                   Trạng Thái
                 </TableCell>
                 <TableCell>
-                  Loại phòng
+                  Phòng
                 </TableCell>
                 <TableCell>
-                  Địa chỉ
+                  Lượt xem
+                </TableCell>
+                <TableCell>
+                  Sao
                 </TableCell>
                 <TableCell align="right">
                   Hành động
@@ -158,11 +154,21 @@ function Results({
               </TableRow>
             </TableHead>
             <TableBody>
-              {filteredCustomers.map((customer) => (
+              {filteredPlaces.map((place) => (
                 <TableRow
                   hover
-                  key={customer.id}
+                  key={places.id}
                 >
+                  <TableCell>
+                    <Link
+                      color="inherit"
+                      component={RouterLink}
+                      to={`/places/${place.id}`}
+                      variant="h6"
+                    >
+                      {place.title}
+                    </Link>
+                  </TableCell>
                   <TableCell>
                     <Box
                       display="flex"
@@ -170,44 +176,54 @@ function Results({
                     >
                       <Avatar
                         className={classes.avatar}
-                        src={customer.avatar}
+                        src={place.creator.avatar}
                       >
-                        {getInitials(customer.username)}
+                        {getInitials(place.creator.avatar)}
                       </Avatar>
                       <div>
                         <Link
                           color="inherit"
                           component={RouterLink}
-                          to={`/users/${customer.id}`}
+                          to={`/users/${place.creator.id}`}
                           variant="h6"
                         >
-                          {customer.username}
+                          {place.creator.username}
                         </Link>
                         <Typography
                           variant="body2"
                           color="textSecondary"
                         >
-                          {customer.email}
+                          {place.creator.email}
                         </Typography>
                       </div>
                     </Box>
                   </TableCell>
                   <TableCell>
-                    <Label color={(customer.role === 'Unapproved' && !customer.activated) ? 'error' : 'success'}>
-                      {(customer.role === 'Unapproved' && !customer.activated)
+                    {place.address}
+                  </TableCell>
+                  <TableCell>
+                    <Label color={(!place.activated) ? 'error' : 'success'}>
+                      {(!place.activated)
                         ? 'Chưa duyệt'
                         : 'Đã duyệt'}
                     </Label>
                   </TableCell>
                   <TableCell>
-                    {customer.phone}
+                    <Label color={(!place.available) ? 'error' : 'success'}>
+                      {(!place.available)
+                        ? 'Hết phòng'
+                        : 'Còn phòng'}
+                    </Label>
                   </TableCell>
                   <TableCell>
-                    {customer.address}
+                    {place.views}
+                  </TableCell>
+                  <TableCell>
+                    {place.star}
                   </TableCell>
                   <TableCell align="right">
                     <IconButton
-                      onClick={() => activateCustomer(customer.id)}
+                      onClick={() => activatePlace(place.id)}
                     >
                       <CheckIcon />
                     </IconButton>
@@ -224,12 +240,12 @@ function Results({
 
 Results.propTypes = {
   className: PropTypes.string,
-  activateCustomer: PropTypes.func,
-  customers: PropTypes.array
+  activatePlace: PropTypes.func,
+  places: PropTypes.array
 };
 
 Results.defaultProps = {
-  customers: []
+  places: []
 };
 
 export default Results;

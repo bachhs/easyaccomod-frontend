@@ -69,13 +69,29 @@ function PlaceDetailView() {
     axios
       .patch(`${process.env.REACT_APP_API}/places/${id}/activate`)
       .then(() => {
-        enqueueSnackbar('Xác thực thành công', {
+        enqueueSnackbar('Duyệt bài thành công', {
           variant: 'success'
         });
         getPlace();
       })
       .catch(() => {
-        enqueueSnackbar('Xác thực không thành công', {
+        enqueueSnackbar('Duyệt bài không thành công', {
+          variant: 'error'
+        });
+      });
+  };
+
+  const setAvailablePlace = (id) => {
+    axios
+      .patch(`${process.env.REACT_APP_API}/places/${id}/available`)
+      .then(() => {
+        enqueueSnackbar('Thay đổi trạng thái thành công', {
+          variant: 'success'
+        });
+        getPlace();
+      })
+      .catch(() => {
+        enqueueSnackbar('Thay đổi trạng thái không thành công', {
           variant: 'error'
         });
       });
@@ -95,7 +111,7 @@ function PlaceDetailView() {
       title={place.title}
     >
       <Container maxWidth="lg">
-        <Header place={place} activatePlace={activatePlace} />
+        <Header place={place} activatePlace={activatePlace} setAvailablePlace={setAvailablePlace} />
         <Box mt={3}>
           <Tabs
             onChange={handleTabsChange}
