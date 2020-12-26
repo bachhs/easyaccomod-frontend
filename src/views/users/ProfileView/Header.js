@@ -121,7 +121,7 @@ function Header({
             </Label>
           </Box>
           <Box flexGrow={1} />
-          {account.user.id !== user.id && (
+          {account.user && account.user.id !== user.id && (
           <Hidden smDown>
             <Button
               color="secondary"
@@ -135,9 +135,9 @@ function Header({
             </Button>
           </Hidden>
           )}
-          {(account.user.role === 'admin' || account.user.id === user.id) && (
+          {account.user && (account.user.role === 'admin' || account.user.id === user.id) && (
           <Tooltip title="Thay đổi thông tin">
-            <IconButton className={classes.action}>
+            <IconButton className={classes.action} href={`/users/${user.id}/edit`}>
               <EditIcon />
             </IconButton>
           </Tooltip>

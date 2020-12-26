@@ -53,8 +53,18 @@ function Routes() {
                 />
                 <Route
                   exact
+                  path="/places/:pid/edit"
+                  component={lazy(() => import('src/views/places/PlaceEditView'))}
+                />
+                <Route
+                  exact
                   path="/places/:pid"
                   component={lazy(() => import('src/views/places/PlaceDetailView'))}
+                />
+                <Route
+                  exact
+                  path="/users/:uid/edit"
+                  component={lazy(() => import('src/views/users/EditProfileView'))}
                 />
                 <Route
                   exact

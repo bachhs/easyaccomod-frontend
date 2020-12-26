@@ -139,7 +139,7 @@ function Header({
           )}
           {account.user && (account.user.role === 'admin' || place.creator === account.user.id) && (
           <Tooltip title="Sửa bài đăng">
-            <IconButton>
+            <IconButton href={`${place.id}/edit`}>
               <EditOutlinedIcon color="secondary" />
             </IconButton>
           </Tooltip>
