@@ -42,7 +42,6 @@ function Overview({
       >
         <Brief
           place={place}
-          imageViewer={openImage}
           handleImageOpen={handleImageOpen}
         />
         <ImageView

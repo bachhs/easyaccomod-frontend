@@ -19,7 +19,7 @@ import YouTubeIcon from '@material-ui/icons/YouTube';
 const useStyles = makeStyles((theme) => ({
   root: {
     paddingTop: theme.spacing(1, 0),
-    backgroundImage: `url(${'http://serquis.com/NEW/wp-content/uploads/2012/12/footerbg.png'})`,
+    backgroundImage: `url(${'/static/images/footers/footer.png'})`,
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
     backgroundSize: 'cover',

@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {
@@ -14,11 +13,8 @@ import {
   makeStyles,
   CardHeader,
   CardMedia,
-  CardActions,
-  Dialog
 } from '@material-ui/core';
 import Maps from 'src/components/Maps';
-import ImageViewer from 'react-simple-image-viewer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -38,9 +34,6 @@ import ViewComfyIcon from '@material-ui/icons/ViewComfy';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
-  imageViewer: {
-    padding: 100
-  },
   chip: {
     marginBottom: 8
   },
@@ -421,7 +414,6 @@ function Brief({
 
 Brief.propTypes = {
   place: PropTypes.object.isRequired,
-  imageViewer: PropTypes.bool,
   handleImageOpen: PropTypes.func,
   className: PropTypes.string
 };

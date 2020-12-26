@@ -96,7 +96,6 @@ function PlaceCard({ place, className, ...rest }) {
         <Typography
           color="textPrimary"
           variant="subtitle2"
-          style={{ marginBottom: 6, fontSize: 15 }}
         >
           Địa chỉ :
           {' '}

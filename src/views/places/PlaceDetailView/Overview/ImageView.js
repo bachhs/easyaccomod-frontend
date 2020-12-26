@@ -46,7 +46,7 @@ function ImageView({
 
 ImageView.propTypes = {
   className: PropTypes.string,
-  images: PropTypes.object,
+  images: PropTypes.array,
   onApply: PropTypes.func,
   onClose: PropTypes.func,
   open: PropTypes.bool.isRequired

@@ -58,7 +58,6 @@ function Maps({
             value={address}
             fullWidth
             placeholder="Nhập địa chỉ"
-            style={{ marginBottom: 10 }}
           />
         </StandaloneSearchBox>
         )}

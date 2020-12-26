@@ -90,7 +90,6 @@ function Header({
     >
       <div
         className={classes.cover}
-        style={{ backgroundImage: `url(${'https://www.pngitem.com/pimgs/m/160-1605161_cities-background-for-footer-skyline-hd-png-download.png'})` }}
       />
       <Container maxWidth="lg">
         <Box

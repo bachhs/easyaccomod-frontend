@@ -115,7 +115,7 @@ function Header({
               ? (<CheckCircleOutlineIcon className={clsx(classes.checkCircleIcon, className)} />)
               : (<HighlightOffIcon className={clsx(classes.HighlightOffIcon, className)} />)}
           </IconButton>
-          {place.available && (account.user.role === 'admin' || place.creator === account.user.id) && (
+          {place.available && account.user && (account.user.role === 'admin' || place.creator === account.user.id) && (
             <Button
               className={classes.badgeIcon}
               variant="outlined"
@@ -126,7 +126,7 @@ function Header({
               Hết phòng
             </Button>
           )}
-          {!place.activated && (account.user.role === 'admin') && (
+          {!place.activated && account.user && (account.user.role === 'admin') && (
             <>
               <Button
                 variant="outlined"
@@ -137,7 +137,7 @@ function Header({
               </Button>
             </>
           )}
-          {(account.user.role === 'admin' || place.creator === account.user.id) && (
+          {account.user && (account.user.role === 'admin' || place.creator === account.user.id) && (
           <Tooltip title="Sửa bài đăng">
             <IconButton>
               <EditOutlinedIcon color="secondary" />
