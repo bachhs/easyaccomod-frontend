@@ -19,10 +19,17 @@ import {
 import { logout } from 'src/actions/accountActions';
 
 const useStyles = makeStyles((theme) => ({
+  avatar1: {
+    height: 32,
+    width: 32,
+    marginRight: theme.spacing(1),
+    marginLeft: 24
+  },
   avatar: {
     height: 32,
     width: 32,
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
+    marginLeft: 12
   },
   popover: {
     width: 200
@@ -61,6 +68,7 @@ function Account() {
   return (
     <>
       <Box
+        className={classes.root}
         display="flex"
         alignItems="center"
         component={ButtonBase}
@@ -69,7 +77,7 @@ function Account() {
       >
         <Avatar
           alt="User"
-          className={classes.avatar}
+          className={account.user ? classes.avatar : classes.avatar1}
           src={account.user ? account.user.avatar : null}
         />
         <Hidden smDown>

@@ -23,10 +23,11 @@ const useStyles = makeStyles((theme) => ({
   root: {},
   cover: {
     position: 'relative',
-    height: 500,
+    height: 450,
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
+    backgroundImage: `url(${'/static/images/users/userBG.png'})`,
     '&:before': {
       position: 'absolute',
       content: '" "',

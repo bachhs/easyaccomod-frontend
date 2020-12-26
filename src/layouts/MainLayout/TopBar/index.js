@@ -65,6 +65,9 @@ const useStyles = makeStyles((theme) => ({
       color: '#abc4db'
     }
   },
+  iconChat: {
+    marginLeft: 12
+  }
 }));
 
 function TopBar({
@@ -111,7 +114,11 @@ function TopBar({
           />
         </div>
         {account.user && (
-        <IconButton href={`/chat/${account.user.id}`} color="inherit">
+        <IconButton
+          href={`/chat/${account.user.id}`}
+          className={classes.iconChat}
+          color="inherit"
+        >
           <ChatBubbleIcon />
         </IconButton>
         )}
