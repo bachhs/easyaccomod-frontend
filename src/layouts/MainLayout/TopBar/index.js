@@ -110,9 +110,11 @@ function TopBar({
             }}
           />
         </div>
+        {account.user && (
         <IconButton href={`/chat/${account.user.id}`} color="inherit">
           <ChatBubbleIcon />
         </IconButton>
+        )}
         <Account />
       </Toolbar>
     </AppBar>
