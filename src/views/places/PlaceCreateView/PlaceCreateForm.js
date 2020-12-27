@@ -65,22 +65,22 @@ function PlaceCreateForm({ className, ...rest }) {
         endDate: moment(new Date()).add(1, 'weeks'),
       }}
       validationSchema={Yup.object().shape({
-        title: Yup.string().max(255).required('Title is required'),
-        type: Yup.string().oneOf(['Phòng trọ', 'Chung cư', 'Nhà nguyên căn']).required('Type is required'),
+        title: Yup.string().max(255).required('Vui lòng nhập tiêu đề'),
+        type: Yup.string().oneOf(['Phòng trọ', 'Chung cư', 'Nhà nguyên căn']).required('Vui lòng chọn loại phòng'),
         address: Yup.string().required('Vui lòng nhập địa chỉ'),
-        room: Yup.number().positive('Must be a positive').required('Number is required'),
-        area: Yup.number().positive('Must be a positive').required('Number is required'),
-        price: Yup.number().positive('Must be a positive').required('Number is required'),
+        room: Yup.number().positive('Must be a positive').required('Vui lòng nhập số phòng'),
+        area: Yup.number().positive('Must be a positive').required('Vui lòng nhập diện tích'),
+        price: Yup.number().positive('Must be a positive').required('Vui lòng nhập giá phòng'),
         host: Yup.boolean(),
-        bathroom: Yup.string().oneOf(['Chung', 'Khép kín']).required('Bathroom type is required'),
+        bathroom: Yup.string().oneOf(['Chung', 'Khép kín']).required('Vui lòng chọn loại Phòng tắm'),
         waterHeater: Yup.boolean(),
-        kitchen: Yup.string().oneOf(['Khu bếp riêng', 'Khu bếp chung', 'Không nấu ăn']).required('Kitchen type is required'),
+        kitchen: Yup.string().oneOf(['Khu bếp riêng', 'Khu bếp chung', 'Không nấu ăn']).required('Vui lòng chọn loại Phòng bếp'),
         airconditioner: Yup.boolean(),
         balcony: Yup.boolean(),
-        electricPrice: Yup.number().positive('Must be a positive').required('Number is required'),
-        waterPrice: Yup.number().positive('Must be a positive').required('Number is required'),
+        electricPrice: Yup.number().positive('Must be a positive').required('Vui lòng nhập giá điện'),
+        waterPrice: Yup.number().positive('Must be a positive').required('Vui lòng nhập giá nước'),
         images: Yup.array().min(3, 'Upload tối thiểu 3 ảnh').required('Vui lòng đăng ảnh minh họa'),
-        endDate: Yup.date().min(moment(new Date()).add(6, 'days'), 'Thời gian đăng bài tối thiểu 1 tuần').required('End date is required'),
+        endDate: Yup.date().min(moment(new Date()).add(6, 'days'), 'Thời gian đăng bài tối thiểu 1 tuần').required('Vui lòng nhập ngày hết hạn'),
       })}
       onSubmit={async (values, {
         setErrors,
@@ -215,7 +215,7 @@ function PlaceCreateForm({ className, ...rest }) {
                           variant="outlined"
                         >
                           <MenuItem value="Phòng trọ">Phòng trọ</MenuItem>
-                          <MenuItem value="Chung cư">Chung cư mini</MenuItem>
+                          <MenuItem value="Chung cư">Chung cư</MenuItem>
                           <MenuItem value="Nhà nguyên căn">Nhà nguyên căn</MenuItem>
                         </TextField>
                       </Grid>

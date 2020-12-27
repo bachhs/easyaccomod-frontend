@@ -71,7 +71,7 @@ function Notifications() {
 
   return (
     <>
-      <Tooltip title="Notifications">
+      <Tooltip>
         <IconButton
           color="inherit"
           ref={ref}
@@ -95,7 +95,7 @@ function Notifications() {
             variant="h5"
             color="textPrimary"
           >
-            Notifications
+            Thông báo
           </Typography>
         </Box>
         {notifications.length === 0 ? (
@@ -104,7 +104,7 @@ function Notifications() {
               variant="h6"
               color="textPrimary"
             >
-              There are no notifications
+              Bạn không có thông báo
             </Typography>
           </Box>
         ) : (

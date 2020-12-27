@@ -1,12 +1,17 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Container, makeStyles } from '@material-ui/core';
-import { useParams } from 'react-router-dom';
+import {
+  Container,
+  makeStyles,
+  Grid,
+  Button,
+  Typography
+} from '@material-ui/core';
+import { Link as RouterLink, useParams } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import { useSnackbar } from 'notistack';
 import axios from 'src/utils/axios';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import Page from 'src/components/Page';
-import Header from './Header';
 import PlaceEditForm from './PlaceEditForm';
 
 const useStyles = makeStyles((theme) => ({
@@ -56,7 +61,28 @@ function PlaceEditView() {
       title="Chỉnh sửa bài đăng"
     >
       <Container maxWidth="md">
-        <Header />
+        <Grid
+          container
+          justify="space-between"
+          spacing={3}
+        >
+          <Grid item>
+            <Typography
+              variant="h3"
+              color="textPrimary"
+            >
+              Chỉnh sửa bài đăng
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Button
+              component={RouterLink}
+              to={`/places/${pid}`}
+            >
+              Hủy
+            </Button>
+          </Grid>
+        </Grid>
         <PlaceEditForm place={place} />
       </Container>
     </Page>

@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   iconChat: {
-    marginLeft: 12
+    marginLeft: 16
   }
 }));
 
@@ -103,7 +103,7 @@ function TopBar({
             <SearchIcon />
           </div>
           <InputBase
-            placeholder="Search…"
+            placeholder="Tìm kiếm…"
             classes={{
               root: classes.inputRoot,
               input: classes.inputInput,

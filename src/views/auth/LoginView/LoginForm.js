@@ -29,8 +29,8 @@ function LoginForm({
         password: ''
       }}
       validationSchema={Yup.object().shape({
-        email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-        password: Yup.string().max(255).required('Password is required')
+        email: Yup.string().email('Phải là một email hợp lệ').max(255).required('Bạn chưa nhập Email'),
+        password: Yup.string().max(255).required('Bạn chưa nhập Mật khẩu')
       })}
       onSubmit={async (values, {
         setErrors,
@@ -69,7 +69,7 @@ function LoginForm({
             fullWidth
             autoFocus
             helperText={touched.email && errors.email}
-            label="Email Address"
+            label="Địa chỉ Email"
             margin="normal"
             name="email"
             onBlur={handleBlur}
@@ -82,7 +82,7 @@ function LoginForm({
             error={Boolean(touched.password && errors.password)}
             fullWidth
             helperText={touched.password && errors.password}
-            label="Password"
+            label="Mật khẩu"
             margin="normal"
             name="password"
             onBlur={handleBlur}
@@ -100,7 +100,7 @@ function LoginForm({
               type="submit"
               variant="contained"
             >
-              Log In
+              Đăng nhập
             </Button>
           </Box>
         </form>

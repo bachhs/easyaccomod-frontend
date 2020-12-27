@@ -131,7 +131,7 @@ function Account() {
             component={RouterLink}
             to="/dashboard"
           >
-            Dashboard
+            Quản lí trang Web
           </MenuItem>
           )}
           <MenuItem onClick={handleLogout}>

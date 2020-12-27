@@ -188,7 +188,7 @@ function PlaceEditForm({ className, place, ...rest }) {
                           variant="outlined"
                         >
                           <MenuItem value="Phòng trọ">Phòng trọ</MenuItem>
-                          <MenuItem value="Chung cư">Chung cư mini</MenuItem>
+                          <MenuItem value="Chung cư">Chung cư</MenuItem>
                           <MenuItem value="Nhà nguyên căn">Nhà nguyên căn</MenuItem>
                         </TextField>
                       </Grid>

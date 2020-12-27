@@ -13,28 +13,26 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
-import SendIcon from '@material-ui/icons/Send';
+import SubtitlesRoundedIcon from '@material-ui/icons/SubtitlesRounded';
 import NavigateNextIcon from '@material-ui/icons/NavigateNextOutlined';
-import PaymentIcon from '@material-ui/icons/PaymentOutlined';
-import MailIcon from '@material-ui/icons/MailOutlineOutlined';
+import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 
 const iconsMap = {
-  invite: <SendIcon />,
-  message: <MailIcon />,
-  payout: <PaymentIcon />
+  post: <SubtitlesRoundedIcon />,
+  account: <AccountCircleRoundedIcon />,
 };
 
 const notifications = [
   {
     id: '5e8883a4f7877f898c408c27',
-    type: 'invite',
-    message: 'duyệt bài đăng',
+    type: 'post',
+    message: 'Duyệt bài đăng',
     link: '/places'
   },
   {
     id: '5e8883aa34190e0457a6e2b9',
-    type: 'message',
-    message: 'duyệt người dùng',
+    type: 'account',
+    message: 'Duyệt người dùng',
     link: '/users'
   },
 ];

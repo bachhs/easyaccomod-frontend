@@ -90,7 +90,7 @@ function LoginView() {
             to="/"
             className={classes.backButton}
           >
-            Back to home
+            Trở về trang chủ
           </Button>
         </Box>
         <Card className={classes.card}>
@@ -102,13 +102,13 @@ function LoginView() {
               variant="h2"
               color="textPrimary"
             >
-              Sign in
+              Đăng nhập
             </Typography>
             <Typography
               variant="subtitle1"
               color="textSecondary"
             >
-              Sign in on the internal platform
+              Nhập thông tin vào form bên dưới
             </Typography>
             <Box mt={4}>
               <LoginForm onSubmitSuccess={handleSubmitSuccess} onSubmitFail={handleSubmitFail} />
@@ -122,7 +122,7 @@ function LoginView() {
               variant="body2"
               color="textSecondary"
             >
-              Create new account
+              Tạo tài khoản mới
             </Link>
           </CardContent>
         </Card>

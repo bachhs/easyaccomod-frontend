@@ -44,16 +44,16 @@ function RegisterForm({
         policy: false
       }}
       validationSchema={Yup.object().shape({
-        username: Yup.string().max(255).required('User Name is required'),
-        email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-        role: Yup.string().oneOf(['renter', 'owner']).required('Role is required'),
-        citizen: Yup.string().required('Citizen ID is required').matches(/^[0-9]+$/, 'Must be only digits').min(6, 'Must be at least 6 digits')
-          .max(12, 'Must be max 12 digits'),
-        address: Yup.string().max(255).required('Address is required'),
-        phone: Yup.string().required('Phone number is required').matches(/^[0-9]+$/, 'Must be only digits').min(6, 'Must be at least 6 digits')
-          .max(12, 'Must be max 12 digits'),
-        password: Yup.string().min(6).max(255).required('Password is required'),
-        policy: Yup.boolean().oneOf([true], 'This field must be checked')
+        username: Yup.string().max(255).required('Vui lòng nhập họ và tên'),
+        email: Yup.string().email('Phải là một email hợp lệ').max(255).required('Vui lòng nhập email'),
+        role: Yup.string().oneOf(['renter', 'owner']).required('Vui lòng chọn vai trò'),
+        citizen: Yup.string().required('Vui lòng nhập số căn cước công dân').matches(/^[0-9]+$/, 'Chỉ có kí tự là chữ số').min(6, 'Ít nhất là 6 chữ số')
+          .max(12, 'Tối đa là 12 chữ số'),
+        address: Yup.string().max(255).required('Vui lòng nhập địa chỉ'),
+        phone: Yup.string().required('Vui lòng nhập số điện thoại').matches(/^[0-9]+$/, 'Chỉ có kí tự là chữ số').min(6, 'Ít nhất là 6 chữ số')
+          .max(10, 'Tối đa là 10 chữ số'),
+        password: Yup.string().min(6).max(255).required('Vui lòng nhập mật khẩu'),
+        policy: Yup.boolean().oneOf([true], 'Vui lòng tích vào ô điều khoản')
       })}
       onSubmit={async (values, {
         setErrors,
@@ -89,7 +89,7 @@ function RegisterForm({
             error={Boolean(touched.username && errors.username)}
             fullWidth
             helperText={touched.username && errors.username}
-            label="User Name"
+            label="Họ và Tên"
             margin="normal"
             name="username"
             onBlur={handleBlur}
@@ -102,7 +102,7 @@ function RegisterForm({
             error={Boolean(touched.email && errors.email)}
             fullWidth
             helperText={touched.email && errors.email}
-            label="Email Address"
+            label="Địa chỉ Email"
             margin="normal"
             style={{ marginBottom: 15 }}
             name="email"
@@ -112,18 +112,18 @@ function RegisterForm({
             value={values.email}
             variant="outlined"
           />
-          <FormLabel>Role</FormLabel>
+          <FormLabel>Bạn là ?</FormLabel>
           <RadioGroup row aria-label="role" name="role" value={values.role} onChange={handleChange}>
-            <FormControlLabel value="renter" control={<Radio />} label="Renter" />
-            <FormControlLabel value="owner" control={<Radio />} label="Owner" />
+            <FormControlLabel value="renter" control={<Radio />} label="Người thuê nhà" />
+            <FormControlLabel value="owner" control={<Radio />} label="Chủ sở hữu" />
           </RadioGroup>
           {Boolean(touched.role && errors.role)
-            && <FormHelperText className="MuiFormHelperText-root MuiFormHelperText-contained Mui-error">You must select a role</FormHelperText>}
+            && <FormHelperText className="MuiFormHelperText-root MuiFormHelperText-contained Mui-error">Vui lòng chọn vai trò của mình</FormHelperText>}
           <TextField
             error={Boolean(touched.citizen && errors.citizen)}
             fullWidth
             helperText={touched.citizen && errors.citizen}
-            label="Citizen ID"
+            label="Số Căn cước công dân"
             margin="normal"
             style={{ marginTop: 10 }}
             name="citizen"
@@ -137,7 +137,7 @@ function RegisterForm({
             error={Boolean(touched.address && errors.address)}
             fullWidth
             helperText={touched.address && errors.address}
-            label="Address"
+            label="Địa chỉ"
             margin="normal"
             name="address"
             onBlur={handleBlur}
@@ -150,7 +150,7 @@ function RegisterForm({
             error={Boolean(touched.phone && errors.phone)}
             fullWidth
             helperText={touched.phone && errors.phone}
-            label="Phone Number"
+            label="Số điện thoại"
             margin="normal"
             name="phone"
             onBlur={handleBlur}
@@ -163,7 +163,7 @@ function RegisterForm({
             error={Boolean(touched.password && errors.password)}
             fullWidth
             helperText={touched.password && errors.password}
-            label="Password"
+            label="Mật khẩu"
             margin="normal"
             name="password"
             onBlur={handleBlur}
@@ -187,14 +187,14 @@ function RegisterForm({
               variant="body2"
               color="textSecondary"
             >
-              I have read the
+              Bạn đã đọc
               {' '}
               <Link
                 component="a"
                 href="#"
                 color="secondary"
               >
-                Terms and Conditions
+                Điều khoản và Điều kiện
               </Link>
             </Typography>
           </Box>
@@ -212,7 +212,7 @@ function RegisterForm({
               type="submit"
               variant="contained"
             >
-              Create account
+              Tạo tài khoản
             </Button>
           </Box>
         </form>

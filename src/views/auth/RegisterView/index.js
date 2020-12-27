@@ -62,7 +62,7 @@ function RegisterView() {
             to="/"
             className={classes.backButton}
           >
-            Back to home
+            Trở về trang chủ
           </Button>
         </Box>
         <Card>
@@ -72,7 +72,7 @@ function RegisterView() {
               variant="h2"
               color="textPrimary"
             >
-              Sign up
+              Đăng kí
             </Typography>
             <Box>
               <RegisterForm onSubmitSuccess={handleSubmitSuccess} onSubmitFail={handleSubmitFail} />
@@ -86,7 +86,7 @@ function RegisterView() {
               variant="body2"
               color="textSecondary"
             >
-              Have an account?
+              Bạn đã có tài khoản?
             </Link>
           </CardContent>
         </Card>

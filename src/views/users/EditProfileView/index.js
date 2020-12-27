@@ -9,12 +9,12 @@ import {
   CardContent,
   Container,
   Typography,
-  makeStyles
+  makeStyles,
+  Grid
 } from '@material-ui/core';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import axios from 'src/utils/axios';
 import Page from 'src/components/Page';
-import Logo from 'src/components/Logo';
 import ProfileForm from './ProfileForm';
 
 const useStyles = makeStyles((theme) => ({
@@ -82,26 +82,27 @@ function RegisterView() {
           alignItems="center"
           mb={1}
         >
-          <RouterLink to="/">
-            <Logo />
-          </RouterLink>
-          <Button
-            component={RouterLink}
-            to="/"
-            className={classes.backButton}
+          <Grid
+            container
+            justify="space-between"
           >
-            Back to home
-          </Button>
+            <Typography
+              variant="h3"
+              color="textPrimary"
+            >
+              Chỉnh sửa thông tin
+            </Typography>
+            <Button
+              component={RouterLink}
+              to={`/users/${uid}`}
+              className={classes.backButton}
+            >
+              Hủy
+            </Button>
+          </Grid>
         </Box>
         <Card>
           <CardContent>
-            <Typography
-              gutterBottom
-              variant="h2"
-              color="textPrimary"
-            >
-              Sign up
-            </Typography>
             <Box>
               <ProfileForm
                 onSubmitSuccess={handleSubmitSuccess}

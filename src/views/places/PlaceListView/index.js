@@ -155,7 +155,7 @@ function ProjectBrowseView() {
             variant="h1"
             className={classes.span}
           >
-            FLASH HOME
+            TOMAHAWK HOME
           </Typography>
           <Typography
             variant="h4"
