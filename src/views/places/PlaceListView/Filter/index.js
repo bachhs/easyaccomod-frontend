@@ -9,7 +9,9 @@ import {
   Input,
   Slider,
   Typography,
-  makeStyles
+  makeStyles,
+  Grid,
+  Button
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import MultiSelect from './MultiSelect';
@@ -47,6 +49,17 @@ const useStyles = makeStyles((theme) => ({
   },
   chip: {
     margin: theme.spacing(1)
+  },
+  slider: {
+    width: '85%',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    paddingLeft: '1.5%'
+  },
+  button: {
+    marginTop: 'auto',
+    marginBottom: 'auto',
+    marginRight: '2%'
   }
 }));
 
@@ -54,7 +67,7 @@ function Filter({ className, ...rest }) {
   const classes = useStyles();
   const [inputValue, setInputValue] = useState('');
   const [chips, setChips] = useState([]);
-  const [price, setPrice] = useState([0, 100]);
+  const [price, setPrice] = useState([0, 20]);
 
   const handleChipDelete = (chip) => {
     setChips((prevChips) => prevChips.filter((prevChip) => chip !== prevChip));
@@ -67,6 +80,17 @@ function Filter({ className, ...rest }) {
   const handlePriceChange = (event, newValue) => {
     setPrice(newValue);
   };
+
+  const marks = [
+    {
+      value: 0,
+      label: 'triệu VNĐ',
+    },
+    {
+      value: 20,
+      label: '20 triệu VNĐ',
+    },
+  ];
 
   return (
     <Card
@@ -100,14 +124,25 @@ function Filter({ className, ...rest }) {
         alignItems="center"
         flexWrap="wrap"
       >
-        <Typography id="range-slider" gutterBottom>
-          Temperature range
+        <Typography
+          id="range-slider"
+          gutterBottom
+          variant="h6"
+          color="textPrimary"
+        >
+          MỨC GIÁ
         </Typography>
-        <Slider
-          value={price}
-          onChange={handlePriceChange}
-          valueLabelDisplay="auto"
-        />
+        <div className={classes.slider}>
+          <Slider
+            value={price}
+            onChange={handlePriceChange}
+            min={0}
+            max={20}
+            step={0.5}
+            valueLabelDisplay="auto"
+            marks={marks}
+          />
+        </div>
         {chips.map((chip) => (
           <Chip
             className={classes.chip}
@@ -118,23 +153,37 @@ function Filter({ className, ...rest }) {
         ))}
       </Box>
       <Divider />
-      <Box
-        display="flex"
-        alignItems="center"
-        flexWrap="wrap"
-        p={1}
+      <Grid
+        container
+        justify="space-between"
       >
-        {selectOptions.map((option) => (
-          <MultiSelect
-            key={option.label}
-            label={option.label}
-            onChange={handleMultiSelectChange}
-            options={option.options}
-            value={chips}
-          />
-        ))}
-        <Box flexGrow={1} />
-      </Box>
+        <Box
+          display="flex"
+          alignItems="center"
+          flexWrap="wrap"
+          p={1}
+        >
+          {selectOptions.map((option) => (
+            <MultiSelect
+              key={option.label}
+              label={option.label}
+              onChange={handleMultiSelectChange}
+              options={option.options}
+              value={chips}
+            />
+          ))}
+          <Box flexGrow={1} />
+        </Box>
+        <Box className={classes.button}>
+          <Button
+            variant="contained"
+            color="secondary"
+            size="medium"
+          >
+            Tìm kiếm
+          </Button>
+        </Box>
+      </Grid>
     </Card>
   );
 }
