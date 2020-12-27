@@ -157,7 +157,7 @@ function Results({
               {filteredPlaces.map((place) => (
                 <TableRow
                   hover
-                  key={places.id}
+                  key={place.id}
                 >
                   <TableCell>
                     <Link

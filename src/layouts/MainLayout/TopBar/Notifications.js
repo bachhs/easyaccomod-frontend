@@ -71,7 +71,7 @@ function Notifications() {
 
   return (
     <>
-      <Tooltip>
+      <Tooltip title="Xem thông báo mới nhất">
         <IconButton
           color="inherit"
           ref={ref}
