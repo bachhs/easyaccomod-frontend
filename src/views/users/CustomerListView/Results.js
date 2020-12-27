@@ -222,7 +222,7 @@ function Results({
                     {customer.address}
                   </TableCell>
                   <TableCell align="right">
-                    {account.user && account.user === 'admin' && (
+                    {account.user && account.user.role === 'admin' && (
                     <IconButton
                       onClick={() => activateCustomer(customer.id)}
                     >
