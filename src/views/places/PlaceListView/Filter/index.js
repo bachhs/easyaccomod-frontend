@@ -4,11 +4,11 @@ import clsx from 'clsx';
 import {
   Box,
   Card,
-  Checkbox,
   Chip,
   Divider,
-  FormControlLabel,
   Input,
+  Slider,
+  Typography,
   makeStyles
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
@@ -16,31 +16,27 @@ import MultiSelect from './MultiSelect';
 
 const selectOptions = [
   {
-    label: 'Type',
+    label: 'Loại phòng',
     options: [
-      'Freelance',
-      'Full Time',
-      'Part Time',
-      'Internship']
+      'Phòng trọ',
+      'Chung cư',
+      'Nhà nguyên căn']
   },
   {
-    label: 'Level',
-    options: ['Novice', 'Expert']
+    label: 'Phòng tắm',
+    options: ['Khép kín', 'Chung']
   },
   {
-    label: 'Location',
+    label: 'Bếp',
     options: [
-      'Africa',
-      'Asia',
-      'Australia',
-      'Europe',
-      'North America',
-      'South America'
+      'Khu bếp riêng',
+      'Khu bếp chung',
+      'Không nấu ăn',
     ]
   },
   {
-    label: 'Roles',
-    options: ['Android', 'Web Developer', 'iOS']
+    label: 'Đồ đạc',
+    options: ['Điều hòa', 'Nóng lạnh']
   }
 ];
 
@@ -57,30 +53,8 @@ const useStyles = makeStyles((theme) => ({
 function Filter({ className, ...rest }) {
   const classes = useStyles();
   const [inputValue, setInputValue] = useState('');
-  const [chips, setChips] = useState([
-    'Freelance',
-    'Full Time',
-    'Novice',
-    'Europe',
-    'Android',
-    'Web Developer'
-  ]);
-
-  const handleInputChange = (event) => {
-    event.persist();
-    setInputValue(event.target.value);
-  };
-
-  const handleInputKeyup = (event) => {
-    event.persist();
-
-    if (event.keyCode === 13 && inputValue) {
-      if (!chips.includes(inputValue)) {
-        setChips((prevChips) => [...prevChips, inputValue]);
-        setInputValue('');
-      }
-    }
-  };
+  const [chips, setChips] = useState([]);
+  const [price, setPrice] = useState([0, 100]);
 
   const handleChipDelete = (chip) => {
     setChips((prevChips) => prevChips.filter((prevChip) => chip !== prevChip));
@@ -88,6 +62,10 @@ function Filter({ className, ...rest }) {
 
   const handleMultiSelectChange = (value) => {
     setChips(value);
+  };
+
+  const handlePriceChange = (event, newValue) => {
+    setPrice(newValue);
   };
 
   return (
@@ -105,8 +83,12 @@ function Filter({ className, ...rest }) {
           disableUnderline
           fullWidth
           className={classes.searchInput}
-          onChange={handleInputChange}
-          onKeyUp={handleInputKeyup}
+          onChange={(event) => setInputValue(event.target.value)}
+          onKeyPress={(event) => {
+            if (event.key === 'Enter') {
+              setInputValue(event.target.value);
+            }
+          }}
           placeholder="Enter a keyword"
           value={inputValue}
         />
@@ -118,6 +100,14 @@ function Filter({ className, ...rest }) {
         alignItems="center"
         flexWrap="wrap"
       >
+        <Typography id="range-slider" gutterBottom>
+          Temperature range
+        </Typography>
+        <Slider
+          value={price}
+          onChange={handlePriceChange}
+          valueLabelDisplay="auto"
+        />
         {chips.map((chip) => (
           <Chip
             className={classes.chip}
@@ -144,13 +134,6 @@ function Filter({ className, ...rest }) {
           />
         ))}
         <Box flexGrow={1} />
-        <FormControlLabel
-          className={classes.inNetwork}
-          control={(
-            <Checkbox defaultChecked />
-          )}
-          label="In network"
-        />
       </Box>
     </Card>
   );
