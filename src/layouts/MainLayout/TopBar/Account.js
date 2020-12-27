@@ -125,6 +125,15 @@ function Account() {
             Danh sách bài đăng
           </MenuItem>
           )}
+          {account.user.role === 'admin' && (
+          <MenuItem
+            onClick={handleClose}
+            component={RouterLink}
+            to="/dashboard"
+          >
+            Dashboard
+          </MenuItem>
+          )}
           <MenuItem onClick={handleLogout}>
             Đăng xuất
           </MenuItem>

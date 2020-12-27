@@ -1,6 +1,8 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import { useHistory } from 'react-router';
+import { useLocation } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -41,14 +43,21 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
 function Results({
   className, getPlaces, places, placeCount, ...rest
 }) {
   const classes = useStyles();
   const sortRef = useRef(null);
+  const history = useHistory();
   const [openSort, setOpenSort] = useState(false);
-  const [selectedSort, setSelectedSort] = useState('Most popular');
+  const [selectedSort, setSelectedSort] = useState('Gần đây nhất');
   const [mode, setMode] = useState('grid');
+  const query = useQuery();
+  const page = parseInt(query.get('page'), 10) || 1;
 
   const handleSortOpen = () => {
     setOpenSort(true);
@@ -58,9 +67,59 @@ function Results({
     setOpenSort(false);
   };
 
+  useEffect(() => {
+
+  }, []);
+
   const handleSortSelect = (value) => {
     setSelectedSort(value);
     setOpenSort(false);
+    switch (value) {
+      case 'Đánh giá cao nhất':
+        query.append('orderBy', 'star');
+        query.append('order', 'desc');
+        if (query.has('page')) {
+          query.set('page', 1);
+        } else {
+          query.append('page', 1);
+        }
+        history.push(`/?${query.toString()}`);
+        break;
+      case 'Giá cao nhất':
+        query.append('orderBy', 'price');
+        query.append('order', 'desc');
+        if (query.has('page')) {
+          query.set('page', 1);
+        } else {
+          query.append('page', 1);
+        }
+        history.push(`/?${query.toString()}`);
+        break;
+      case 'Giá thấp nhất':
+        query.append('orderBy', 'price');
+        query.append('order', 'asc');
+        if (query.has('page')) {
+          query.set('page', 1);
+        } else {
+          query.append('page', 1);
+        }
+        history.push(`/?${query.toString()}`);
+        break;
+      case 'Nhiều lượt xem nhất':
+        query.append('orderBy', 'views');
+        query.append('order', 'desc');
+        if (query.has('page')) {
+          query.set('page', 1);
+        } else {
+          query.append('page', 1);
+        }
+        history.push(`/?${query.toString()}`);
+        break;
+      default:
+        query.delete('orderBy');
+        query.delete('order');
+        history.push(`/?${query.toString()}`);
+    }
   };
 
   const handleModeChange = (event, value) => {
@@ -137,8 +196,10 @@ function Results({
       >
         <Pagination
           count={Math.ceil(placeCount / 6)}
+          defaultPage={page}
           onChange={(event, value) => {
-            getPlaces(value);
+            query.set('page', value);
+            history.push(`/?${query.toString()}`);
           }}
         />
       </Box>
@@ -149,7 +210,7 @@ function Results({
         open={openSort}
         elevation={1}
       >
-        {['Most recent', 'Popular', 'Price high', 'Price low', 'On sale'].map(
+        {['Gần đây nhất', 'Đánh giá cao nhất', 'Giá cao nhất', 'Giá thấp nhất', 'Nhiều lượt xem nhất'].map(
           (option) => (
             <MenuItem
               key={option}

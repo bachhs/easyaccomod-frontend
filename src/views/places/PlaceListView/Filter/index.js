@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router';
+import { useLocation } from 'react-router-dom';
 import clsx from 'clsx';
 import {
   Box,
@@ -22,7 +24,8 @@ const selectOptions = [
     options: [
       'Phòng trọ',
       'Chung cư',
-      'Nhà nguyên căn']
+      'Nhà nguyên căn'
+    ]
   },
   {
     label: 'Phòng tắm',
@@ -51,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1)
   },
   slider: {
-    width: '85%',
+    width: '88%',
     marginRight: 'auto',
     marginLeft: 'auto',
     paddingLeft: '1.5%'
@@ -63,11 +66,39 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
 function Filter({ className, ...rest }) {
   const classes = useStyles();
   const [inputValue, setInputValue] = useState('');
   const [chips, setChips] = useState([]);
   const [price, setPrice] = useState([0, 20]);
+  const history = useHistory();
+  const queryString = useQuery();
+
+  useEffect(() => {
+    if (queryString.has('q')) { setInputValue(queryString.get('q')); }
+    if (queryString.has('type')) {
+      setChips((oldChips) => [...oldChips, ...queryString.getAll('type')]);
+    }
+    if (queryString.has('bathroom')) {
+      setChips((oldChips) => [...oldChips, ...queryString.getAll('bathroom')]);
+    }
+    if (queryString.has('kitchen')) {
+      setChips((oldChips) => [...oldChips, ...queryString.getAll('kitchen')]);
+    }
+    if (queryString.has('airconditioner')) {
+      setChips((oldChips) => [...oldChips, 'Điều hòa']);
+    }
+    if (queryString.has('waterHeater')) {
+      setChips((oldChips) => [...oldChips, 'Nóng lạnh']);
+    }
+    if (queryString.has('start') && queryString.has('end')) {
+      setPrice([parseInt(queryString.get('start'), 10), parseInt(queryString.get('end'), 10)]);
+    }
+  }, []);
 
   const handleChipDelete = (chip) => {
     setChips((prevChips) => prevChips.filter((prevChip) => chip !== prevChip));
@@ -79,6 +110,32 @@ function Filter({ className, ...rest }) {
 
   const handlePriceChange = (event, newValue) => {
     setPrice(newValue);
+  };
+
+  const onButtonClick = () => {
+    let query = `/?q=${inputValue}`;
+    chips.forEach((chip) => {
+      if (selectOptions[0].options.includes(chip)) {
+        query += `&type=${chip}`;
+      }
+      if (selectOptions[1].options.includes(chip)) {
+        query += `&bathroom=${chip}`;
+      }
+      if (selectOptions[2].options.includes(chip)) {
+        query += `&kitchen=${chip}`;
+      }
+      if (chip === 'Điều hòa') {
+        query += '&airconditioner=1';
+      }
+      if (chip === 'Nóng lạnh') {
+        query += '&waterHeater=1';
+      }
+    });
+
+    query += `&start=${price[0]}`;
+    query += `&end=${price[1]}`;
+    query += '&page=1';
+    history.push(query);
   };
 
   const marks = [
@@ -113,7 +170,7 @@ function Filter({ className, ...rest }) {
               setInputValue(event.target.value);
             }
           }}
-          placeholder="Enter a keyword"
+          placeholder="Nhập tên bài hoặc địa chỉ"
           value={inputValue}
         />
       </Box>
@@ -179,6 +236,7 @@ function Filter({ className, ...rest }) {
             variant="contained"
             color="secondary"
             size="medium"
+            onClick={onButtonClick}
           >
             Tìm kiếm
           </Button>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -96,6 +97,7 @@ const useStyles = makeStyles((theme) => ({
 function Results({
   className, customers, activateCustomer, ...rest
 }) {
+  const account = useSelector((state) => state.account);
   const classes = useStyles();
   const [currentTab, setCurrentTab] = useState('all');
   const [filters, setFilters] = useState({
@@ -220,11 +222,13 @@ function Results({
                     {customer.address}
                   </TableCell>
                   <TableCell align="right">
+                    {account.user && account.user === 'admin' && (
                     <IconButton
                       onClick={() => activateCustomer(customer.id)}
                     >
                       <CheckIcon />
                     </IconButton>
+                    )}
                     <IconButton
                       component={RouterLink}
                       to={`chat/${customer.id}`}

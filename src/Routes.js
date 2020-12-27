@@ -43,6 +43,11 @@ function Routes() {
                 />
                 <Route
                   exact
+                  path="/dashboard"
+                  component={lazy(() => import('src/views/pages/OverviewView'))}
+                />
+                <Route
+                  exact
                   path="/places/"
                   component={lazy(() => import('src/views/places/PlaceAllView'))}
                 />

@@ -96,16 +96,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
-
 function ProjectBrowseView() {
   const classes = useStyles();
   const isMountedRef = useIsMountedRef();
   const [places, setPlaces] = useState([]);
   const [placeCount, setPlaceCount] = useState(0);
-  const query = useQuery();
 
   const handleClick = () => {
     const anchor = document.querySelector('#Main');
@@ -119,9 +114,13 @@ function ProjectBrowseView() {
     handleClick();
   }
 
+  const q = useLocation().search;
+
   const getPlaces = useCallback(() => {
-    let API_URL = `${process.env.REACT_APP_API}/places?`;
-    if (query.get('q')) { API_URL += `q=${query.get('q')}`; }
+    let API_URL = `${process.env.REACT_APP_API}/places${q}`;
+    if (!q) {
+      API_URL += '?page=1';
+    }
     axios
       .get(API_URL)
       .then((response) => {

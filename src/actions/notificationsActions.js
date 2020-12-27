@@ -3,7 +3,7 @@ import axios from 'src/utils/axios';
 export const GET_NOTIFICATIONS = '@notifications/get-notifications';
 
 export function getNotifications() {
-  const request = axios.get('/api/notifications');
+  const request = axios.get(`${process.env.REACT_APP_API}/users/notifications`);
 
   return (dispatch) => {
     request.then((response) => dispatch({

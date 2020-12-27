@@ -11,7 +11,6 @@ import {
 import {
   Avatar,
   Box,
-  Button,
   IconButton,
   List,
   ListItem,
@@ -23,15 +22,22 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
-import AllInboxIcon from '@material-ui/icons/AllInbox';
+import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
+import ClearIcon from '@material-ui/icons/Clear';
+import CheckIcon from '@material-ui/icons/Check';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import { getNotifications } from 'src/actions/notificationsActions';
 
 const iconsMap = {
-  order_placed: AllInboxIcon,
-  new_message: NotificationsIcon,
-  item_shipped: LocalShippingIcon
+  ADMIN: HourglassEmptyIcon,
+  ACTIVATED: CheckIcon,
+  UNAVAILABLE: ClearIcon
+};
+
+const notificationText = {
+  ADMIN: 'Bài đăng cần duyệt',
+  ACTIVATED: 'Bài đăng đã được kích hoạt',
+  UNAVAILABLE: 'Phòng yêu thích đã được thuê'
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -115,8 +121,9 @@ function Notifications() {
                     className={classes.listItem}
                     component={RouterLink}
                     divider
+                    onClick={handleClose}
                     key={notification.id}
-                    to="#"
+                    to={`/places/${notification.place}`}
                   >
                     <ListItemAvatar>
                       <Avatar
@@ -128,27 +135,14 @@ function Notifications() {
                       </Avatar>
                     </ListItemAvatar>
                     <ListItemText
-                      primary={notification.title}
+                      primary={notificationText[notification.type]}
                       primaryTypographyProps={{ variant: 'subtitle2', color: 'textPrimary' }}
-                      secondary={notification.description}
+                      secondary={notification.title}
                     />
                   </ListItem>
                 );
               })}
             </List>
-            <Box
-              p={1}
-              display="flex"
-              justifyContent="center"
-            >
-              <Button
-                component={RouterLink}
-                size="small"
-                to="#"
-              >
-                Mark all as read
-              </Button>
-            </Box>
           </>
         )}
       </Popover>
