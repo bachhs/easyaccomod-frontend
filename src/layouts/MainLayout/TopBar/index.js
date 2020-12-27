@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
+import { useHistory } from 'react-router';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {
@@ -23,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
   },
   toolbar: {
     minHeight: 56
+  },
+  logo: {
+    height: 42
   },
   search: {
     position: 'relative',
@@ -77,6 +81,7 @@ function TopBar({
 }) {
   const classes = useStyles();
   const account = useSelector((state) => state.account);
+  const history = useHistory();
   const [search, setSearch] = useState('');
 
   return (
@@ -86,7 +91,7 @@ function TopBar({
     >
       <Toolbar className={classes.toolbar}>
         <RouterLink to="/">
-          <Logo />
+          <Logo className={classes.logo} />
         </RouterLink>
         <Box
           ml={2}
@@ -107,8 +112,7 @@ function TopBar({
             onChange={(event) => setSearch(event.target.value)}
             onKeyPress={(event) => {
               if (event.key === 'Enter') {
-                // Do code here
-                event.preventDefault();
+                history.push(`/?q=${event.target.value}`);
               }
             }}
           />

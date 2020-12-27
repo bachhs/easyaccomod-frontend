@@ -7,7 +7,7 @@ import axios from 'src/utils/axios';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import Page from 'src/components/Page';
 import Header from './Header';
-import PlaceCreateForm from './PlaceCreateForm';
+import PlaceEditForm from './PlaceEditForm';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,7 +57,7 @@ function PlaceEditView() {
     >
       <Container maxWidth="md">
         <Header />
-        <PlaceCreateForm place={place} />
+        <PlaceEditForm place={place} />
       </Container>
     </Page>
   );

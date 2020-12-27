@@ -1,4 +1,3 @@
-/* eslint-disable global-require */
 import React, {
   useCallback,
   useState,
@@ -13,6 +12,7 @@ import {
   Typography,
   Divider
 } from '@material-ui/core';
+import { useLocation } from 'react-router-dom';
 import Page from 'src/components/Page';
 import axios from 'src/utils/axios';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
@@ -96,23 +96,34 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
 function ProjectBrowseView() {
   const classes = useStyles();
   const isMountedRef = useIsMountedRef();
   const [places, setPlaces] = useState([]);
   const [placeCount, setPlaceCount] = useState(0);
+  const query = useQuery();
 
-  const handleClick = (event) => {
-    const anchor = (event.target.ownerDocument || document).querySelector('#Main');
+  const handleClick = () => {
+    const anchor = document.querySelector('#Main');
 
     if (anchor) {
       anchor.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
-  const getPlaces = useCallback((page) => {
+  if (window.location.search) {
+    handleClick();
+  }
+
+  const getPlaces = useCallback(() => {
+    let API_URL = `${process.env.REACT_APP_API}/places?`;
+    if (query.get('q')) { API_URL += `q=${query.get('q')}`; }
     axios
-      .get(`${process.env.REACT_APP_API}/places?page=${page}`)
+      .get(API_URL)
       .then((response) => {
         if (isMountedRef.current) {
           setPlaceCount(response.data.placeCount);

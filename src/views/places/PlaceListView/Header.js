@@ -3,15 +3,12 @@ import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {
-  Breadcrumbs,
   Button,
   Grid,
-  Link,
   SvgIcon,
   Typography,
   makeStyles
 } from '@material-ui/core';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = makeStyles((theme) => ({
@@ -34,45 +31,18 @@ function Header({ className, ...rest }) {
       {...rest}
     >
       <Grid item>
-        <Breadcrumbs
-          separator={<NavigateNextIcon fontSize="small" />}
-          aria-label="breadcrumb"
-        >
-          <Link
-            variant="body1"
-            color="inherit"
-            to="/app"
-            component={RouterLink}
-          >
-            Dashboard
-          </Link>
-          <Link
-            variant="body1"
-            color="inherit"
-            to="/app/projects"
-            component={RouterLink}
-          >
-            Projects
-          </Link>
-          <Typography
-            variant="body1"
-            color="textPrimary"
-          >
-            Browse
-          </Typography>
-        </Breadcrumbs>
         <Typography
           variant="h3"
           color="textPrimary"
         >
-          See the latest opportunities
+          Danh sách cho thuê
         </Typography>
       </Grid>
       <Grid item>
         <Button
           color="secondary"
           component={RouterLink}
-          to="/app/projects/create"
+          to="/places/new"
           variant="contained"
         >
           <SvgIcon
@@ -81,7 +51,7 @@ function Header({ className, ...rest }) {
           >
             <AddIcon />
           </SvgIcon>
-          Add new project
+          Đăng bài cho thuê
         </Button>
       </Grid>
     </Grid>
