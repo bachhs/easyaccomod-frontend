@@ -22,6 +22,10 @@ import Filter from './Filter';
 import Footer from './Footer';
 import Results from './Results';
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
@@ -114,11 +118,12 @@ function ProjectBrowseView() {
     handleClick();
   }
 
-  const q = useLocation().search;
+  const query = useQuery();
 
   const getPlaces = useCallback(() => {
-    let API_URL = `${process.env.REACT_APP_API}/places${q}`;
-    if (!q) {
+    query.delete('fbclid');
+    let API_URL = `${process.env.REACT_APP_API}/places${query.toString()}`;
+    if (!query.toString()) {
       API_URL += '?page=1';
     }
     axios
