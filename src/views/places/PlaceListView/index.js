@@ -122,7 +122,7 @@ function ProjectBrowseView() {
 
   const getPlaces = useCallback(() => {
     query.delete('fbclid');
-    let API_URL = `${process.env.REACT_APP_API}/places${query.toString()}`;
+    let API_URL = `${process.env.REACT_APP_API}/places?${query.toString()}`;
     if (!query.toString()) {
       API_URL += '?page=1';
     }
