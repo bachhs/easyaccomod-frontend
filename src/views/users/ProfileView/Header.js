@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
-    backgroundImage: `url(${'/static/images/users/userBG.png'})`,
+    backgroundImage: `url(${'/static/images/users/user.png'})`,
     '&:before': {
       position: 'absolute',
       content: '" "',

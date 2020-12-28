@@ -60,7 +60,6 @@ function Sidebar({ containerRef }) {
       <Hidden mdUp>
         <Drawer
           variant="temporary"
-          open
           classes={{
             paper: classes.drawerMobilePaper
           }}
